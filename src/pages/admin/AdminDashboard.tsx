@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { GenericContentModal } from '@/components/admin/GenericContentModal'
 import { AdminAiAssistant } from '@/components/admin/AdminAiAssistant'
 import { getImageSrc } from '@/services/contentService'
+import { reviewVolunteerAction } from '@/services/gamificationService'
 import { toast } from '@/hooks/use-toast'
 import {
   HeartHandshake,
@@ -31,6 +32,14 @@ import {
   CheckCircle2,
   HelpCircle,
   Search,
+  Target,
+  Trophy,
+  Check,
+  XCircle,
+  Gift,
+  Flame,
+  ShieldCheck,
+  MessageSquare,
 } from 'lucide-react'
 
 export default function AdminDashboard() {
@@ -52,6 +61,14 @@ export default function AdminDashboard() {
   const [contentBlocks, setContentBlocks] = useState<any[]>([])
   const [inscriptions, setInscriptions] = useState<any[]>([])
   const [settingsData, setSettingsData] = useState<any>({})
+
+  // Gamification states in CMS
+  const [volunteerProfiles, setVolunteerProfiles] = useState<any[]>([])
+  const [missions, setMissions] = useState<any[]>([])
+  const [badges, setBadges] = useState<any[]>([])
+  const [volunteerActions, setVolunteerActions] = useState<any[]>([])
+  const [reviewingActionId, setReviewingActionId] = useState<string | null>(null)
+  const [reviewFeedback, setReviewFeedback] = useState('')
 
   const [loading, setLoading] = useState(false)
 
@@ -84,6 +101,10 @@ export default function AdminDashboard() {
         blocksData,
         inscData,
         settingsRecords,
+        vpData,
+        vmData,
+        vbData,
+        vaData,
       ] = await Promise.all([
         pb.collection('news').getFullList({ sort: '-created' }),
         pb.collection('beneficiaries').getFullList({ sort: '-created' }),
@@ -102,6 +123,22 @@ export default function AdminDashboard() {
           .collection('site_settings')
           .getFullList()
           .catch(() => []),
+        pb
+          .collection('volunteer_profiles')
+          .getFullList({ sort: '-points,-created' })
+          .catch(() => []),
+        pb
+          .collection('volunteer_missions')
+          .getFullList({ sort: 'order,created' })
+          .catch(() => []),
+        pb
+          .collection('volunteer_badges')
+          .getFullList({ sort: 'points_required,name' })
+          .catch(() => []),
+        pb
+          .collection('volunteer_actions')
+          .getFullList({ sort: '-created', expand: 'volunteer_profile_id,mission_id' })
+          .catch(() => []),
       ])
 
       setNews(newsData)
@@ -114,6 +151,10 @@ export default function AdminDashboard() {
       setPastEditions(pastData)
       setContentBlocks(blocksData)
       setInscriptions(inscData)
+      setVolunteerProfiles(vpData)
+      setMissions(vmData)
+      setBadges(vbData)
+      setVolunteerActions(vaData)
 
       const sMap: any = {}
       for (const s of settingsRecords) sMap[s.key] = s.value
@@ -233,8 +274,148 @@ export default function AdminDashboard() {
     }
   }
 
+  const handleReviewAction = async (actionId: string, decision: 'approved' | 'rejected') => {
+    try {
+      await reviewVolunteerAction(
+        actionId,
+        decision,
+        user?.name || 'Administrador CMS',
+        reviewFeedback,
+      )
+      toast({
+        title: decision === 'approved' ? 'Ação Aprovada!' : 'Ação Rejeitada',
+        description:
+          decision === 'approved'
+            ? 'Os pontos foram creditados no perfil do voluntário com sucesso.'
+            : 'O voluntário verá o status como não aprovado.',
+      })
+      setReviewingActionId(null)
+      setReviewFeedback('')
+      loadAllData()
+    } catch (err: any) {
+      console.error(err)
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao revisar ação',
+        description: err.message,
+      })
+    }
+  }
+
   function getCollectionModalConfig(collection: string, item: any | null) {
     switch (collection) {
+      case 'volunteer_missions':
+        return {
+          collection: 'volunteer_missions',
+          title: item ? 'Editar Missão de Voluntariado' : 'Criar Nova Missão Gamificada',
+          item,
+          fields: [
+            { name: 'title', label: 'Título da Missão', type: 'text', required: true },
+            {
+              name: 'category',
+              label: 'Categoria',
+              type: 'select',
+              required: true,
+              options: [
+                { label: 'Indicação de Amigos', value: 'Indicação' },
+                { label: 'Doação / Arrecadação', value: 'Doação' },
+                { label: 'Ação Social / Presencial', value: 'Ação Social' },
+                { label: 'Divulgação em Redes', value: 'Divulgação' },
+                { label: 'Especial / Desafio Épico', value: 'Especial' },
+              ],
+            },
+            {
+              name: 'difficulty',
+              label: 'Dificuldade',
+              type: 'select',
+              required: true,
+              options: [
+                { label: 'Fácil', value: 'Fácil' },
+                { label: 'Médio', value: 'Médio' },
+                { label: 'Avançado', value: 'Avançado' },
+                { label: 'Épico', value: 'Épico' },
+              ],
+            },
+            {
+              name: 'points_reward',
+              label: 'Pontos de Recompensa (Número)',
+              type: 'number',
+              required: true,
+            },
+            {
+              name: 'icon_name',
+              label: 'Ícone (HeartHandshake, Users, Gift, Sparkles, PartyPopper)',
+              type: 'text',
+            },
+            {
+              name: 'description',
+              label: 'Descrição Detalhada da Missão (HTML)',
+              type: 'editor',
+              required: true,
+            },
+            {
+              name: 'instructions',
+              label: 'Instruções de Comprovação para o Voluntário',
+              type: 'textarea',
+            },
+            { name: 'active', label: 'Missão Ativa para os Voluntários', type: 'bool' },
+            { name: 'order', label: 'Ordem de Exibição', type: 'number' },
+          ],
+        }
+
+      case 'volunteer_badges':
+        return {
+          collection: 'volunteer_badges',
+          title: item ? 'Editar Medalha' : 'Criar Nova Medalha / Conquista',
+          item,
+          fields: [
+            { name: 'name', label: 'Nome da Medalha', type: 'text', required: true },
+            {
+              name: 'description',
+              label: 'Descrição / Requisito',
+              type: 'textarea',
+              required: true,
+            },
+            {
+              name: 'category',
+              label: 'Categoria',
+              type: 'select',
+              required: true,
+              options: [
+                { label: 'Geral', value: 'Geral' },
+                { label: 'Indicações', value: 'Indicações' },
+                { label: 'Doações', value: 'Doações' },
+                { label: 'Presença', value: 'Presença' },
+                { label: 'Destaque', value: 'Destaque' },
+              ],
+            },
+            {
+              name: 'rarity',
+              label: 'Raridade',
+              type: 'select',
+              required: true,
+              options: [
+                { label: 'Comum', value: 'Comum' },
+                { label: 'Raro', value: 'Raro' },
+                { label: 'Lendário', value: 'Lendário' },
+                { label: 'Mestre', value: 'Mestre' },
+              ],
+            },
+            {
+              name: 'points_required',
+              label: 'Pontos Necessários para Desbloqueio Automático',
+              type: 'number',
+              required: true,
+            },
+            {
+              name: 'icon_name',
+              label: 'Ícone (HeartHandshake, Users, Gift, ShieldCheck, Sparkles, PartyPopper)',
+              type: 'text',
+              required: true,
+            },
+          ],
+        }
+
       case 'banners':
         return {
           collection: 'banners',
@@ -724,10 +905,17 @@ export default function AdminDashboard() {
                         <ImageIcon className="w-3.5 h-3.5 mr-1.5 text-blue-500" /> Banners (
                         {banners.length})
                       </TabsTrigger>
-                      <TabsTrigger value="voluntariado" className="text-xs py-1.5">
-                        <Users className="w-3.5 h-3.5 mr-1.5 text-green-500" /> Voluntariado (
-                        {volunteerAreas.length})
+                      <TabsTrigger
+                        value="gamificacao"
+                        className="text-xs py-1.5 bg-amber-500/10 text-amber-900 border border-amber-300 font-bold"
+                      >
+                        <Trophy className="w-3.5 h-3.5 mr-1.5 text-amber-600" /> Gamificação & Ações
+                        ({volunteerActions.filter((a) => a.status === 'pending').length} pendentes)
                       </TabsTrigger>
+                      <TabsTrigger value="voluntariado" className="text-xs py-1.5">
+                        <Users className="w-3.5 h-3.5 mr-1.5 text-blue-600" /> Voluntariado (
+                        {volunteerAreas.length} áreas / {inscriptions.length} insc.)
+                      </TabsTrigger>{' '}
                       <TabsTrigger value="festa" className="text-xs py-1.5">
                         <Calendar className="w-3.5 h-3.5 mr-1.5 text-pink-500" /> Abraçolândia (
                         {eventSections.length})
@@ -1375,6 +1563,395 @@ export default function AdminDashboard() {
                         </div>
                       ))}
                     </div>
+                  </TabsContent>
+
+                  {/* GAMIFICAÇÃO & GESTÃO DE VOLUNTÁRIOS */}
+                  <TabsContent value="gamificacao" className="space-y-6 pt-4">
+                    {/* Header stats */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <div className="text-xs text-amber-800 font-bold uppercase">
+                          Ações Pendentes de Análise
+                        </div>
+                        <div className="text-2xl font-black text-amber-900 mt-1">
+                          {volunteerActions.filter((a) => a.status === 'pending').length}
+                        </div>
+                        <span className="text-[11px] text-amber-700">Aguardando aprovação</span>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                        <div className="text-xs text-blue-800 font-bold uppercase">
+                          Voluntários Cadastrados
+                        </div>
+                        <div className="text-2xl font-black text-blue-900 mt-1">
+                          {volunteerProfiles.length}
+                        </div>
+                        <span className="text-[11px] text-blue-700">Com perfil e código ativo</span>
+                      </div>
+                      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                        <div className="text-xs text-emerald-800 font-bold uppercase">
+                          Missões Ativas
+                        </div>
+                        <div className="text-2xl font-black text-emerald-900 mt-1">
+                          {missions.filter((m) => m.active).length}
+                        </div>
+                        <span className="text-[11px] text-emerald-700">Disponíveis no site</span>
+                      </div>
+                      <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                        <div className="text-xs text-purple-800 font-bold uppercase">
+                          Medalhas / Badges
+                        </div>
+                        <div className="text-2xl font-black text-purple-900 mt-1">
+                          {badges.length}
+                        </div>
+                        <span className="text-[11px] text-purple-700">Conquistas configuradas</span>
+                      </div>
+                    </div>
+
+                    {/* Sub-Tabs: Ações Pendentes, Missões, Medalhas, Ranking Geral */}
+                    <Tabs defaultValue="pendentes" className="space-y-4">
+                      <div className="border-b border-slate-200 pb-2">
+                        <TabsList className="bg-slate-100 p-1 rounded-lg">
+                          <TabsTrigger value="pendentes" className="text-xs font-bold">
+                            <Clock className="w-3.5 h-3.5 mr-1 text-amber-600" /> Aprovação de Ações
+                            ({volunteerActions.filter((a) => a.status === 'pending').length})
+                          </TabsTrigger>
+                          <TabsTrigger value="missoes_cms" className="text-xs font-bold">
+                            <Target className="w-3.5 h-3.5 mr-1 text-blue-600" /> Gestão de Missões
+                            ({missions.length})
+                          </TabsTrigger>
+                          <TabsTrigger value="badges_cms" className="text-xs font-bold">
+                            <Award className="w-3.5 h-3.5 mr-1 text-purple-600" /> Medalhas (
+                            {badges.length})
+                          </TabsTrigger>
+                          <TabsTrigger value="ranking_cms" className="text-xs font-bold">
+                            <Trophy className="w-3.5 h-3.5 mr-1 text-emerald-600" /> Ranking &
+                            Perfis ({volunteerProfiles.length})
+                          </TabsTrigger>
+                        </TabsList>
+                      </div>
+
+                      {/* 1. Sub-Tab: Aprovação de Ações */}
+                      <TabsContent value="pendentes" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Comprovações de Boas Ações, Doações e Indicações
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Ao aprovar, a pontuação é calculada e creditada automaticamente no
+                              perfil do voluntário.
+                            </p>
+                          </div>
+                        </div>
+
+                        {volunteerActions.length === 0 ? (
+                          <div className="text-center py-10 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500">
+                            Nenhum registro de ação encontrado.
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            {volunteerActions.map((act) => (
+                              <div
+                                key={act.id}
+                                className={`p-4 rounded-xl border bg-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                                  act.status === 'pending'
+                                    ? 'border-amber-300 bg-amber-50/20'
+                                    : 'border-slate-200'
+                                }`}
+                              >
+                                <div className="space-y-1.5 min-w-0">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <Badge
+                                      className={
+                                        act.status === 'approved'
+                                          ? 'bg-emerald-100 text-emerald-800'
+                                          : act.status === 'rejected'
+                                            ? 'bg-red-100 text-red-800'
+                                            : 'bg-amber-100 text-amber-800 font-bold'
+                                      }
+                                    >
+                                      {act.status === 'approved'
+                                        ? '✓ Aprovado'
+                                        : act.status === 'rejected'
+                                          ? '✗ Rejeitado'
+                                          : '⏳ Pendente de Aprovação'}
+                                    </Badge>
+                                    <Badge variant="outline" className="text-[10px]">
+                                      {act.action_type.toUpperCase()}
+                                    </Badge>
+                                    <span className="text-xs font-semibold text-amber-700">
+                                      +{act.points_claimed} pts
+                                    </span>
+                                  </div>
+
+                                  <h5 className="font-bold text-slate-900 text-sm">{act.title}</h5>
+                                  <p className="text-xs text-slate-600 leading-relaxed">
+                                    {act.description}
+                                  </p>
+
+                                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 pt-1">
+                                    <span>
+                                      <strong>Voluntário:</strong>{' '}
+                                      {act.expand?.volunteer_profile_id?.display_name ||
+                                        'Perfil #' + act.volunteer_profile_id}
+                                    </span>
+                                    {act.invited_email && (
+                                      <span>
+                                        <strong>Indicado:</strong> {act.invited_email}
+                                      </span>
+                                    )}
+                                    {act.donation_value > 0 && (
+                                      <span>
+                                        <strong>Valor:</strong> R$ {act.donation_value}
+                                      </span>
+                                    )}
+                                    {act.proof_url && (
+                                      <a
+                                        href={act.proof_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 underline font-semibold flex items-center gap-1"
+                                      >
+                                        Link do Comprovante <ExternalLink className="w-3 h-3" />
+                                      </a>
+                                    )}
+                                  </div>
+
+                                  {act.admin_feedback && (
+                                    <p className="text-xs bg-slate-50 p-2 rounded border border-slate-100 text-slate-600 italic">
+                                      Feedback salvo: "{act.admin_feedback}" (por {act.reviewed_by})
+                                    </p>
+                                  )}
+                                </div>
+
+                                {/* Decision buttons */}
+                                <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 pt-3 md:pt-0">
+                                  {act.status === 'pending' ? (
+                                    <>
+                                      <Button
+                                        size="sm"
+                                        onClick={() => handleReviewAction(act.id, 'approved')}
+                                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs h-8"
+                                      >
+                                        <Check className="w-3.5 h-3.5 mr-1" /> Aprovar & Pontuar
+                                      </Button>
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => handleReviewAction(act.id, 'rejected')}
+                                        className="text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50 text-xs h-8"
+                                      >
+                                        <XCircle className="w-3.5 h-3.5 mr-1" /> Rejeitar
+                                      </Button>
+                                    </>
+                                  ) : (
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      onClick={() =>
+                                        handleReviewAction(
+                                          act.id,
+                                          act.status === 'approved' ? 'rejected' : 'approved',
+                                        )
+                                      }
+                                      className="text-xs text-slate-500 hover:text-slate-900 h-8"
+                                    >
+                                      Alternar Status
+                                    </Button>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </TabsContent>
+
+                      {/* 2. Sub-Tab: Missões */}
+                      <TabsContent value="missoes_cms" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Missões Gamificadas
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Adicione novos desafios para os voluntários cumprirem no site.
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            onClick={() => handleOpenCreate('volunteer_missions')}
+                            className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
+                          >
+                            <Plus className="w-3.5 h-3.5 mr-1.5" /> Nova Missão
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {missions.map((m) => (
+                            <div
+                              key={m.id}
+                              className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3"
+                            >
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <Badge className="bg-blue-100 text-blue-800 text-[10px]">
+                                    {m.category}
+                                  </Badge>
+                                  <Badge className="bg-amber-500 text-slate-950 font-bold text-[10px]">
+                                    +{m.points_reward} pts
+                                  </Badge>
+                                </div>
+                                <h5 className="font-bold text-slate-900 text-sm">{m.title}</h5>
+                                <div
+                                  className="text-xs text-slate-500 line-clamp-2"
+                                  dangerouslySetInnerHTML={{ __html: m.description }}
+                                />
+                              </div>
+                              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                                <span className="text-[11px] text-slate-400">
+                                  {m.active ? '🟢 Ativa' : '🔴 Inativa'}
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => handleOpenEdit('volunteer_missions', m)}
+                                    className="h-7 w-7 p-0"
+                                  >
+                                    <Edit className="w-3.5 h-3.5" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => handleDeleteItem('volunteer_missions', m.id)}
+                                    className="h-7 w-7 p-0 text-red-500"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </TabsContent>
+
+                      {/* 3. Sub-Tab: Medalhas */}
+                      <TabsContent value="badges_cms" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Medalhas & Conquistas
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Gerencie as honrarias que os voluntários podem desbloquear.
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            onClick={() => handleOpenCreate('volunteer_badges')}
+                            className="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold"
+                          >
+                            <Plus className="w-3.5 h-3.5 mr-1.5" /> Nova Medalha
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {badges.map((b) => (
+                            <div
+                              key={b.id}
+                              className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3"
+                            >
+                              <div className="space-y-1.5">
+                                <div className="flex items-center justify-between">
+                                  <Badge className="bg-purple-100 text-purple-800 text-[10px]">
+                                    {b.rarity}
+                                  </Badge>
+                                  <span className="text-xs font-bold text-amber-600">
+                                    {b.points_required} pts
+                                  </span>
+                                </div>
+                                <h5 className="font-bold text-slate-900 text-sm">{b.name}</h5>
+                                <p className="text-xs text-slate-500 leading-relaxed">
+                                  {b.description}
+                                </p>
+                              </div>
+                              <div className="flex items-center justify-end gap-1 pt-2 border-t border-slate-100">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleOpenEdit('volunteer_badges', b)}
+                                  className="h-7 w-7 p-0"
+                                >
+                                  <Edit className="w-3.5 h-3.5" />
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleDeleteItem('volunteer_badges', b.id)}
+                                  className="h-7 w-7 p-0 text-red-500"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </TabsContent>
+
+                      {/* 4. Sub-Tab: Ranking & Voluntários */}
+                      <TabsContent value="ranking_cms" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Todos os Perfis de Voluntários Registrados
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Acompanhe códigos de indicação e pontuações individuais.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                          <table className="w-full text-xs text-left">
+                            <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                              <tr>
+                                <th className="p-3">Posição</th>
+                                <th className="p-3">Nome / Cidade</th>
+                                <th className="p-3">Código Convite</th>
+                                <th className="p-3">Pontos</th>
+                                <th className="p-3">Nível</th>
+                                <th className="p-3">Ações Concluídas</th>
+                                <th className="p-3">Indicados</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 text-slate-700">
+                              {volunteerProfiles.map((p, idx) => (
+                                <tr key={p.id} className="hover:bg-slate-50">
+                                  <td className="p-3 font-bold text-slate-900">#{idx + 1}</td>
+                                  <td className="p-3">
+                                    <div className="font-bold text-slate-900">{p.display_name}</div>
+                                    <div className="text-[11px] text-slate-400">{p.city}</div>
+                                  </td>
+                                  <td className="p-3 font-mono font-bold text-blue-700">
+                                    {p.referral_code}
+                                  </td>
+                                  <td className="p-3 font-extrabold text-amber-600 text-sm">
+                                    {p.points}
+                                  </td>
+                                  <td className="p-3 font-semibold text-slate-600">
+                                    {p.level_name || 'Iniciante'}
+                                  </td>
+                                  <td className="p-3">{p.total_actions_completed || 0}</td>
+                                  <td className="p-3 font-bold text-emerald-700">
+                                    {p.total_volunteers_invited || 0}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </TabsContent>
+                    </Tabs>
                   </TabsContent>
 
                   {/* 10. CONFIGURAÇÕES & REDES */}

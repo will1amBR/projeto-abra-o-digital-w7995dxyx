@@ -106,19 +106,19 @@ export default function Home() {
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link to={activeBanner.cta_link || '/voluntariado'}>
-                  <Button className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 h-12 rounded-xl shadow-lg shadow-blue-600/30 text-sm">
-                    {activeBanner.cta_text || 'Quero Fazer Parte'}{' '}
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 h-12 rounded-xl text-sm shadow-lg shadow-amber-500/20">
+                    {activeBanner.cta_text || 'Fazer Parte do Projeto'}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
-                <Link to="/nossa-historia">
+                <Link to="/area-do-voluntario">
                   <Button
                     variant="outline"
-                    className="border-slate-700 bg-slate-900/60 text-slate-200 hover:bg-slate-800 hover:text-white h-12 px-5 rounded-xl text-sm"
+                    className="border-amber-400/50 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-bold px-5 h-12 rounded-xl text-sm"
                   >
-                    Conheça Nossa História
+                    <Sparkles className="w-4 h-4 mr-2 text-amber-400" /> Área do Voluntário (Pontos)
                   </Button>
-                </Link>
+                </Link>{' '}
               </div>
 
               {/* Carousel Indicators */}
@@ -270,6 +270,41 @@ export default function Home() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        {/* Banner de Destaque para Área do Voluntário Gamificada */}
+        <section className="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 text-white py-12 border-y border-blue-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div className="lg:col-span-8 space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+                  <Sparkles className="w-3.5 h-3.5" /> Nova Área do Voluntário Gamificada
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold">
+                  Acumule pontos por suas boas ações e indicações!
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+                  Cada amigo convidado, doação mobilizada ou ação presencial realizada rende pontos,
+                  medalhas exclusivas e posições no ranking solidário do Projeto Abraço.
+                </p>
+              </div>
+              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+                <Link to="/area-do-voluntario">
+                  <Button className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs h-11 rounded-xl shadow-lg">
+                    <Sparkles className="w-4 h-4 mr-2" /> Acessar Área do Voluntário
+                  </Button>
+                </Link>
+                <Link to="/voluntariado">
+                  <Button
+                    variant="outline"
+                    className="w-full border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs h-11 rounded-xl"
+                  >
+                    Ver Vagas de Voluntariado
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 

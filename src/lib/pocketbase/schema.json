@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T12:51:18.900Z",
+  "generatedAt": "2026-08-30T13:16:53.911Z",
   "collections": [
     {
       "name": "users",
@@ -1058,6 +1058,461 @@
         }
       ],
       "indexes": []
+    },
+    {
+      "name": "volunteer_profiles",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "user_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "bio",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "level_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "referral_code",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "referred_by_code",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "total_actions_completed",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "total_donations_value",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "total_volunteers_invited",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "avatar_url",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_vp_user_id ON volunteer_profiles (user_id)",
+        "CREATE UNIQUE INDEX idx_vp_ref_code ON volunteer_profiles (referral_code)",
+        "CREATE INDEX idx_vp_points ON volunteer_profiles (points DESC)"
+      ]
+    },
+    {
+      "name": "volunteer_missions",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "editor",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Indicação", "Doação", "Ação Social", "Divulgação", "Especial"]
+        },
+        {
+          "name": "points_reward",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "icon_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "badge_reward_id",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "active",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "deadline",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "difficulty",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Fácil", "Médio", "Avançado", "Épico"]
+        },
+        {
+          "name": "instructions",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_vm_category ON volunteer_missions (category)",
+        "CREATE INDEX idx_vm_active ON volunteer_missions (active)"
+      ]
+    },
+    {
+      "name": "volunteer_badges",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "icon_name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Geral", "Indicações", "Doações", "Presença", "Destaque"]
+        },
+        {
+          "name": "points_required",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "color",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "rarity",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Comum", "Raro", "Lendário", "Mestre"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "volunteer_earned_badges",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "volunteer_profile_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "volunteer_profiles"
+        },
+        {
+          "name": "badge_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "volunteer_badges"
+        },
+        {
+          "name": "earned_at",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE INDEX idx_veb_vp ON volunteer_earned_badges (volunteer_profile_id)"]
+    },
+    {
+      "name": "volunteer_actions",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "volunteer_profile_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "volunteer_profiles"
+        },
+        {
+          "name": "mission_id",
+          "type": "relation",
+          "required": false,
+          "system": false,
+          "collectionRef": "volunteer_missions"
+        },
+        {
+          "name": "action_type",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["indicacao", "doacao", "acao_social", "divulgacao", "outro"]
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "proof_url",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "proof_file",
+          "type": "file",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "points_claimed",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["pending", "approved", "rejected"]
+        },
+        {
+          "name": "admin_feedback",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "reviewed_by",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "reviewed_at",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "donation_value",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "invited_email",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_va_vp ON volunteer_actions (volunteer_profile_id)",
+        "CREATE INDEX idx_va_status ON volunteer_actions (status)"
+      ]
     }
   ]
 }

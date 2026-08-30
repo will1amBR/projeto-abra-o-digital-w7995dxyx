@@ -10,6 +10,106 @@ export interface User {
   updated: string
 }
 
+export interface VolunteerProfile {
+  id: string
+  user_id: string
+  display_name: string
+  phone?: string
+  city?: string
+  bio?: string
+  points: number
+  level_name?: string
+  referral_code: string
+  referred_by_code?: string
+  total_actions_completed: number
+  total_donations_value: number
+  total_volunteers_invited: number
+  avatar_url?: string
+  created: string
+  updated: string
+  expand?: {
+    user_id?: User
+  }
+}
+
+export interface VolunteerMission {
+  id: string
+  title: string
+  description: string
+  category: 'Indicação' | 'Doação' | 'Ação Social' | 'Divulgação' | 'Especial'
+  points_reward: number
+  icon_name?: string
+  badge_reward_id?: string
+  active: boolean
+  deadline?: string
+  difficulty: 'Fácil' | 'Médio' | 'Avançado' | 'Épico'
+  instructions?: string
+  order?: number
+  created: string
+  updated: string
+}
+
+export interface VolunteerBadge {
+  id: string
+  name: string
+  description: string
+  icon_name: string
+  category: 'Geral' | 'Indicações' | 'Doações' | 'Presença' | 'Destaque'
+  points_required: number
+  color?: string
+  rarity: 'Comum' | 'Raro' | 'Lendário' | 'Mestre'
+  created: string
+  updated: string
+}
+
+export interface VolunteerEarnedBadge {
+  id: string
+  volunteer_profile_id: string
+  badge_id: string
+  earned_at: string
+  reason?: string
+  created: string
+  updated: string
+  expand?: {
+    badge_id?: VolunteerBadge
+    volunteer_profile_id?: VolunteerProfile
+  }
+}
+
+export interface VolunteerAction {
+  id: string
+  volunteer_profile_id: string
+  mission_id?: string
+  action_type: 'indicacao' | 'doacao' | 'acao_social' | 'divulgacao' | 'outro'
+  title: string
+  description: string
+  proof_url?: string
+  proof_file?: string
+  points_claimed: number
+  status: 'pending' | 'approved' | 'rejected'
+  admin_feedback?: string
+  reviewed_by?: string
+  reviewed_at?: string
+  donation_value?: number
+  invited_email?: string
+  created: string
+  updated: string
+  expand?: {
+    volunteer_profile_id?: VolunteerProfile
+    mission_id?: VolunteerMission
+  }
+}
+
+export interface VolunteerLevelInfo {
+  level: number
+  name: string
+  minPoints: number
+  maxPoints: number
+  icon: string
+  badgeColor: string
+  description: string
+}
+
 export interface SiteSettings {
   id: string
   key: string

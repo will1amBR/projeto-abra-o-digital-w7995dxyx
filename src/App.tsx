@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import Home from '@/pages/Home'
 import NossaHistoria from '@/pages/NossaHistoria'
 import Voluntariado from '@/pages/Voluntariado'
+import AreaDoVoluntario from '@/pages/AreaDoVoluntario'
 import Noticias from '@/pages/Noticias'
 import NoticiaDetalhe from '@/pages/NoticiaDetalhe'
 import Beneficiados from '@/pages/Beneficiados'
@@ -57,6 +58,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/nossa-historia" element={<NossaHistoria />} />
           <Route path="/voluntariado" element={<Voluntariado />} />
+          <Route path="/area-do-voluntario" element={<AreaDoVoluntario />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/noticias/:slug" element={<NoticiaDetalhe />} />
           <Route path="/beneficiados" element={<Beneficiados />} />

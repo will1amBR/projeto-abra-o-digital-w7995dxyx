@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import { useAuth } from '@/contexts/AuthContext'
 import {
   getVolunteerAreas,
   submitVolunteerInscription,
@@ -22,16 +24,26 @@ import {
   Sparkles,
   Send,
   HelpCircle,
+  Trophy,
+  Award,
+  ArrowRight,
+  ShieldCheck,
+  Lock,
 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
 export default function Voluntariado() {
+  const { user, registerVolunteer } = useAuth()
   const [areas, setAreas] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   // Form State
+  const [createAccount, setCreateAccount] = useState(true)
+  const [accountPassword, setAccountPassword] = useState('')
+  const [referralCodeInput, setReferralCodeInput] = useState('')
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -61,6 +73,27 @@ export default function Voluntariado() {
     setLoading(true)
     try {
       await submitVolunteerInscription(formData)
+
+      // Se optou por criar conta na Área do Voluntário gamificada
+      if (createAccount && !user && accountPassword) {
+        try {
+          await registerVolunteer({
+            email: formData.email,
+            password: accountPassword,
+            name: formData.name,
+            phone: formData.phone,
+            city: formData.city,
+            referred_by_code: referralCodeInput,
+          })
+          toast({
+            title: '🎉 Inscrição e Conta Criadas com Sucesso!',
+            description: 'Você já ganhou +100 pontos de boas-vindas na Área do Voluntário!',
+          })
+        } catch (accErr: any) {
+          console.warn('Conta já existe ou erro:', accErr)
+        }
+      }
+
       setSubmitted(true)
       toast({
         title: 'Inscrição enviada com sucesso!',
@@ -86,17 +119,35 @@ export default function Voluntariado() {
         {/* Banner */}
         <section className="bg-slate-900 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl space-y-4">
-              <Badge className="bg-green-600 text-white text-xs px-3 py-1 font-semibold">
-                Faça Parte da Mudança
-              </Badge>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                Seja um Voluntário do Projeto Abraço
-              </h1>
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-                Doe seu tempo, seu talento e seu amor ao próximo. O voluntariado é o coração
-                pulsante de todas as nossas iniciativas e eventos.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <Badge className="bg-green-600 text-white text-xs px-3 py-1 font-semibold">
+                  Faça Parte da Mudança
+                </Badge>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+                  Seja um Voluntário do Projeto Abraço
+                </h1>
+                <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+                  Doe seu tempo, seu talento e seu amor ao próximo. O voluntariado é o coração
+                  pulsante de todas as nossas iniciativas e eventos.
+                </p>
+              </div>
+
+              {/* Box de Acesso Rápido à Área Gamificada */}
+              <div className="lg:col-span-4 bg-gradient-to-br from-blue-900/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl p-5 text-white backdrop-blur-md shadow-xl space-y-3">
+                <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+                  <Trophy className="w-5 h-5 text-amber-400" />
+                  Área do Voluntário Gamificada
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Já é voluntário? Acompanhe sua pontuação, participe de missões e suba no ranking!
+                </p>
+                <Link to="/area-do-voluntario" className="block">
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs h-9 shadow-md">
+                    <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Acessar Meus Pontos & Missões
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -312,7 +363,6 @@ export default function Voluntariado() {
                     />
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold text-slate-300">
@@ -336,7 +386,6 @@ export default function Voluntariado() {
                     />
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold text-slate-300">
@@ -367,7 +416,6 @@ export default function Voluntariado() {
                     </select>
                   </div>
                 </div>
-
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-slate-300">
                     Disponibilidade de Dias e Horários
@@ -379,7 +427,6 @@ export default function Voluntariado() {
                     className="bg-slate-900 border-slate-700 text-white text-xs"
                   />
                 </div>
-
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-slate-300">
                     Conte um pouco sobre você / Motivação
@@ -392,14 +439,63 @@ export default function Voluntariado() {
                     className="bg-slate-900 border-slate-700 text-white text-xs"
                   />
                 </div>
+                {/* Integração com Conta da Área Gamificada */}
+                {!user && (
+                  <div className="p-4 bg-slate-900/90 rounded-xl border border-slate-700 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="createAccount"
+                        checked={createAccount}
+                        onChange={(e) => setCreateAccount(e.target.checked)}
+                        className="rounded border-slate-700 bg-slate-800 text-blue-600"
+                      />
+                      <label
+                        htmlFor="createAccount"
+                        className="text-xs font-bold text-amber-300 cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        Criar também meu acesso na Área do Voluntário (Ganhe +100 pontos!)
+                      </label>
+                    </div>
 
+                    {createAccount && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <div className="space-y-1">
+                          <Label className="text-xs text-slate-300">
+                            Crie uma Senha de Acesso *
+                          </Label>
+                          <Input
+                            type="password"
+                            required={createAccount}
+                            value={accountPassword}
+                            onChange={(e) => setAccountPassword(e.target.value)}
+                            placeholder="Mínimo 8 caracteres"
+                            className="bg-slate-950 border-slate-700 text-white text-xs"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-xs text-slate-300">
+                            Código de Indicação (se tiver)
+                          </Label>
+                          <Input
+                            value={referralCodeInput}
+                            onChange={(e) => setReferralCodeInput(e.target.value)}
+                            placeholder="Ex: WILL2025"
+                            className="bg-slate-950 border-slate-700 text-white text-xs uppercase font-mono"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <Button
                   type="submit"
                   disabled={loading}
                   className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold h-11 text-sm shadow-lg"
                 >
                   {loading ? 'Enviando sua inscrição...' : 'Concluir Inscrição Voluntária'}
-                </Button>
+                </Button>{' '}
               </form>
             )}
           </div>

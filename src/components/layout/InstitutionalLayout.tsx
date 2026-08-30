@@ -42,6 +42,7 @@ export const InstitutionalHeader: React.FC = () => {
     { name: 'Início', path: '/' },
     { name: 'Nossa História', path: '/nossa-historia' },
     { name: 'Voluntariado', path: '/voluntariado' },
+    { name: 'Área do Voluntário', path: '/area-do-voluntario' },
     { name: 'Notícias & Eventos', path: '/noticias' },
     { name: 'Beneficiados', path: '/beneficiados' },
     { name: 'Patrocinadores', path: '/patrocinadores' },
@@ -107,6 +108,14 @@ export const InstitutionalHeader: React.FC = () => {
 
             <div className="h-3 w-px bg-slate-700" />
 
+            {/* Link direto para Área do Voluntário */}
+            <Link
+              to="/area-do-voluntario"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black px-2.5 py-0.5 rounded-full text-[11px] shadow-sm transition"
+            >
+              <Sparkles className="w-3.5 h-3.5" /> Área do Voluntário
+            </Link>
+
             {/* Link direto para Abraçolândia */}
             <Link
               to="/abracolandia"
@@ -165,10 +174,18 @@ export const InstitutionalHeader: React.FC = () => {
           </nav>
 
           {/* Right CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2">
+            <Link to="/area-do-voluntario">
+              <Button
+                variant="outline"
+                className="border-amber-400/80 bg-amber-50/70 hover:bg-amber-100 text-amber-900 font-bold text-xs px-3 h-10 rounded-xl"
+              >
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 text-amber-600" /> Área Gamificada
+              </Button>
+            </Link>
             <Link to="/voluntariado">
               <Button className="bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs px-4 h-10 shadow-sm rounded-xl">
-                Seja Voluntário <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                Quero Participar <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
               </Button>
             </Link>
           </div>
@@ -312,12 +329,20 @@ export const InstitutionalFooter: React.FC = () => {
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link
-                  to="/nossa-historia"
+                  to="/voluntariado"
                   className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3 h-3 text-blue-400" /> Nossa História e Origens
+                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Seja um Voluntário
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/area-do-voluntario"
+                  className="text-amber-300 hover:text-amber-200 font-semibold transition flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Área do Voluntário (Pontos)
+                </Link>
+              </li>{' '}
               <li>
                 <Link
                   to="/voluntariado"
