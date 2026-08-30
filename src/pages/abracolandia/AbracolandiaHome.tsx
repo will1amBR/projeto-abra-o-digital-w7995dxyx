@@ -28,6 +28,9 @@ import {
   Flame,
   ChevronRight,
   Users,
+  Dice5,
+  CreditCard,
+  QrCode,
 } from 'lucide-react'
 
 export default function AbracolandiaHome() {
@@ -172,13 +175,16 @@ export default function AbracolandiaHome() {
               </div>
             </Link>
 
-            <Link to="/abracolandia/festa" className="group">
-              <div className="bg-white p-5 rounded-3xl border-2 border-purple-200 shadow-lg hover:border-purple-400 hover:shadow-xl transition flex flex-col items-center text-center space-y-2">
+            <Link to="/abracolandia/bingo" className="group">
+              <div className="bg-white p-5 rounded-3xl border-2 border-purple-300 shadow-lg hover:border-purple-500 hover:shadow-xl transition flex flex-col items-center text-center space-y-2 relative overflow-hidden">
+                <Badge className="absolute top-2 right-2 bg-pink-600 text-white text-[9px] font-bold">
+                  AO VIVO
+                </Badge>
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center font-black group-hover:scale-110 transition">
-                  <Award className="w-6 h-6" />
+                  <Dice5 className="w-6 h-6 text-purple-600" />
                 </div>
-                <h3 className="font-black text-slate-800 text-sm">Super Bingo</h3>
-                <p className="text-[11px] text-slate-500">Carro 0km e Grandes Prêmios</p>
+                <h3 className="font-black text-purple-950 text-sm">Telão do Bingo</h3>
+                <p className="text-[11px] text-slate-500">Acompanhe as bolas no celular</p>
               </div>
             </Link>
           </div>

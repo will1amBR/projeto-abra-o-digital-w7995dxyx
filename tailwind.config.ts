@@ -27,7 +27,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter var', 'SF Pro Display', 'system-ui', 'sans-serif'],
+        sans: ['Roboto', 'Inter var', 'SF Pro Display', 'system-ui', 'sans-serif'],
         display: ['SF Pro Display', 'Inter var', 'system-ui', 'sans-serif'],
       },
       colors: {
@@ -36,6 +36,15 @@ export default {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        // Official Abraço Palette
+        abraco: {
+          pink: '#ed0e58',
+          purple: '#8d198f',
+          blue: '#2e3192',
+          cyan: '#01abb7',
+          lime: '#cce310',
+          orange: '#f89c0e',
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

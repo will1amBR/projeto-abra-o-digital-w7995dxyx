@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { getSiteSettings } from '@/services/contentService'
 import { Button } from '@/components/ui/button'
+import AbracoLogo from '@/components/brand/AbracoLogo'
 import {
   HeartHandshake,
   Menu,
@@ -20,6 +21,8 @@ import {
   PartyPopper,
   ShieldCheck,
   ChevronRight,
+  Dice5,
+  CreditCard,
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -139,21 +142,18 @@ export const InstitutionalHeader: React.FC = () => {
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Brand Logo with Official Vector */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center text-white shadow-md shadow-blue-900/20 group-hover:scale-105 transition-transform">
-              <HeartHandshake className="w-7 h-7 text-amber-400" />
-            </div>
-            <div>
-              <span className="text-xl font-extrabold text-blue-950 tracking-tight block leading-none">
-                Projeto Abraço
+            <AbracoLogo size="md" variant="full" />
+            <div className="hidden lg:block border-l-2 border-slate-200 pl-3">
+              <span className="text-xs font-black text-slate-800 tracking-tight block">
+                Projeto Abraço Oficial
               </span>
-              <span className="text-[11px] font-medium text-slate-500 tracking-wider uppercase mt-1 block">
-                Acolher • Incluir • Transformar
+              <span className="text-[10px] font-bold text-pink-600 uppercase">
+                Faça da Diversão uma Boa Ação
               </span>
             </div>
           </Link>
-
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
@@ -257,14 +257,12 @@ export const InstitutionalFooter: React.FC = () => {
           {/* Col 1: Sobre */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white shadow-md">
-                <HeartHandshake className="w-6 h-6 text-amber-400" />
-              </div>
-              <span className="text-xl font-bold text-white tracking-tight">Projeto Abraço</span>
+              <AbracoLogo size="md" variant="full" />
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
-              Organização sem fins lucrativos comprometida com acolhimento, inclusão social e
-              transformação real de vidas em situação de vulnerabilidade.
+              Transformamos diversão em boa ação! Há mais de 15 anos unindo voluntários e empresas
+              para mobilizar recursos e destinar a projetos de benfeitoria para instituições
+              assistenciais.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a

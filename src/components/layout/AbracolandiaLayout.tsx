@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { getSiteSettings } from '@/services/contentService'
 import { Button } from '@/components/ui/button'
+import AbracoLogo from '@/components/brand/AbracoLogo'
 import {
   PartyPopper,
   Sparkles,
@@ -25,6 +26,8 @@ import {
   Flame,
   Gamepad2,
   ShoppingBag,
+  Dice5,
+  CreditCard,
 } from 'lucide-react'
 
 export const AbracolandiaHeader: React.FC = () => {
@@ -42,7 +45,8 @@ export const AbracolandiaHeader: React.FC = () => {
   const navLinks = [
     { name: 'A Festa', path: '/abracolandia/festa', icon: Music },
     { name: 'Comprar Ingressos', path: '/abracolandia/ingressos', icon: Ticket },
-    { name: 'Pontos de Venda (PDVs)', path: '/abracolandia/convites', icon: ShoppingBag },
+    { name: 'Painel do Bingo', path: '/abracolandia/bingo', icon: Dice5 },
+    { name: 'Pontos de Venda', path: '/abracolandia/convites', icon: ShoppingBag },
     { name: 'Beneficiados', path: '/abracolandia/beneficiados', icon: HeartHandshake },
     { name: 'Patrocinadores', path: '/abracolandia/patrocinadores', icon: Award },
     { name: 'Voluntariado', path: '/abracolandia/voluntariado', icon: Users },
@@ -109,19 +113,17 @@ export const AbracolandiaHeader: React.FC = () => {
       {/* Main Festive Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Festive Logo */}
+          {/* Festive Logo with Official Branding */}
           <Link to="/abracolandia" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-3xl bg-gradient-to-tr from-pink-500 via-purple-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 group-hover:rotate-6 transition-transform">
-              <PartyPopper className="w-7 h-7 text-white" />
-            </div>
-            <div>
+            <AbracoLogo size="md" variant="full" />
+            <div className="hidden sm:block border-l-2 border-pink-300 pl-3">
               <div className="flex items-center gap-1.5">
-                <span className="text-2xl font-black bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
+                <span className="text-xl font-black bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
                   Abraçolândia
                 </span>
                 <Sparkles className="w-4 h-4 text-amber-500 fill-amber-500 animate-pulse" />
               </div>
-              <span className="text-[10px] font-bold text-purple-800 tracking-wider uppercase block">
+              <span className="text-[10px] font-extrabold text-purple-900 tracking-wider uppercase block">
                 O Maior Festival Beneficente
               </span>
             </div>
@@ -148,10 +150,18 @@ export const AbracolandiaHeader: React.FC = () => {
           </nav>
 
           {/* Right Action */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2">
+            <Link to="/abracolandia/bingo">
+              <Button
+                variant="outline"
+                className="border-purple-300 bg-purple-50 hover:bg-purple-100 text-purple-900 font-extrabold text-xs px-3.5 h-10 rounded-2xl"
+              >
+                <Dice5 className="w-4 h-4 mr-1.5 text-pink-600" /> Telão do Bingo
+              </Button>
+            </Link>
             <Link to="/abracolandia/ingressos">
-              <Button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-extrabold text-xs px-5 h-10 shadow-md rounded-2xl animate-pulse hover:animate-none">
-                <Ticket className="w-4 h-4 mr-1.5" /> Comprar Ingressos
+              <Button className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 hover:from-pink-500 hover:to-indigo-600 text-white font-extrabold text-xs px-4 h-10 shadow-md rounded-2xl animate-pulse hover:animate-none">
+                <Ticket className="w-4 h-4 mr-1.5" /> Ingressos Online
               </Button>
             </Link>
           </div>
@@ -230,12 +240,7 @@ export const AbracolandiaFooter: React.FC = () => {
           {/* Col 1 */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
-                <PartyPopper className="w-6 h-6" />
-              </div>
-              <span className="text-2xl font-black bg-gradient-to-r from-pink-400 to-amber-300 bg-clip-text text-transparent">
-                Abraçolândia
-              </span>
+              <AbracoLogo size="md" variant="full" />
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
               O maior evento beneficente do Projeto Abraço. Uma celebração de música, alta
@@ -292,8 +297,11 @@ export const AbracolandiaFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/abracolandia/festa" className="hover:text-white transition">
-                  Super Bingo Beneficente
+                <Link
+                  to="/abracolandia/bingo"
+                  className="text-pink-400 font-bold hover:text-white transition"
+                >
+                  🎲 Telão Digital do Bingo (Ao Vivo)
                 </Link>
               </li>
               <li>

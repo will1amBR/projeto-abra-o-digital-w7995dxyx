@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T19:35:51.027Z",
+  "generatedAt": "2026-08-30T20:28:32.221Z",
   "collections": [
     {
       "name": "users",
@@ -1786,6 +1786,320 @@
         "CREATE INDEX idx_tickets_order ON tickets (order_id)",
         "CREATE INDEX idx_tickets_status ON tickets (status)"
       ]
+    },
+    {
+      "name": "event_cards",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "card_uid",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "holder_name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "cpf",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "balance_cents",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["ativo", "bloqueado"]
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_event_cards_uid ON event_cards (card_uid)",
+        "CREATE INDEX idx_event_cards_cpf ON event_cards (cpf)",
+        "CREATE INDEX idx_event_cards_status ON event_cards (status)"
+      ]
+    },
+    {
+      "name": "consumables",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "price_cents",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["comida", "bebida", "sobremesa", "brinquedo", "outro"]
+        },
+        {
+          "name": "image_url",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "image",
+          "type": "file",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "active",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_consumables_cat ON consumables (category)",
+        "CREATE INDEX idx_consumables_active ON consumables (active)"
+      ]
+    },
+    {
+      "name": "consumable_transactions",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "card_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "event_cards"
+        },
+        {
+          "name": "type",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["recarga", "venda", "estorno"]
+        },
+        {
+          "name": "amount_cents",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "previous_balance_cents",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "new_balance_cents",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "items_json",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "payment_method",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "operator_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_ctx_card ON consumable_transactions (card_id)",
+        "CREATE INDEX idx_ctx_type ON consumable_transactions (type)",
+        "CREATE INDEX idx_ctx_created ON consumable_transactions (created DESC)"
+      ]
+    },
+    {
+      "name": "bingo_games",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "drawn_numbers",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "last_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["em_andamento", "pausado", "finalizado"]
+        },
+        {
+          "name": "round_prize",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "max_number",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "draw_history",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE INDEX idx_bingo_status ON bingo_games (status)"]
     }
   ]
 }

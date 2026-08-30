@@ -174,22 +174,31 @@ export default function Home() {
 
         {/* DESTAQUE HOTSITE ABRAÇOLÂNDIA (CONVITE) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 rounded-3xl p-8 lg:p-12 text-white shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="bg-gradient-to-r from-abraco-pink via-abraco-purple to-abraco-blue rounded-3xl p-8 lg:p-12 text-white shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-4 max-w-xl z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold text-pink-100">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Evento Anual Beneficente
+                <Sparkles className="w-3.5 h-3.5 text-abraco-lime" /> Evento Anual Beneficente
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
                 Vem aí a Abraçolândia 2025!
               </h2>
               <p className="text-pink-100 text-sm sm:text-base leading-relaxed">
-                Música ao vivo, alta gastronomia, parque infantil e o tradicional Bingo Solidário.
-                100% da arrecadação é revertida diretamente para as famílias do Projeto Abraço.
+                Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o
+                tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente
+                para as causas assistenciais do Projeto Abraço.
               </p>
-              <div className="pt-2">
+              <div className="flex flex-wrap gap-3 pt-2">
                 <Link to="/abracolandia">
                   <Button className="bg-white text-purple-900 hover:bg-pink-50 font-extrabold px-6 h-11 rounded-xl shadow-md text-xs sm:text-sm">
                     Acessar Hotsite da Abraçolândia <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+                <Link to="/abracolandia/bingo">
+                  <Button
+                    variant="outline"
+                    className="border-white/40 bg-white/10 hover:bg-white/20 text-white font-bold px-4 h-11 rounded-xl text-xs sm:text-sm"
+                  >
+                    🎲 Painel do Bingo
                   </Button>
                 </Link>
               </div>
@@ -197,19 +206,19 @@ export default function Home() {
 
             <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white space-y-3">
               <h3 className="font-bold text-base flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-amber-300" /> 18 e 19 de Outubro de 2025
+                <Calendar className="w-5 h-5 text-abraco-lime" /> 18 e 19 de Outubro de 2025
               </h3>
               <p className="text-xs text-pink-100">
                 Parque das Nações & Pavilhão Social • São Paulo/SP
               </p>
               <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-white/20">
                 <div className="bg-black/20 p-2.5 rounded-lg">
-                  <span className="font-bold block">Bingo Especial</span>
-                  <span className="text-[11px] text-pink-200">Carro 0km e Prêmios</span>
+                  <span className="font-bold block text-abraco-lime">Bingo Especial</span>
+                  <span className="text-[11px] text-pink-200">Smart TVs & Carro 0km</span>
                 </div>
                 <div className="bg-black/20 p-2.5 rounded-lg">
-                  <span className="font-bold block">Gastronomia</span>
-                  <span className="text-[11px] text-pink-200">+25 Food Trucks</span>
+                  <span className="font-bold block text-abraco-orange">Caixa Pré-Pago</span>
+                  <span className="text-[11px] text-pink-200">+25 Food Trucks & Bebidas</span>
                 </div>
               </div>
             </div>
