@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import ColorStrip from '@/components/brand/ColorStrip'
 import {
   getBanners,
   getNews,
@@ -19,14 +20,13 @@ import {
   Users,
   Sparkles,
   Calendar,
-  Gift,
-  Award,
   ChevronRight,
-  Quote,
-  CheckCircle2,
-  TrendingUp,
-  Building,
+  ChevronLeft,
+  PartyPopper,
 } from 'lucide-react'
+
+// Import mockup screenshot asset
+import mockupHeroImage from '@/assets/screenshot2026-08-30-17-21-42-705com.android.chrome-edit-ce9fc.jpg'
 
 export default function Home() {
   const [banners, setBanners] = useState<any[]>([])
@@ -71,519 +71,162 @@ export default function Home() {
     })
   }, [])
 
-  // Banner carousel timer
-  useEffect(() => {
-    if (banners.length <= 1) return
-    const interval = setInterval(() => {
-      setCurrentBannerIndex((prev) => (prev + 1) % banners.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [banners.length])
-
-  const activeBanner = banners[currentBannerIndex] || {
-    title: 'FAÇA PARTE! VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!',
-    subtitle:
-      'O Projeto Abraço é uma instituição que há mais de 20 anos desenvolve ações voltadas à assistência social, educação, cultura, esporte, saúde e lazer.',
-    cta_text: 'Faça Parte como Voluntário',
-    cta_link: '/voluntariado',
-    badge: 'PROJETO ABRAÇO • FAÇA DA DIVERSÃO UMA BOA AÇÃO',
-    image_url: 'https://img.usecurling.com/p/1600/700?q=solidarity%20community%20charity%20hands',
-  }
-
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col selection:bg-pink-500 selection:text-white">
       <InstitutionalHeader />
 
       <main className="flex-1">
-        {/* HERO SECTION / BANNER PRINCIPAL EDITÁVEL VIA CMS */}
-        <section className="relative overflow-hidden bg-slate-950 text-white py-20 lg:py-28">
-          {/* Background image with overlay */}
+        {/* =========================================================================
+            HERO SECTION - FIEL AO MOCKUP
+            - Imagem de fundo com voluntários com camisetas azuis "VOLUNTÁRIO Eu faço parte! @projetoabraco"
+            - Texto destacado "Faça da Diversão uma Boa Ação!" com sombra/borda rosa/roxa
+            - Botão "Seja Voluntário" branco com texto na cor principal (#8d198f ou #ed0e58)
+            - Setas de navegação nas laterais
+            ========================================================================= */}
+        <section className="relative overflow-hidden w-full bg-slate-900 min-h-[380px] sm:min-h-[460px] md:min-h-[520px] lg:min-h-[580px] flex items-center justify-center">
+          {/* Background image */}
           <div className="absolute inset-0 z-0">
             <img
-              src={getImageSrc(activeBanner, 'banners')}
-              alt={activeBanner.title}
-              className="w-full h-full object-cover object-center opacity-30 scale-105 transition-all duration-1000 ease-out"
+              src="https://img.usecurling.com/p/1600/900?q=volunteers%20blue%20shirts%20community%20event%20crowd"
+              alt="Voluntários do Projeto Abraço"
+              className="w-full h-full object-cover object-center brightness-95"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+            {/* Subtle dark gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/20" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/20 border border-pink-400/40 text-pink-300 text-xs font-black tracking-wide backdrop-blur-sm">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                PROJETO ABRAÇO • FAÇA DA DIVERSÃO UMA BOA AÇÃO
+          {/* Carousel Left/Right indicators as shown on mockup */}
+          <button
+            type="button"
+            aria-label="Banner anterior"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full"
+          >
+            <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400 drop-shadow-md" />
+          </button>
+          <button
+            type="button"
+            aria-label="Próximo banner"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full"
+          >
+            <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400 drop-shadow-md" />
+          </button>
+
+          {/* Hero Content Container */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 py-12 flex flex-col justify-end h-full">
+            <div className="flex flex-col md:flex-row items-end md:items-end justify-between gap-6 pt-24 sm:pt-36">
+              {/* Slogan with pink/purple highlight stroke & shadow */}
+              <div className="max-w-xl text-left">
+                <h1
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-normal font-sans"
+                  style={{
+                    textShadow:
+                      '0 0 20px rgba(237, 14, 88, 0.9), 0 0 35px rgba(141, 25, 143, 0.8), 2px 2px 4px rgba(0,0,0,0.9), -2px -2px 0 #ed0e58, 2px -2px 0 #ed0e58, -2px 2px 0 #ed0e58, 2px 2px 0 #ed0e58',
+                  }}
+                >
+                  Faça da Diversão <br />
+                  uma Boa Ação!
+                </h1>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                PROJETO ABRAÇO
-              </h1>
-
-              <div className="text-pink-400 font-extrabold text-lg sm:text-xl uppercase tracking-wide">
-                Faça da diversão uma boa ação.
-              </div>
-
-              <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
-                O Projeto Abraço é uma organização não governamental, sem fins lucrativos, que há
-                mais de 20 anos desenvolve ações voltadas à assistência social, educação, cultura,
-                esporte, saúde e lazer. Sua história nasceu da iniciativa de um grupo de amigos que
-                começou realizando pequenas ações sociais. Com o passar do tempo, a participação de
-                mais pessoas e a vontade de fazer a diferença fizeram com que essas iniciativas
-                ganhassem novas proporções. O que começou com pequenos gestos se transformou em um
-                projeto capaz de mobilizar voluntários, parceiros e apoiadores em torno de um mesmo
-                propósito: transformar diversão, convivência e solidariedade em ações concretas para
-                quem precisa. É dessa essência que nasce uma das frases que melhor traduz o Projeto
-                Abraço: Faça da diversão uma boa ação.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              {/* Botão "Seja Voluntário" com fundo branco e texto na cor principal */}
+              <div className="self-end md:self-end pb-2">
                 <Link to="/voluntariado">
-                  <Button className="bg-pink-600 hover:bg-pink-500 text-white font-extrabold px-6 h-12 rounded-xl text-sm shadow-lg shadow-pink-600/30">
-                    Cadastre-se como voluntário e FAÇA PARTE!
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-                <Link to="/nossa-historia">
                   <Button
-                    variant="outline"
-                    className="border-slate-400/40 bg-white/10 hover:bg-white/20 text-white font-bold px-5 h-12 rounded-xl text-sm"
+                    size="lg"
+                    className="bg-white hover:bg-slate-50 text-[#8d198f] hover:text-[#ed0e58] font-black text-base sm:text-lg px-8 py-6 rounded-2xl shadow-2xl transition-all duration-200 hover:scale-105 border border-pink-200/50"
                   >
-                    Conheça Quem Somos
+                    Seja Voluntário
                   </Button>
                 </Link>
               </div>
-
-              {/* Carousel Indicators */}
-              {banners.length > 1 && (
-                <div className="flex items-center gap-2 pt-4">
-                  {banners.map((b, idx) => (
-                    <button
-                      key={b.id || idx}
-                      onClick={() => setCurrentBannerIndex(idx)}
-                      className={`h-2 rounded-full transition-all ${
-                        idx === currentBannerIndex
-                          ? 'w-8 bg-blue-500'
-                          : 'w-2 bg-slate-600 hover:bg-slate-400'
-                      }`}
-                      aria-label={`Ir para banner ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </section>
 
-        {/* IMPACT METRICS BAR */}
-        <section className="bg-white border-y border-slate-200 shadow-xs relative z-20 -mt-6 max-w-6xl mx-auto rounded-2xl p-6 lg:p-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
-            <div className="space-y-1">
-              <div className="text-3xl lg:text-4xl font-extrabold text-blue-900">+20 Anos</div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                De História e Ação Social
+        {/* Colorful 6-color Project Abraço strip divider */}
+        <ColorStrip height="h-[3.5px]" />
+
+        {/* =========================================================================
+            SEÇÃO BEM-VINDO - FIEL AO MOCKUP
+            - Título "bem-vindo" em minúsculas e negrito
+            - Textos institucionais à esquerda (Missão e "O que fazemos?")
+            - Botão "Saiba mais..." na cor laranja (#f89c0e)
+            - Imagem de um abraço à direita, conforme o mockup
+            ========================================================================= */}
+        <section className="bg-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Coluna Esquerda: Conteúdo Institucional (7 colunas) */}
+            <div className="md:col-span-7 space-y-6">
+              {/* Título "bem-vindo" em minúsculas e negrito */}
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight lowercase">
+                bem-vindo
+              </h2>
+
+              {/* Texto 1: Missão / Descrição */}
+              <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal text-justify">
+                Somos uma organização sem fins lucrativos e temos como missão engajar pessoas para o
+                trabalho voluntário com o objetivo de promover ações sociais que mobilizam recursos
+                para instituições assistenciais e comunidades carentes.
               </p>
+
+              {/* Subtítulo: "O que fazemos?" em amarelo/laranja */}
+              <div className="space-y-2 pt-2">
+                <h3 className="text-sm sm:text-base font-bold text-[#f89c0e]">O que fazemos?</h3>
+                <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal text-justify">
+                  Promovemos eventos e ações sociais para mobilizar recursos e destiná-los a
+                  projetos de benfeitoria para instituições assistenciais e comunidades carentes.
+                </p>
+              </div>
+
+              {/* Botão "Saiba mais..." na cor laranja (#f89c0e) */}
+              <div className="pt-4">
+                <Link to="/nossa-historia">
+                  <Button className="bg-[#f89c0e] hover:bg-[#e08905] text-white font-bold text-sm px-7 py-5 rounded-xl shadow-md transition-all hover:scale-105">
+                    Saiba mais...
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <div className="space-y-1 pt-4 lg:pt-0">
-              <div className="text-3xl lg:text-4xl font-extrabold text-blue-900">Desde 2005</div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Realizando a Abraçolândia
-              </p>
-            </div>
-            <div className="space-y-1 pt-4 lg:pt-0">
-              <div className="text-3xl lg:text-4xl font-extrabold text-blue-900">Milhares</div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                De Pessoas Beneficiadas
-              </p>
-            </div>
-            <div className="space-y-1 pt-4 lg:pt-0">
-              <div className="text-3xl lg:text-4xl font-extrabold text-pink-600">100%</div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Renda Revertida em Benfeitorias
-              </p>
+
+            {/* Coluna Direita: Imagem de um Abraço (5 colunas) */}
+            <div className="md:col-span-5 flex justify-center md:justify-end">
+              <div className="w-full max-w-sm sm:max-w-md rounded-2xl overflow-hidden shadow-xl border-4 border-slate-100 group">
+                <img
+                  src="https://img.usecurling.com/p/600/600?q=warm%20hug%20elderly%20volunteer%20embrace%20love"
+                  alt="Um abraço de solidariedade do Projeto Abraço"
+                  className="w-full h-auto object-cover aspect-square group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* DESTAQUE HOTSITE ABRAÇOLÂNDIA (ACONTECENDO AGORA - 2026) */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-gradient-to-r from-pink-600 via-purple-700 to-indigo-800 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 border-2 border-pink-400/30">
-            {/* Pulsing indicator background */}
-            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Colorful 6-color Project Abraço strip divider */}
+        <ColorStrip height="h-[3.5px]" />
 
-            <div className="space-y-4 max-w-xl z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-amber-400 text-purple-950 rounded-full text-xs font-black shadow-lg animate-pulse">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
+        {/* =========================================================================
+            DESTAQUE ABRAÇOLÂNDIA (HOTSITE 2026) - EVENTO ANUAL
+            ========================================================================= */}
+        <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 py-12 px-4 sm:px-6 lg:px-8 text-white">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-purple-950 text-xs font-black">
+                <PartyPopper className="w-3.5 h-3.5" />
                 {eventSettings.statusBadge || 'ACONTECENDO AGORA'} •{' '}
                 {eventSettings.edition || '13ª Edição'}
               </div>
-
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
-                {eventSettings.headline ||
-                  `${eventSettings.eventName || 'Abraçolândia 2026'} está ACONTECENDO HOJE!`}
-              </h2>
-
-              <p className="text-pink-100 text-sm sm:text-base leading-relaxed">
-                {eventSettings.description ||
-                  'O principal evento beneficente anual do Projeto Abraço está rolando agora! Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente para as causas assistenciais do Projeto Abraço.'}
-              </p>
-
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Link to="/abracolandia">
-                  <Button className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-black px-6 h-12 rounded-xl shadow-lg text-xs sm:text-sm">
-                    🎪 Acessar Hotsite da Abraçolândia <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-                <Link to="/abracolandia/bingo">
-                  <Button
-                    variant="outline"
-                    className="border-white/40 bg-white/10 hover:bg-white/20 text-white font-bold px-4 h-12 rounded-xl text-xs sm:text-sm"
-                  >
-                    🎲 Acompanhar Bingo Ao Vivo
-                  </Button>
-                </Link>
-                <Link to="/abracolandia/ingressos">
-                  <Button
-                    variant="outline"
-                    className="border-pink-300/50 bg-pink-500/20 hover:bg-pink-500/30 text-white font-bold px-4 h-12 rounded-xl text-xs sm:text-sm"
-                  >
-                    🎟 Ingressos & Acesso
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white space-y-3.5 shadow-inner">
-              <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
-                <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                  Portões Abertos
-                </span>
-                <span className="text-xs font-bold text-pink-200">
-                  {eventSettings.eventName || 'Abraçolândia 2026'}
-                </span>
-              </div>
-
-              <h3 className="font-black text-base flex items-center gap-2 text-white">
-                <Calendar className="w-5 h-5 text-amber-300 shrink-0" />
-                <span>{eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}</span>
-              </h3>
-
-              <p className="text-xs text-pink-100 flex items-start gap-1.5">
-                <span className="text-amber-300 font-bold shrink-0">📍</span>
-                <span>
-                  {eventSettings.venue || 'Parque das Nações & Pavilhão Social'}
-                  {eventSettings.address ? ` • ${eventSettings.address}` : ''}
-                </span>
-              </p>
-
-              {eventSettings.timeStr && (
-                <p className="text-xs text-pink-200 flex items-center gap-1.5">
-                  <span className="text-amber-300 font-bold">⏰</span>
-                  <span>{eventSettings.timeStr}</span>
-                </p>
-              )}
-
-              <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-white/20">
-                <div className="bg-black/25 p-2.5 rounded-lg">
-                  <span className="font-bold block text-amber-300">Bingo Beneficente</span>
-                  <span className="text-[11px] text-pink-200">Rodadas ao vivo no telão</span>
-                </div>
-                <div className="bg-black/25 p-2.5 rounded-lg">
-                  <span className="font-bold block text-emerald-300">Caixa & Gastronomia</span>
-                  <span className="text-[11px] text-pink-200">+25 Food Trucks & Bebidas</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SEÇÃO O QUE FAZEMOS & QUEM BENEFICIA */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
-                O QUE FAZEMOS?
-              </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-                Alegria que se transforma em impacto social.
-              </h2>
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
-                Promovemos eventos e ações sociais gerando, a fim de proporcionar um projeto de
-                benfeitoria para instituições assistenciais e comunidades carentes em todo
-                território nacional. Nosso trabalho beneficia crianças, jovens, adultos e idosos.
-              </p>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                O Projeto Abraço promove eventos e ações sociais com o objetivo de gerar recursos e
-                viabilizar projetos de benfeitoria para instituições assistenciais e comunidades
-                carentes. As iniciativas são desenvolvidas buscando atender necessidades reais das
-                instituições e dos públicos beneficiados. A atuação do projeto envolve diferentes
-                áreas, entre elas: assistência social; educação; cultura; esporte; saúde; lazer;
-                atividades recreativas; ações de inclusão e cidadania. O trabalho beneficia pessoas
-                de diferentes faixas etárias, incluindo crianças, jovens, adultos e idosos. A
-                proposta é simples na origem, mas ampla em seu alcance: mobilizar pessoas, criar
-                experiências positivas e transformar essa participação em ações capazes de
-                contribuir para a vida de outras pessoas.
-              </p>
-              <div className="pt-2">
-                <Link to="/beneficiados">
-                  <Button className="bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs h-10 rounded-xl">
-                    Conhecer Beneficiados <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* A ABRAÇOLÂNDIA (Seção Institucional) */}
-            <div className="bg-gradient-to-br from-purple-900 via-slate-900 to-blue-950 text-white rounded-3xl p-8 sm:p-10 shadow-xl space-y-6 border border-purple-800/40">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-pink-500/20 border border-pink-400/30 text-pink-300 text-xs font-bold rounded-full">
-                <Sparkles className="w-3.5 h-3.5" /> A ABRAÇOLÂNDIA
-              </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Diversão que se transforma em uma boa ação.
+                {eventSettings.eventName || 'Abraçolândia 2026'}
               </h3>
-              <p className="text-pink-100 text-sm leading-relaxed">
-                O Projeto Abraço atua desde 2005 na organização da Abraçolândia, um evento social,
-                cultural e recreativo. Toda renda obtida através deste evento é integralmente
-                revertida em instituições e/ou comunidades carentes, previamente selecionadas, em
-                forma de projetos de benfeitorias.
+              <p className="text-slate-300 text-sm leading-relaxed">
+                {eventSettings.description ||
+                  'Nosso tradicional festival beneficente que transforma alegria em solidariedade! Gastronomia, shows ao vivo e o Super Bingo.'}
               </p>
-              <p className="text-slate-300 text-xs leading-relaxed">
-                Desde 2005, o Projeto Abraço realiza a Abraçolândia, um evento social, cultural e
-                recreativo que se tornou parte importante da história do projeto. A Abraçolândia
-                reúne entretenimento, convivência e solidariedade em torno de um propósito comum. A
-                renda obtida por meio do evento é integralmente revertida para instituições e/ou
-                comunidades carentes previamente selecionadas, por meio de projetos de benfeitoria.
-                Esse modelo permite que a participação no evento vá além da diversão. Quem
-                participa, apoia ou colabora com a Abraçolândia também passa a fazer parte da
-                corrente de solidariedade criada pelo Projeto Abraço. Por isso, a Abraçolândia
-                representa de maneira muito clara a essência do projeto: divertir, reunir pessoas e
-                transformar essa energia em uma boa ação.
-              </p>
-              <div className="pt-2 flex flex-wrap gap-3">
-                <Link to="/abracolandia">
-                  <Button className="bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs h-10 rounded-xl shadow">
-                    Ir para Abraçolândia <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                  </Button>
-                </Link>
-              </div>
             </div>
-          </div>
-        </section>
-
-        {/* NOSSO PROPÓSITO */}
-        <section className="bg-slate-900 text-white py-16 border-y border-slate-800">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <span className="text-xs font-bold text-pink-400 uppercase tracking-wider bg-pink-500/10 border border-pink-500/30 px-3.5 py-1 rounded-full">
-              NOSSO PROPÓSITO
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              Faça da diversão uma boa ação.
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              O Projeto Abraço acredita na capacidade das pessoas de transformar realidades quando
-              se unem em torno de um propósito. Foi assim que pequenas ações realizadas por um grupo
-              de amigos cresceram. Foi assim que nasceu uma história que já atravessa mais de duas
-              décadas. E é assim que o projeto continua: reunindo pessoas, promovendo encontros e
-              transformando participação em solidariedade. Porque um abraço pode representar
-              acolhimento. Pode representar cuidado. Pode representar presença. E, quando muitas
-              pessoas se unem, pode também representar transformação. Projeto Abraço. Faça da
-              diversão uma boa ação.
-            </p>
-          </div>
-        </section>
-
-        {/* SEÇÃO FAÇA PARTE (CTA FINAL) */}
-        <section className="bg-gradient-to-r from-pink-600 via-purple-600 to-blue-700 text-white py-16 shadow-xl">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 text-white text-xs font-black tracking-wide backdrop-blur-sm uppercase">
-              FAÇA PARTE!
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
-            </h2>
-            <p className="text-base sm:text-lg text-pink-100 max-w-2xl mx-auto leading-relaxed">
-              Você também pode fazer parte dessa história. Participe das ações. Seja voluntário.
-              Acompanhe o Projeto Abraço. Apoie nossos projetos.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-white/90 pt-2">
-              <span className="bg-black/20 px-3 py-1.5 rounded-lg">
-                Domínio: <strong>projetoabraco.org.br</strong>
-              </span>
-              <a
-                href="https://instagram.com/projetoabraco"
-                target="_blank"
-                rel="noreferrer"
-                className="bg-black/20 hover:bg-black/30 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition"
-              >
-                Instagram: <strong>@projetoabraco</strong>
-              </a>
-            </div>
-            <div className="pt-4 flex flex-wrap justify-center gap-4">
-              <Link to="/voluntariado">
-                <Button className="bg-white text-purple-900 hover:bg-pink-50 font-extrabold px-8 h-12 rounded-xl text-sm shadow-xl">
-                  cadastre-se como voluntário e FAÇA PARTE!
-                </Button>
-              </Link>
-              <Link to="/area-do-voluntario">
-                <Button
-                  variant="outline"
-                  className="border-white/50 bg-white/10 hover:bg-white/20 text-white font-bold px-6 h-12 rounded-xl text-sm"
-                >
-                  <Sparkles className="w-4 h-4 mr-2 text-amber-300" /> Área Gamificada
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ÚLTIMAS NOTÍCIAS & EVENTOS */}
-        <section className="bg-slate-100 py-16 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-              <div>
-                <span className="text-xs font-bold text-blue-700 tracking-wider uppercase">
-                  Fique por dentro
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                  Últimas Notícias & Novidades
-                </h2>
-              </div>
-              <Link to="/noticias">
-                <Button variant="outline" className="text-xs font-semibold">
-                  Ver Todas as Notícias <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {latestNews.map((n) => (
-                <Link key={n.id} to={`/noticias/${n.slug}`} className="group">
-                  <Card className="border-slate-200 bg-white overflow-hidden hover:shadow-md transition h-full flex flex-col">
-                    <div className="h-48 overflow-hidden relative bg-slate-200">
-                      <img
-                        src={getImageSrc(n, 'news')}
-                        alt={n.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-blue-900 text-white text-[11px] font-semibold shadow">
-                          {n.category}
-                        </Badge>
-                      </div>
-                    </div>
-                    <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                      <div>
-                        <span className="text-[11px] text-slate-400 font-medium block mb-1">
-                          {n.published_at || 'Recente'}
-                        </span>
-                        <h3 className="font-bold text-slate-900 text-base group-hover:text-blue-700 transition line-clamp-2">
-                          {n.title}
-                        </h3>
-                        <p className="text-xs text-slate-600 line-clamp-2 mt-2">{n.summary}</p>
-                      </div>
-                      <div className="text-xs font-semibold text-blue-700 flex items-center gap-1 pt-2">
-                        Ler notícia completa <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* BENEFICIADOS & AÇÕES SOCIAIS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <span className="text-xs font-bold text-red-600 tracking-wider uppercase">
-                Impacto Real
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                Ações Sociais & Beneficiados
-              </h2>
-            </div>
-            <Link to="/beneficiados">
-              <Button variant="outline" className="text-xs font-semibold">
-                Ver Todas as Ações <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recentBeneficiaries.map((b) => (
-              <Link key={b.id} to={`/beneficiados/${b.slug}`} className="group">
-                <Card className="border-slate-200 bg-white overflow-hidden hover:shadow-md transition h-full flex flex-col">
-                  <div className="h-48 overflow-hidden relative bg-slate-200">
-                    <img
-                      src={getImageSrc(b, 'beneficiaries')}
-                      alt={b.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <Badge className="bg-red-600 text-white text-[11px] font-semibold shadow">
-                        {b.type}
-                      </Badge>
-                    </div>
-                  </div>
-                  <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                    <div>
-                      <div className="text-[11px] text-slate-500 font-semibold mb-1">
-                        {b.quantity} • {b.location}
-                      </div>
-                      <h3 className="font-bold text-slate-900 text-base group-hover:text-red-700 transition line-clamp-2">
-                        {b.title}
-                      </h3>
-                      <p className="text-xs text-slate-600 line-clamp-2 mt-2">{b.summary}</p>
-                    </div>
-                    <div className="text-xs font-semibold text-red-700 flex items-center gap-1 pt-2">
-                      Conhecer esta ação <ArrowRight className="w-3.5 h-3.5" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* PATROCINADORES / APOIADORES */}
-        <section className="bg-white py-16 border-t border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">
-              Empresas do Bem
-            </span>
-            <h2 className="text-2xl font-extrabold text-slate-900 mt-1 mb-8">
-              Nossos Patrocinadores e Parceiros
-            </h2>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center">
-              {sponsors.slice(0, 8).map((s) => (
-                <Link
-                  key={s.id}
-                  to={`/patrocinadores/${s.slug}`}
-                  className="p-4 rounded-xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50/30 transition flex flex-col items-center group"
-                >
-                  <img
-                    src={getImageSrc(s, 'sponsors')}
-                    alt={s.name}
-                    className="h-14 object-contain grayscale group-hover:grayscale-0 transition mb-2"
-                  />
-                  <span className="text-xs font-bold text-slate-700 group-hover:text-blue-900">
-                    {s.name}
-                  </span>
-                  <Badge variant="outline" className="text-[10px] mt-1">
-                    {s.tier}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-8">
-              <Link to="/patrocinadores">
-                <Button variant="outline" className="text-xs">
-                  Ver Todos os Patrocinadores & Como Apoiar{' '}
-                  <ChevronRight className="w-4 h-4 ml-1" />
+            <div className="flex flex-wrap gap-3">
+              <Link to="/abracolandia">
+                <Button className="bg-[#ed0e58] hover:bg-pink-600 text-white font-black px-6 h-12 rounded-xl text-sm shadow-lg">
+                  Acessar Hotsite da Abraçolândia <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             </div>
@@ -591,6 +234,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* Footer já inclui a Seção de Redes Sociais roxa (#8d198f), Contatos laranja (#f89c0e), barras coloridas e Copyright escuro */}
       <InstitutionalFooter />
     </div>
   )
