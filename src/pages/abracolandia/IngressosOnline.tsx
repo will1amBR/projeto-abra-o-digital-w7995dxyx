@@ -7,6 +7,7 @@ import {
   getOrderWithTickets,
   formatCurrencyBRL,
 } from '@/services/ticketService'
+import { getSiteSettings } from '@/services/contentService'
 import type { TicketCategory, TicketOrder, TicketItem } from '@/types/content'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -61,14 +62,30 @@ export default function IngressosOnline() {
   const [submitting, setSubmitting] = useState(false)
   const [completedOrder, setCompletedOrder] = useState<TicketOrder | null>(null)
   const [completedTickets, setCompletedTickets] = useState<TicketItem[]>([])
+  const [eventSettings, setEventSettings] = useState<any>({
+    eventName: 'Abraçolândia 2026',
+    dateStr: 'Hoje, 30 de Agosto de 2026',
+    venue: 'Pavilhão de Eventos Vera Cruz & Social',
+    timeStr: 'Portões abertos a partir das 10h',
+    statusBadge: 'ACONTECENDO AGORA',
+  })
 
-  // Load Categories & Completed Order if returning from Checkout
+  // Load Categories, Settings & Completed Order if returning from Checkout
   useEffect(() => {
     async function init() {
       setLoading(true)
       try {
-        const cats = await getActiveTicketCategories()
+        const [cats, settingsMap] = await Promise.all([
+          getActiveTicketCategories(),
+          getSiteSettings(),
+        ])
         setCategories(cats)
+        if (settingsMap.event_general_info) {
+          setEventSettings((prev: any) => ({
+            ...prev,
+            ...settingsMap.event_general_info,
+          }))
+        }
 
         // Initialize quantities to 0
         const initQ: Record<string, number> = {}
@@ -232,29 +249,29 @@ export default function IngressosOnline() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                Ingressos Abraçolândia 2025
+                Ingressos {eventSettings.eventName || 'Abraçolândia 2026'}
               </h1>
 
               <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
                 Garanta sua entrada no maior festival beneficente da região com pagamento seguro e
                 emissão imediata de QR Code por ingresso.{' '}
-                <strong>100% da arrecadação líquida</strong> é destinada às famílias assistidas pelo
-                Projeto Abraço.
+                <strong>100% da arrecadação líquida</strong> é destinada às famílias e instituições
+                assistidas pelo Projeto Abraço.
               </p>
 
               {/* Event quick badges */}
               <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-pink-100">
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <Calendar className="w-4 h-4 text-amber-300" />
-                  <span>18 & 19 de Outubro de 2025</span>
+                  <span>{eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <MapPin className="w-4 h-4 text-pink-300" />
-                  <span>Pavilhão de Eventos Vera Cruz</span>
+                  <span>{eventSettings.venue || 'Pavilhão Social & Parque das Nações'}</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <Clock className="w-4 h-4 text-purple-300" />
-                  <span>Abertura dos Portões: 10h</span>
+                  <span>{eventSettings.timeStr || 'Portões Abertos: 10h às 22h'}</span>
                 </div>
               </div>
             </div>

@@ -6,6 +6,7 @@ import {
   getNews,
   getBeneficiaries,
   getSponsors,
+  getSiteSettings,
   getImageSrc,
 } from '@/services/contentService'
 import { Button } from '@/components/ui/button'
@@ -33,6 +34,19 @@ export default function Home() {
   const [latestNews, setLatestNews] = useState<any[]>([])
   const [recentBeneficiaries, setRecentBeneficiaries] = useState<any[]>([])
   const [sponsors, setSponsors] = useState<any[]>([])
+  const [eventSettings, setEventSettings] = useState<any>({
+    eventName: 'Abraçolândia 2026',
+    edition: '13ª Edição',
+    dateStr: 'Hoje, 30 de Agosto de 2026',
+    timeStr: 'Das 10h às 22h (Em Andamento)',
+    venue: 'Parque das Nações & Pavilhão Social',
+    address: 'Av. das Festas, 1000 - São Paulo/SP',
+    status: 'happening_now',
+    statusBadge: 'ACONTECENDO AGORA',
+    headline: 'Abraçolândia 2026 está ACONTECENDO HOJE!',
+    description:
+      'Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente para as causas assistenciais do Projeto Abraço.',
+  })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -41,11 +55,18 @@ export default function Home() {
       getNews({ featuredOnly: false }),
       getBeneficiaries({ site: 'abraco' }),
       getSponsors({ site: 'abraco' }),
-    ]).then(([banData, newsData, benData, sponData]) => {
+      getSiteSettings(),
+    ]).then(([banData, newsData, benData, sponData, settingsMap]) => {
       setBanners(banData)
       setLatestNews(newsData.slice(0, 3))
       setRecentBeneficiaries(benData.slice(0, 3))
       setSponsors(sponData)
+      if (settingsMap.event_general_info) {
+        setEventSettings((prev: any) => ({
+          ...prev,
+          ...settingsMap.event_general_info,
+        }))
+      }
       setLoading(false)
     })
   }, [])
@@ -60,12 +81,12 @@ export default function Home() {
   }, [banners.length])
 
   const activeBanner = banners[currentBannerIndex] || {
-    title: 'Acolher, incluir e transformar vidas',
+    title: 'FAÇA PARTE! VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!',
     subtitle:
-      'Uma rede de solidariedade e amor ao próximo que transforma vulnerabilidade em esperança e novas oportunidades.',
-    cta_text: 'Quero Ser Voluntário',
+      'O Projeto Abraço é uma instituição que há mais de 20 anos desenvolve ações voltadas à assistência social, educação, cultura, esporte, saúde e lazer.',
+    cta_text: 'Faça Parte como Voluntário',
     cta_link: '/voluntariado',
-    badge: 'Projeto Abraço Institucional',
+    badge: 'PROJETO ABRAÇO • FAÇA DA DIVERSÃO UMA BOA AÇÃO',
     image_url: 'https://img.usecurling.com/p/1600/700?q=solidarity%20community%20charity%20hands',
   }
 
@@ -183,52 +204,93 @@ export default function Home() {
           </div>
         </section>
 
-        {/* DESTAQUE HOTSITE ABRAÇOLÂNDIA (CONVITE) */}
+        {/* DESTAQUE HOTSITE ABRAÇOLÂNDIA (ACONTECENDO AGORA - 2026) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-gradient-to-r from-abraco-pink via-abraco-purple to-abraco-blue rounded-3xl p-8 lg:p-12 text-white shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="bg-gradient-to-r from-pink-600 via-purple-700 to-indigo-800 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 border-2 border-pink-400/30">
+            {/* Pulsing indicator background */}
+            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+
             <div className="space-y-4 max-w-xl z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold text-pink-100">
-                <Sparkles className="w-3.5 h-3.5 text-abraco-lime" /> Evento Anual Beneficente
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-amber-400 text-purple-950 rounded-full text-xs font-black shadow-lg animate-pulse">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
+                {eventSettings.statusBadge || 'ACONTECENDO AGORA'} •{' '}
+                {eventSettings.edition || '13ª Edição'}
               </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
-                Vem aí a Abraçolândia 2025!
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
+                {eventSettings.headline ||
+                  `${eventSettings.eventName || 'Abraçolândia 2026'} está ACONTECENDO HOJE!`}
               </h2>
+
               <p className="text-pink-100 text-sm sm:text-base leading-relaxed">
-                Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o
-                tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente
-                para as causas assistenciais do Projeto Abraço.
+                {eventSettings.description ||
+                  'O principal evento beneficente anual do Projeto Abraço está rolando agora! Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente para as causas assistenciais do Projeto Abraço.'}
               </p>
+
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link to="/abracolandia">
-                  <Button className="bg-white text-purple-900 hover:bg-pink-50 font-extrabold px-6 h-11 rounded-xl shadow-md text-xs sm:text-sm">
-                    Acessar Hotsite da Abraçolândia <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-black px-6 h-12 rounded-xl shadow-lg text-xs sm:text-sm">
+                    🎪 Acessar Hotsite da Abraçolândia <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
                 <Link to="/abracolandia/bingo">
                   <Button
                     variant="outline"
-                    className="border-white/40 bg-white/10 hover:bg-white/20 text-white font-bold px-4 h-11 rounded-xl text-xs sm:text-sm"
+                    className="border-white/40 bg-white/10 hover:bg-white/20 text-white font-bold px-4 h-12 rounded-xl text-xs sm:text-sm"
                   >
-                    🎲 Painel do Bingo
+                    🎲 Acompanhar Bingo Ao Vivo
+                  </Button>
+                </Link>
+                <Link to="/abracolandia/ingressos">
+                  <Button
+                    variant="outline"
+                    className="border-pink-300/50 bg-pink-500/20 hover:bg-pink-500/30 text-white font-bold px-4 h-12 rounded-xl text-xs sm:text-sm"
+                  >
+                    🎟 Ingressos & Acesso
                   </Button>
                 </Link>
               </div>
             </div>
 
-            <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white space-y-3">
-              <h3 className="font-bold text-base flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-abraco-lime" /> 18 e 19 de Outubro de 2025
+            <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white space-y-3.5 shadow-inner">
+              <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
+                <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  Portões Abertos
+                </span>
+                <span className="text-xs font-bold text-pink-200">
+                  {eventSettings.eventName || 'Abraçolândia 2026'}
+                </span>
+              </div>
+
+              <h3 className="font-black text-base flex items-center gap-2 text-white">
+                <Calendar className="w-5 h-5 text-amber-300 shrink-0" />
+                <span>{eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}</span>
               </h3>
-              <p className="text-xs text-pink-100">
-                Parque das Nações & Pavilhão Social • São Paulo/SP
+
+              <p className="text-xs text-pink-100 flex items-start gap-1.5">
+                <span className="text-amber-300 font-bold shrink-0">📍</span>
+                <span>
+                  {eventSettings.venue || 'Parque das Nações & Pavilhão Social'}
+                  {eventSettings.address ? ` • ${eventSettings.address}` : ''}
+                </span>
               </p>
+
+              {eventSettings.timeStr && (
+                <p className="text-xs text-pink-200 flex items-center gap-1.5">
+                  <span className="text-amber-300 font-bold">⏰</span>
+                  <span>{eventSettings.timeStr}</span>
+                </p>
+              )}
+
               <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-white/20">
-                <div className="bg-black/20 p-2.5 rounded-lg">
-                  <span className="font-bold block text-abraco-lime">Bingo Especial</span>
-                  <span className="text-[11px] text-pink-200">Smart TVs & Carro 0km</span>
+                <div className="bg-black/25 p-2.5 rounded-lg">
+                  <span className="font-bold block text-amber-300">Bingo Beneficente</span>
+                  <span className="text-[11px] text-pink-200">Rodadas ao vivo no telão</span>
                 </div>
-                <div className="bg-black/20 p-2.5 rounded-lg">
-                  <span className="font-bold block text-abraco-orange">Caixa Pré-Pago</span>
+                <div className="bg-black/25 p-2.5 rounded-lg">
+                  <span className="font-bold block text-emerald-300">Caixa & Gastronomia</span>
                   <span className="text-[11px] text-pink-200">+25 Food Trucks & Bebidas</span>
                 </div>
               </div>

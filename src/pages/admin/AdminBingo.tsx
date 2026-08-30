@@ -164,7 +164,7 @@ export default function AdminBingo() {
 
     try {
       const reset = await createOrResetBingoGame({
-        title: titleInput || 'Super Bingo da Abraçolândia 2025',
+        title: titleInput || 'Super Bingo da Abraçolândia 2026',
         round_prize: prizeInput || 'Smart TV 55" + Prêmios Especiais',
       })
       setGame(reset)

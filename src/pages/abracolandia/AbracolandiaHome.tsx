@@ -6,6 +6,7 @@ import {
   getEventSections,
   getSponsors,
   getPastEditions,
+  getSiteSettings,
   getImageSrc,
 } from '@/services/contentService'
 import { Button } from '@/components/ui/button'
@@ -39,6 +40,15 @@ export default function AbracolandiaHome() {
   const [sections, setSections] = useState<any[]>([])
   const [sponsors, setSponsors] = useState<any[]>([])
   const [lastEdition, setLastEdition] = useState<any>(null)
+  const [eventSettings, setEventSettings] = useState<any>({
+    eventName: 'Abraçolândia 2026',
+    edition: '13ª Edição',
+    dateStr: 'Hoje, 30 de Agosto de 2026',
+    timeStr: 'Das 10h às 22h (Em Andamento)',
+    venue: 'Parque das Nações & Pavilhão Social',
+    address: 'Av. das Festas, 1000 - São Paulo/SP',
+    statusBadge: 'ACONTECENDO AGORA',
+  })
 
   useEffect(() => {
     Promise.all([
@@ -46,10 +56,17 @@ export default function AbracolandiaHome() {
       getEventSections(),
       getSponsors({ site: 'abracolandia' }),
       getPastEditions(),
-    ]).then(([banData, secData, sponData, pastData]) => {
+      getSiteSettings(),
+    ]).then(([banData, secData, sponData, pastData, settingsMap]) => {
       setBanners(banData)
       setSections(secData)
       setSponsors(sponData)
+      if (settingsMap.event_general_info) {
+        setEventSettings((prev: any) => ({
+          ...prev,
+          ...settingsMap.event_general_info,
+        }))
+      }
       if (pastData.length > 0) setLastEdition(pastData[0])
     })
   }, [])
@@ -64,12 +81,12 @@ export default function AbracolandiaHome() {
   }, [banners.length])
 
   const activeBanner = banners[currentBannerIndex] || {
-    title: 'Abraçolândia 2025: A Maior Festa da Solidariedade!',
+    title: 'Abraçolândia 2026: Está Acontecendo Agora!',
     subtitle:
-      'Gastronomia deliciosa, shows ao vivo, mega área infantil e o tradicional Bingo Beneficente. 100% da renda revertida para causas sociais.',
+      'Gastronomia deliciosa, shows ao vivo, mega área infantil e o tradicional Bingo Beneficente ao vivo. 100% da renda revertida para causas sociais.',
     cta_text: 'Comprar Ingressos Online',
     cta_link: '/abracolandia/ingressos',
-    badge: '18 & 19 de Outubro • 12ª Edição',
+    badge: 'ACONTECENDO AGORA • Hoje, 30 de Agosto • 13ª Edição',
     image_url: 'https://img.usecurling.com/p/1600/700?q=festival%20carnival%20celebration%20lights',
   }
 
@@ -232,45 +249,70 @@ export default function AbracolandiaHome() {
               </div>
             </div>
           </div>
-
-          {/* Abraçolândia 2026 */}
-          <div className="bg-gradient-to-br from-purple-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-12 border border-purple-700 shadow-xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          {/* Abraçolândia 2026 (Acontecendo Agora) */}
+          <div className="bg-gradient-to-br from-pink-600 via-purple-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-12 border-2 border-pink-400/40 shadow-2xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative overflow-hidden">
             <div className="space-y-4">
-              <Badge className="bg-amber-400 text-slate-950 text-xs px-3 py-1 font-black uppercase tracking-wider">
-                FUTURO & CONTINUIDADE
-              </Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black uppercase tracking-wider">
+                  EDIÇÃO EM ANDAMENTO • 2026
+                </Badge>
+                <Badge className="bg-red-500 text-white text-xs px-3 py-1 font-black animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-white mr-1.5 animate-ping inline-block" />
+                  ACONTECENDO HOJE (30/08/2026)
+                </Badge>
+              </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white">ABRAÇOLÂNDIA 2026</h2>
-              <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
-                O Projeto Abraço segue sua trajetória com uma nova edição da Abraçolândia em 2026. A
-                construção de cada edição envolve uma rede de pessoas, empresas, parceiros e
-                apoiadores que contribuem para tornar possível a realização do evento e,
-                consequentemente, ampliar sua capacidade de gerar benefícios sociais. Mais do que
-                colocar um evento de pé, cada nova Abraçolândia representa a continuidade de uma
-                história iniciada há mais de 20 anos. Uma história construída por pessoas que
-                acreditam que diversão e solidariedade podem caminhar juntas.
+              <p className="text-slate-100 text-sm sm:text-base leading-relaxed">
+                O Projeto Abraço segue sua trajetória realizando hoje a grande edição da
+                Abraçolândia 2026. A construção de cada edição envolve uma rede de pessoas,
+                empresas, parceiros e apoiadores que contribuem para tornar possível a realização do
+                evento e, consequentemente, ampliar sua capacidade de gerar benefícios sociais. Mais
+                do que colocar um evento de pé, a Abraçolândia representa o principal evento anual
+                da instituição, mantendo viva uma história iniciada há mais de 20 anos.
               </p>
               <div className="pt-2 flex flex-wrap gap-3">
+                <Link to="/abracolandia/ingressos">
+                  <Button className="bg-amber-400 hover:bg-amber-300 text-purple-950 font-black text-xs rounded-xl shadow-lg">
+                    🎟 Garantir Entrada Online
+                  </Button>
+                </Link>
+                <Link to="/abracolandia/bingo">
+                  <Button
+                    variant="outline"
+                    className="border-white/50 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl"
+                  >
+                    🎲 Ver Bingo Ao Vivo
+                  </Button>
+                </Link>
                 <Link to="/abracolandia/voluntariado">
                   <Button className="bg-pink-600 hover:bg-pink-500 text-white font-extrabold text-xs rounded-xl shadow-lg">
-                    cadastre-se como voluntário e FAÇA PARTE!
+                    Cadastre-se como voluntário
                   </Button>
                 </Link>
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 space-y-3">
-              <span className="text-xs font-bold text-amber-300 uppercase tracking-wide block">
-                VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
-              </span>
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 space-y-3.5">
+              <div className="flex items-center justify-between border-b border-white/15 pb-2">
+                <span className="text-xs font-bold text-amber-300 uppercase tracking-wide">
+                  VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+                </span>
+                <span className="text-[11px] font-bold text-emerald-300">● Portões Abertos</span>
+              </div>
               <p className="text-xs text-pink-100 leading-relaxed">
-                Desde 2005 até as edições de 2025 e 2026, cada edição mobiliza voluntários e
-                patrocinadores para garantir benfeitorias estruturais diretas.
+                {eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'} •{' '}
+                {eventSettings.venue || 'Parque das Nações & Pavilhão Social'}
+                {eventSettings.address ? ` • ${eventSettings.address}` : ''}
+              </p>
+              <p className="text-[11px] text-slate-200 leading-relaxed">
+                Desde 2005 até hoje, cada edição mobiliza voluntários e patrocinadores para garantir
+                benfeitorias estruturais diretas para instituições e comunidades assistidas.
               </p>
               <div className="pt-2 text-xs font-mono text-cyan-300">
                 projetoabraco.org.br • @projetoabraco
               </div>
             </div>
-          </div>
+          </div>{' '}
         </section>
 
         {/* RESUMO DAS FESTAS ANTERIORES & ARRECADAÇÃO */}

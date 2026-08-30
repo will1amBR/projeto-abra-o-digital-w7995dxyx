@@ -2521,57 +2521,167 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className="space-y-3 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                          <h4 className="font-bold text-sm text-slate-800">
-                            Informações Rápidas da Festa
+                          <h4 className="font-bold text-sm text-slate-800 flex items-center justify-between">
+                            <span>Informações & Status da Abraçolândia</span>
+                            <span className="text-[10px] font-bold text-pink-600 bg-pink-50 border border-pink-200 px-2 py-0.5 rounded-full">
+                              Editável em tempo real
+                            </span>
                           </h4>
-                          <div>
-                            <label className="text-xs font-semibold text-slate-600">
-                              Nome da Edição
-                            </label>
-                            <Input
-                              value={settingsData.event_general_info?.eventName || ''}
-                              onChange={(e) =>
-                                setSettingsData({
-                                  ...settingsData,
-                                  event_general_info: {
-                                    ...settingsData.event_general_info,
-                                    eventName: e.target.value,
-                                  },
-                                })
-                              }
-                              className="text-xs mt-1"
-                            />
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="text-xs font-semibold text-slate-600">
+                                Nome do Evento
+                              </label>
+                              <Input
+                                value={settingsData.event_general_info?.eventName || ''}
+                                placeholder="Ex: Abraçolândia 2026"
+                                onChange={(e) =>
+                                  setSettingsData({
+                                    ...settingsData,
+                                    event_general_info: {
+                                      ...settingsData.event_general_info,
+                                      eventName: e.target.value,
+                                    },
+                                  })
+                                }
+                                className="text-xs mt-1"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-xs font-semibold text-slate-600">
+                                Edição / Badge de Status
+                              </label>
+                              <Input
+                                value={settingsData.event_general_info?.statusBadge || ''}
+                                placeholder="Ex: ACONTECENDO AGORA"
+                                onChange={(e) =>
+                                  setSettingsData({
+                                    ...settingsData,
+                                    event_general_info: {
+                                      ...settingsData.event_general_info,
+                                      statusBadge: e.target.value,
+                                    },
+                                  })
+                                }
+                                className="text-xs mt-1"
+                              />
+                            </div>
                           </div>
-                          <div>
-                            <label className="text-xs font-semibold text-slate-600">
-                              Data e Horário
-                            </label>
-                            <Input
-                              value={settingsData.event_general_info?.dateStr || ''}
-                              onChange={(e) =>
-                                setSettingsData({
-                                  ...settingsData,
-                                  event_general_info: {
-                                    ...settingsData.event_general_info,
-                                    dateStr: e.target.value,
-                                  },
-                                })
-                              }
-                              className="text-xs mt-1"
-                            />
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="text-xs font-semibold text-slate-600">
+                                Data do Evento
+                              </label>
+                              <Input
+                                value={settingsData.event_general_info?.dateStr || ''}
+                                placeholder="Ex: Hoje, 30 de Agosto de 2026"
+                                onChange={(e) =>
+                                  setSettingsData({
+                                    ...settingsData,
+                                    event_general_info: {
+                                      ...settingsData.event_general_info,
+                                      dateStr: e.target.value,
+                                    },
+                                  })
+                                }
+                                className="text-xs mt-1"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-xs font-semibold text-slate-600">
+                                Horários de Funcionamento
+                              </label>
+                              <Input
+                                value={settingsData.event_general_info?.timeStr || ''}
+                                placeholder="Ex: Hoje das 10h às 22h (Em Andamento)"
+                                onChange={(e) =>
+                                  setSettingsData({
+                                    ...settingsData,
+                                    event_general_info: {
+                                      ...settingsData.event_general_info,
+                                      timeStr: e.target.value,
+                                    },
+                                  })
+                                }
+                                className="text-xs mt-1"
+                              />
+                            </div>
                           </div>
+
                           <div>
                             <label className="text-xs font-semibold text-slate-600">
-                              Local do Pavilhão
+                              Local / Pavilhão
                             </label>
                             <Input
                               value={settingsData.event_general_info?.venue || ''}
+                              placeholder="Ex: Parque das Nações & Pavilhão Social"
                               onChange={(e) =>
                                 setSettingsData({
                                   ...settingsData,
                                   event_general_info: {
                                     ...settingsData.event_general_info,
                                     venue: e.target.value,
+                                  },
+                                })
+                              }
+                              className="text-xs mt-1"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-semibold text-slate-600">
+                              Endereço Completo
+                            </label>
+                            <Input
+                              value={settingsData.event_general_info?.address || ''}
+                              placeholder="Ex: Av. das Festas, 1000 - São Paulo/SP"
+                              onChange={(e) =>
+                                setSettingsData({
+                                  ...settingsData,
+                                  event_general_info: {
+                                    ...settingsData.event_general_info,
+                                    address: e.target.value,
+                                  },
+                                })
+                              }
+                              className="text-xs mt-1"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-semibold text-slate-600">
+                              Título em Destaque na Home
+                            </label>
+                            <Input
+                              value={settingsData.event_general_info?.headline || ''}
+                              placeholder="Ex: A Abraçolândia 2026 está ACONTECENDO HOJE!"
+                              onChange={(e) =>
+                                setSettingsData({
+                                  ...settingsData,
+                                  event_general_info: {
+                                    ...settingsData.event_general_info,
+                                    headline: e.target.value,
+                                  },
+                                })
+                              }
+                              className="text-xs mt-1"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-semibold text-slate-600">
+                              Descrição do Destaque da Festa
+                            </label>
+                            <Input
+                              value={settingsData.event_general_info?.description || ''}
+                              placeholder="Texto de resumo do evento..."
+                              onChange={(e) =>
+                                setSettingsData({
+                                  ...settingsData,
+                                  event_general_info: {
+                                    ...settingsData.event_general_info,
+                                    description: e.target.value,
                                   },
                                 })
                               }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
-import { getEventSections, getImageSrc } from '@/services/contentService'
+import { getEventSections, getSiteSettings, getImageSrc } from '@/services/contentService'
 import type { EventSection } from '@/types/content'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -25,9 +25,26 @@ import { Link } from 'react-router-dom'
 export default function AFesta() {
   const [sections, setSections] = useState<EventSection[]>([])
   const [activeTab, setActiveTab] = useState<string>('todos')
+  const [eventSettings, setEventSettings] = useState<any>({
+    eventName: 'Abraçolândia 2026',
+    edition: '13ª Edição',
+    dateStr: 'Hoje, 30 de Agosto de 2026',
+    timeStr: 'Das 10h às 22h (Em Andamento)',
+    venue: 'Parque das Nações & Pavilhão Social',
+    address: 'Av. das Festas, 1000 - São Paulo/SP',
+    statusBadge: 'ACONTECENDO AGORA',
+  })
 
   useEffect(() => {
-    getEventSections().then(setSections)
+    Promise.all([getEventSections(), getSiteSettings()]).then(([secData, settingsMap]) => {
+      setSections(secData)
+      if (settingsMap.event_general_info) {
+        setEventSettings((prev: any) => ({
+          ...prev,
+          ...settingsMap.event_general_info,
+        }))
+      }
+    })
   }, [])
 
   const generalSection = sections.find((s) => s.section_type === 'geral')
@@ -46,9 +63,15 @@ export default function AFesta() {
         <section className="bg-gradient-to-r from-purple-900 via-pink-700 to-amber-600 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
-                A ABRAÇOLÂNDIA
-              </Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
+                  {eventSettings.eventName || 'ABRAÇOLÂNDIA 2026'}
+                </Badge>
+                <Badge className="bg-red-600 text-white text-xs px-3 py-1 font-black shadow animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-white mr-1.5 animate-ping inline-block" />
+                  {eventSettings.statusBadge || 'ACONTECENDO AGORA'}
+                </Badge>
+              </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
                 Diversão que se transforma em uma boa ação.
               </h1>
@@ -70,7 +93,7 @@ export default function AFesta() {
           </div>
         </section>
 
-        {/* Informações Rápidas (Data, Horário, Local) */}
+        {/* Informações Rápidas (Data, Horário, Local - Editáveis via CMS) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
           <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-center gap-4">
@@ -82,7 +105,7 @@ export default function AFesta() {
                   Data do Evento
                 </span>
                 <span className="font-black text-slate-900 text-sm sm:text-base">
-                  18 e 19 de Outubro de 2025
+                  {eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}
                 </span>
               </div>
             </div>
@@ -96,7 +119,7 @@ export default function AFesta() {
                   Horários de Funcionamento
                 </span>
                 <span className="font-black text-slate-900 text-sm sm:text-base">
-                  Sáb: 11h às 23h • Dom: 11h às 21h
+                  {eventSettings.timeStr || 'Hoje das 10h às 22h (Em Andamento)'}
                 </span>
               </div>
             </div>
@@ -110,8 +133,13 @@ export default function AFesta() {
                   Local / Pavilhão
                 </span>
                 <span className="font-black text-slate-900 text-sm sm:text-base">
-                  Parque das Nações & Pavilhão Social
+                  {eventSettings.venue || 'Parque das Nações & Pavilhão Social'}
                 </span>
+                {eventSettings.address && (
+                  <span className="text-[11px] text-slate-500 block truncate max-w-xs">
+                    {eventSettings.address}
+                  </span>
+                )}
               </div>
             </div>
           </div>
