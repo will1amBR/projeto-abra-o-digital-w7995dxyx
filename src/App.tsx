@@ -18,6 +18,7 @@ import PatrocinadorDetalhe from '@/pages/PatrocinadorDetalhe'
 import AbracolandiaHome from '@/pages/abracolandia/AbracolandiaHome'
 import AFesta from '@/pages/abracolandia/AFesta'
 import Convites from '@/pages/abracolandia/Convites'
+import IngressosOnline from '@/pages/abracolandia/IngressosOnline'
 import AbraBeneficiados from '@/pages/abracolandia/AbraBeneficiados'
 import AbraPatrocinadores from '@/pages/abracolandia/AbraPatrocinadores'
 import AbraVoluntariado from '@/pages/abracolandia/AbraVoluntariado'
@@ -26,6 +27,7 @@ import FestasAnteriores from '@/pages/abracolandia/FestasAnteriores'
 // CMS Admin (Painel Protegido)
 import AdminLogin from '@/pages/admin/AdminLogin'
 import AdminDashboard from '@/pages/admin/AdminDashboard'
+import ValidarIngressos from '@/pages/admin/ValidarIngressos'
 import NotFound from '@/pages/NotFound'
 
 // Protected Admin Route Guard
@@ -72,6 +74,7 @@ export default function App() {
           <Route path="/abracolandia" element={<AbracolandiaHome />} />
           <Route path="/abracolandia/festa" element={<AFesta />} />
           <Route path="/abracolandia/convites" element={<Convites />} />
+          <Route path="/abracolandia/ingressos" element={<IngressosOnline />} />
           <Route path="/abracolandia/beneficiados" element={<AbraBeneficiados />} />
           <Route path="/abracolandia/patrocinadores" element={<AbraPatrocinadores />} />
           <Route path="/abracolandia/patrocinadores/:slug" element={<PatrocinadorDetalhe />} />
@@ -82,6 +85,14 @@ export default function App() {
               PAINEL CMS ADMINISTRATIVO
               ========================================= */}
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/validar-ingressos"
+            element={
+              <ProtectedAdminRoute>
+                <ValidarIngressos />
+              </ProtectedAdminRoute>
+            }
+          />
           <Route
             path="/admin"
             element={

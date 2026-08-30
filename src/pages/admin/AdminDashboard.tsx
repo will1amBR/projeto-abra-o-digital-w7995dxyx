@@ -11,6 +11,7 @@ import { GenericContentModal } from '@/components/admin/GenericContentModal'
 import { AdminAiAssistant } from '@/components/admin/AdminAiAssistant'
 import { getImageSrc } from '@/services/contentService'
 import { reviewVolunteerAction } from '@/services/gamificationService'
+import { formatCurrencyBRL } from '@/services/ticketService'
 import { toast } from '@/hooks/use-toast'
 import {
   HeartHandshake,
@@ -40,6 +41,12 @@ import {
   Flame,
   ShieldCheck,
   MessageSquare,
+  QrCode,
+  ScanLine,
+  Download,
+  FileSpreadsheet,
+  DollarSign,
+  ShoppingBag,
 } from 'lucide-react'
 
 export default function AdminDashboard() {
@@ -69,6 +76,11 @@ export default function AdminDashboard() {
   const [volunteerActions, setVolunteerActions] = useState<any[]>([])
   const [reviewingActionId, setReviewingActionId] = useState<string | null>(null)
   const [reviewFeedback, setReviewFeedback] = useState('')
+
+  // Ingressos Online states in CMS
+  const [ticketCategories, setTicketCategories] = useState<any[]>([])
+  const [ticketOrders, setTicketOrders] = useState<any[]>([])
+  const [ticketsList, setTicketsList] = useState<any[]>([])
 
   const [loading, setLoading] = useState(false)
 
@@ -105,6 +117,9 @@ export default function AdminDashboard() {
         vmData,
         vbData,
         vaData,
+        tcatData,
+        tordData,
+        tktListData,
       ] = await Promise.all([
         pb.collection('news').getFullList({ sort: '-created' }),
         pb.collection('beneficiaries').getFullList({ sort: '-created' }),
@@ -139,6 +154,18 @@ export default function AdminDashboard() {
           .collection('volunteer_actions')
           .getFullList({ sort: '-created', expand: 'volunteer_profile_id,mission_id' })
           .catch(() => []),
+        pb
+          .collection('ticket_categories')
+          .getFullList({ sort: 'order,price_in_cents' })
+          .catch(() => []),
+        pb
+          .collection('ticket_orders')
+          .getFullList({ sort: '-created' })
+          .catch(() => []),
+        pb
+          .collection('tickets')
+          .getFullList({ sort: '-created', expand: 'order_id,category_id' })
+          .catch(() => []),
       ])
 
       setNews(newsData)
@@ -155,6 +182,9 @@ export default function AdminDashboard() {
       setMissions(vmData)
       setBadges(vbData)
       setVolunteerActions(vaData)
+      setTicketCategories(tcatData)
+      setTicketOrders(tordData)
+      setTicketsList(tktListData)
 
       const sMap: any = {}
       for (const s of settingsRecords) sMap[s.key] = s.value
@@ -763,6 +793,42 @@ export default function AdminDashboard() {
           ],
         }
 
+      case 'ticket_categories':
+        return {
+          collection: 'ticket_categories',
+          title: item ? 'Editar Categoria de Ingresso' : 'Criar Nova Categoria de Ingresso',
+          item,
+          fields: [
+            { name: 'name', label: 'Nome da Categoria', type: 'text', required: true },
+            { name: 'description', label: 'Descrição / Detalhes', type: 'textarea' },
+            {
+              name: 'price_in_cents',
+              label: 'Preço em Centavos (ex: 2500 para R$ 25,00)',
+              type: 'number',
+              required: true,
+            },
+            {
+              name: 'total_quantity',
+              label: 'Cota / Estoque Total de Ingressos',
+              type: 'number',
+              required: true,
+            },
+            {
+              name: 'available_quantity',
+              label: 'Quantidade Disponível Restante',
+              type: 'number',
+              required: true,
+            },
+            {
+              name: 'badge_color',
+              label: 'Cor de Destaque HEX (ex: #EC4899, #10B981, #8B5CF6)',
+              type: 'text',
+            },
+            { name: 'active', label: 'Categoria Ativa para Venda Online', type: 'bool' },
+            { name: 'order', label: 'Ordem de Exibição (Número)', type: 'number' },
+          ],
+        }
+
       case 'content_blocks':
         return {
           collection: 'content_blocks',
@@ -825,6 +891,15 @@ export default function AdminDashboard() {
               className="text-xs bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white"
             >
               <ExternalLink className="w-3.5 h-3.5 mr-1.5" /> Ver Site Abraço
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/admin/validar-ingressos')}
+              className="text-xs bg-emerald-950/80 text-emerald-300 border-emerald-700 hover:bg-emerald-900 hover:text-white font-bold"
+            >
+              <ScanLine className="w-3.5 h-3.5 mr-1.5 text-emerald-400" /> Portaria / Validar
+              Ingressos
             </Button>
             <Button
               variant="outline"
@@ -923,6 +998,13 @@ export default function AdminDashboard() {
                       <TabsTrigger value="convites" className="text-xs py-1.5">
                         <Ticket className="w-3.5 h-3.5 mr-1.5 text-purple-500" /> Convites & PDVs (
                         {ticketOutlets.length})
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="ingressos_online"
+                        className="text-xs py-1.5 bg-pink-500/10 text-pink-900 border border-pink-300 font-bold"
+                      >
+                        <QrCode className="w-3.5 h-3.5 mr-1.5 text-pink-600" /> Ingressos & Vendas (
+                        {ticketsList.length} emitidos)
                       </TabsTrigger>
                       <TabsTrigger value="anteriores" className="text-xs py-1.5">
                         <Clock className="w-3.5 h-3.5 mr-1.5 text-orange-500" /> Festas Anteriores (
@@ -1447,6 +1529,406 @@ export default function AdminDashboard() {
                         </div>
                       ))}
                     </div>
+                  </TabsContent>
+
+                  {/* INGRESSOS ONLINE & BILHETERIA DIGITAL */}
+                  <TabsContent value="ingressos_online" className="space-y-6 pt-4">
+                    {/* Header stats row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-pink-50 border border-pink-200 rounded-2xl p-4">
+                        <div className="text-xs text-pink-800 font-bold uppercase">
+                          Arrecadação Total (Vendas)
+                        </div>
+                        <div className="text-2xl font-black text-pink-950 mt-1">
+                          {formatCurrencyBRL(
+                            ticketOrders
+                              .filter((o) => o.status === 'paid')
+                              .reduce((acc, o) => acc + (o.total_amount_cents || 0), 0),
+                          )}
+                        </div>
+                        <span className="text-[11px] text-pink-700">
+                          {ticketOrders.filter((o) => o.status === 'paid').length} pedidos
+                          confirmados
+                        </span>
+                      </div>
+
+                      <div className="bg-purple-50 border border-purple-200 rounded-2xl p-4">
+                        <div className="text-xs text-purple-800 font-bold uppercase">
+                          Ingressos Emitidos
+                        </div>
+                        <div className="text-2xl font-black text-purple-950 mt-1">
+                          {ticketsList.length}
+                        </div>
+                        <span className="text-[11px] text-purple-700">QRs únicos gerados</span>
+                      </div>
+
+                      <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+                        <div className="text-xs text-emerald-800 font-bold uppercase">
+                          Entradas Validadas
+                        </div>
+                        <div className="text-2xl font-black text-emerald-950 mt-1">
+                          {ticketsList.filter((t) => t.status === 'used').length}
+                        </div>
+                        <span className="text-[11px] text-emerald-700">
+                          {ticketsList.length > 0
+                            ? Math.round(
+                                (ticketsList.filter((t) => t.status === 'used').length /
+                                  ticketsList.length) *
+                                  100,
+                              )
+                            : 0}
+                          % do total de participantes
+                        </span>
+                      </div>
+
+                      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                        <div className="text-xs text-amber-800 font-bold uppercase">
+                          Estoque Restante
+                        </div>
+                        <div className="text-2xl font-black text-amber-950 mt-1">
+                          {ticketCategories.reduce(
+                            (acc, c) => acc + (c.available_quantity || 0),
+                            0,
+                          )}
+                        </div>
+                        <span className="text-[11px] text-amber-700">
+                          em {ticketCategories.length} categorias
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Quick Access to Portaria Scanner & CSV Export */}
+                    <div className="p-4 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+                      <div>
+                        <h4 className="font-bold text-sm flex items-center gap-2">
+                          <ScanLine className="w-4 h-4 text-pink-400" /> Sistema de Portaria &
+                          Controle de Acesso
+                        </h4>
+                        <p className="text-xs text-slate-300 mt-0.5">
+                          Use seu celular ou webcam para bipar e liberar entradas na portaria do
+                          evento.
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          onClick={() => {
+                            // Export CSV of tickets
+                            if (ticketsList.length === 0) {
+                              toast({
+                                title: 'Nenhum ingresso emitido para exportar.',
+                              })
+                              return
+                            }
+                            const headers = [
+                              'Codigo_Ingresso',
+                              'Categoria',
+                              'Participante',
+                              'Documento',
+                              'Status',
+                              'Comprador_Nome',
+                              'Comprador_Email',
+                              'Comprador_Telefone',
+                              'Data_Uso',
+                              'Validado_Por',
+                            ]
+                            const rows = ticketsList.map((t) => [
+                              t.ticket_code,
+                              t.expand?.category_id?.name || 'Geral',
+                              t.attendee_name || '',
+                              t.attendee_document || '',
+                              t.status === 'used' ? 'UTILIZADO' : 'NAO_UTILIZADO',
+                              t.expand?.order_id?.customer_name || '',
+                              t.expand?.order_id?.customer_email || '',
+                              t.expand?.order_id?.customer_phone || '',
+                              t.used_at || '',
+                              t.validated_by || '',
+                            ])
+                            const csvContent =
+                              'data:text/csv;charset=utf-8,' +
+                              [
+                                headers.join(','),
+                                ...rows.map((e) =>
+                                  e.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(','),
+                                ),
+                              ].join('\n')
+                            const encodedUri = encodeURI(csvContent)
+                            const link = document.createElement('a')
+                            link.setAttribute('href', encodedUri)
+                            link.setAttribute(
+                              'download',
+                              `ingressos_abracolandia_${Date.now()}.csv`,
+                            )
+                            document.body.appendChild(link)
+                            link.click()
+                            document.body.removeChild(link)
+                            toast({
+                              title: 'Exportação Concluída!',
+                              description: 'Arquivo CSV com todos os participantes gerado.',
+                            })
+                          }}
+                          className="bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white text-xs font-bold h-9 rounded-xl border border-slate-700"
+                        >
+                          <FileSpreadsheet className="w-3.5 h-3.5 mr-1.5 text-emerald-400" />{' '}
+                          Exportar CSV
+                        </Button>
+                        <Button
+                          onClick={() => navigate('/admin/validar-ingressos')}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold h-9 rounded-xl shadow-md"
+                        >
+                          <ScanLine className="w-3.5 h-3.5 mr-1.5" /> Abrir Leitor de Entrada
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Sub-Tabs: Categorias de Ingresso, Pedidos Recebidos, Ingressos Emitidos */}
+                    <Tabs defaultValue="categorias_tkt" className="space-y-4">
+                      <div className="border-b border-slate-200 pb-2">
+                        <TabsList className="bg-slate-100 p-1 rounded-lg">
+                          <TabsTrigger value="categorias_tkt" className="text-xs font-bold">
+                            <Ticket className="w-3.5 h-3.5 mr-1 text-pink-600" /> Lotes & Categorias
+                            ({ticketCategories.length})
+                          </TabsTrigger>
+                          <TabsTrigger value="pedidos_tkt" className="text-xs font-bold">
+                            <ShoppingBag className="w-3.5 h-3.5 mr-1 text-purple-600" /> Pedidos
+                            Realizados ({ticketOrders.length})
+                          </TabsTrigger>
+                          <TabsTrigger value="emitidos_tkt" className="text-xs font-bold">
+                            <QrCode className="w-3.5 h-3.5 mr-1 text-emerald-600" /> Ingressos & QRs
+                            ({ticketsList.length})
+                          </TabsTrigger>
+                        </TabsList>
+                      </div>
+
+                      {/* 1. Categorias de Ingressos */}
+                      <TabsContent value="categorias_tkt" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Categorias e Lotes de Ingressos
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Configure preços, estoques e benefícios de cada tipo de ingresso.
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            onClick={() => handleOpenCreate('ticket_categories')}
+                            className="bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold"
+                          >
+                            <Plus className="w-3.5 h-3.5 mr-1.5" /> Nova Categoria
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {ticketCategories.map((cat) => (
+                            <div
+                              key={cat.id}
+                              className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3 hover:border-pink-300 transition"
+                            >
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2">
+                                    <span
+                                      className="w-3 h-3 rounded-full"
+                                      style={{ backgroundColor: cat.badge_color || '#EC4899' }}
+                                    />
+                                    <span className="font-bold text-slate-900 text-sm">
+                                      {cat.name}
+                                    </span>
+                                  </div>
+                                  <Badge className="bg-purple-950 text-white font-mono text-xs">
+                                    {formatCurrencyBRL(cat.price_in_cents)}
+                                  </Badge>
+                                </div>
+                                <p className="text-xs text-slate-600 leading-relaxed">
+                                  {cat.description}
+                                </p>
+                                <div className="flex items-center justify-between text-xs bg-slate-50 p-2 rounded-lg text-slate-600">
+                                  <span>
+                                    Disponíveis:{' '}
+                                    <strong className="text-pink-600">
+                                      {cat.available_quantity}
+                                    </strong>{' '}
+                                    de {cat.total_quantity}
+                                  </span>
+                                  <span>{cat.active ? '🟢 Venda Ativa' : '🔴 Desativado'}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-end gap-1 pt-2 border-t border-slate-100">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleOpenEdit('ticket_categories', cat)}
+                                  className="h-7 w-7 p-0"
+                                >
+                                  <Edit className="w-3.5 h-3.5 text-blue-600" />
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleDeleteItem('ticket_categories', cat.id)}
+                                  className="h-7 w-7 p-0 text-red-500"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </TabsContent>
+
+                      {/* 2. Pedidos Realizados */}
+                      <TabsContent value="pedidos_tkt" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Pedidos Recebidos pela Bilheteria
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Histórico de compras online e confirmações de pagamento.
+                            </p>
+                          </div>
+                        </div>
+
+                        {ticketOrders.length === 0 ? (
+                          <div className="text-center py-10 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500">
+                            Nenhum pedido registrado ainda.
+                          </div>
+                        ) : (
+                          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                            <table className="w-full text-xs text-left">
+                              <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                                <tr>
+                                  <th className="p-3">Pedido #</th>
+                                  <th className="p-3">Comprador</th>
+                                  <th className="p-3">Contato</th>
+                                  <th className="p-3">Valor Total</th>
+                                  <th className="p-3">Status</th>
+                                  <th className="p-3">Método</th>
+                                  <th className="p-3">Data</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-slate-100 text-slate-700">
+                                {ticketOrders.map((ord) => (
+                                  <tr key={ord.id} className="hover:bg-slate-50">
+                                    <td className="p-3 font-mono font-bold text-purple-950">
+                                      #{ord.id.slice(0, 8).toUpperCase()}
+                                    </td>
+                                    <td className="p-3">
+                                      <div className="font-bold text-slate-900">
+                                        {ord.customer_name}
+                                      </div>
+                                      <div className="text-[11px] text-slate-400">
+                                        Doc: {ord.customer_document || '---'}
+                                      </div>
+                                    </td>
+                                    <td className="p-3">
+                                      <div>{ord.customer_email}</div>
+                                      <div className="text-slate-400">{ord.customer_phone}</div>
+                                    </td>
+                                    <td className="p-3 font-bold text-pink-600">
+                                      {formatCurrencyBRL(ord.total_amount_cents || 0)}
+                                    </td>
+                                    <td className="p-3">
+                                      <Badge
+                                        className={
+                                          ord.status === 'paid'
+                                            ? 'bg-emerald-600 text-white text-[10px]'
+                                            : ord.status === 'pending'
+                                              ? 'bg-amber-500 text-white text-[10px]'
+                                              : 'bg-red-500 text-white text-[10px]'
+                                        }
+                                      >
+                                        {ord.status === 'paid'
+                                          ? '✓ Pago'
+                                          : ord.status === 'pending'
+                                            ? 'Pendente'
+                                            : 'Cancelado'}
+                                      </Badge>
+                                    </td>
+                                    <td className="p-3 text-[11px] font-mono text-slate-500">
+                                      {ord.payment_method || 'Online'}
+                                    </td>
+                                    <td className="p-3 text-[11px] text-slate-500">
+                                      {new Date(ord.created).toLocaleDateString('pt-BR')}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </TabsContent>
+
+                      {/* 3. Ingressos Individuais Emitidos */}
+                      <TabsContent value="emitidos_tkt" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              Ingressos com QR Code Gerados
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              Lista de ingressos válidos e histórico de check-in na portaria.
+                            </p>
+                          </div>
+                        </div>
+
+                        {ticketsList.length === 0 ? (
+                          <div className="text-center py-10 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500">
+                            Nenhum ingresso emitido ainda.
+                          </div>
+                        ) : (
+                          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                            <table className="w-full text-xs text-left">
+                              <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                                <tr>
+                                  <th className="p-3">Código Ingresso</th>
+                                  <th className="p-3">Categoria</th>
+                                  <th className="p-3">Participante</th>
+                                  <th className="p-3">Status</th>
+                                  <th className="p-3">Utilizado em</th>
+                                  <th className="p-3">Validado Por</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-slate-100 text-slate-700">
+                                {ticketsList.map((tkt) => (
+                                  <tr key={tkt.id} className="hover:bg-slate-50">
+                                    <td className="p-3 font-mono font-bold text-slate-900">
+                                      {tkt.ticket_code}
+                                    </td>
+                                    <td className="p-3 font-semibold text-purple-900">
+                                      {tkt.expand?.category_id?.name || 'Ingresso'}
+                                    </td>
+                                    <td className="p-3 font-bold text-slate-800">
+                                      {tkt.attendee_name || 'Participante'}
+                                    </td>
+                                    <td className="p-3">
+                                      <Badge
+                                        className={
+                                          tkt.status === 'used'
+                                            ? 'bg-slate-500 text-white text-[10px]'
+                                            : 'bg-emerald-600 text-white text-[10px]'
+                                        }
+                                      >
+                                        {tkt.status === 'used' ? 'Já Utilizado' : 'Disponível'}
+                                      </Badge>
+                                    </td>
+                                    <td className="p-3 text-[11px] text-slate-500">
+                                      {tkt.used_at
+                                        ? new Date(tkt.used_at).toLocaleString('pt-BR')
+                                        : '---'}
+                                    </td>
+                                    <td className="p-3 text-[11px] text-slate-500">
+                                      {tkt.validated_by || '---'}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </TabsContent>
+                    </Tabs>
                   </TabsContent>
 
                   {/* 8. FESTAS ANTERIORES */}

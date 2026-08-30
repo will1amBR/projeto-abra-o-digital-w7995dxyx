@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T13:16:53.911Z",
+  "generatedAt": "2026-08-30T19:35:51.027Z",
   "collections": [
     {
       "name": "users",
@@ -1512,6 +1512,279 @@
       "indexes": [
         "CREATE INDEX idx_va_vp ON volunteer_actions (volunteer_profile_id)",
         "CREATE INDEX idx_va_status ON volunteer_actions (status)"
+      ]
+    },
+    {
+      "name": "ticket_categories",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "price_in_cents",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "total_quantity",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "available_quantity",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "badge_color",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "active",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "features",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_ticket_cat_active ON ticket_categories (active)",
+        "CREATE INDEX idx_ticket_cat_order ON ticket_categories (order)"
+      ]
+    },
+    {
+      "name": "ticket_orders",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "customer_name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "customer_email",
+          "type": "email",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "customer_phone",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "customer_document",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["pending", "paid", "cancelled"]
+        },
+        {
+          "name": "total_amount_cents",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "payment_method",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "payment_gateway_ref",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "payment_data",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "items_summary",
+          "type": "json",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_orders_status ON ticket_orders (status)",
+        "CREATE INDEX idx_orders_email ON ticket_orders (customer_email)",
+        "CREATE INDEX idx_orders_payref ON ticket_orders (payment_gateway_ref)"
+      ]
+    },
+    {
+      "name": "tickets",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "order_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "ticket_orders"
+        },
+        {
+          "name": "category_id",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "ticket_categories"
+        },
+        {
+          "name": "ticket_code",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "qr_payload",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "attendee_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "attendee_document",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["unused", "used", "cancelled"]
+        },
+        {
+          "name": "used_at",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "validated_by",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "validation_notes",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_tickets_code ON tickets (ticket_code)",
+        "CREATE INDEX idx_tickets_order ON tickets (order_id)",
+        "CREATE INDEX idx_tickets_status ON tickets (status)"
       ]
     }
   ]

@@ -69,32 +69,31 @@ export default function Convites() {
           </div>
         </section>
 
-        {/* Informações de Preço Solidário */}
+        {/* Informações de Preço Solidário & Chamada para Bilheteria Online */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
           <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-pink-300 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
               <span className="text-xs font-bold text-pink-600 uppercase tracking-wider">
-                Valor do Convite Solidário
+                Bilheteria Oficial Online & Convite Solidário
               </span>
               <div className="text-3xl font-black text-purple-950">
-                R$ 25,00{' '}
-                <span className="text-sm font-normal text-slate-500">(por pessoa/dia)</span>
+                A partir de R$ 15,00{' '}
+                <span className="text-sm font-normal text-slate-500">
+                  (várias categorias com QR Code)
+                </span>
               </div>
               <p className="text-xs text-slate-500">
-                • Crianças de até 10 anos acompanhadas de responsável <strong>NÃO PAGAM</strong>{' '}
-                ingresso.
+                • Crianças de até 5 anos acompanhadas de responsável <strong>NÃO PAGAM</strong>.{' '}
+                Emissão instantânea de ingressos com QR Code no seu celular!
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <a
-                href="https://sympla.com.br"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-black px-6 h-12 rounded-2xl shadow-lg transition text-xs sm:text-sm"
+                href="/abracolandia/ingressos"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-black px-6 h-12 rounded-2xl shadow-lg transition text-xs sm:text-sm animate-bounce hover:animate-none"
               >
-                <Ticket className="w-4 h-4" /> Comprar Online Agora{' '}
-                <ExternalLink className="w-3.5 h-3.5" />
+                <Ticket className="w-4 h-4" /> Comprar Ingressos Online com QR Code
               </a>
             </div>
           </div>

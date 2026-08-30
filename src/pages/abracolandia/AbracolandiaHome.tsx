@@ -64,8 +64,8 @@ export default function AbracolandiaHome() {
     title: 'Abraçolândia 2025: A Maior Festa da Solidariedade!',
     subtitle:
       'Gastronomia deliciosa, shows ao vivo, mega área infantil e o tradicional Bingo Beneficente. 100% da renda revertida para causas sociais.',
-    cta_text: 'Garantir Convites',
-    cta_link: '/abracolandia/convites',
+    cta_text: 'Comprar Ingressos Online',
+    cta_link: '/abracolandia/ingressos',
     badge: '18 & 19 de Outubro • 12ª Edição',
     image_url: 'https://img.usecurling.com/p/1600/700?q=festival%20carnival%20celebration%20lights',
   }
@@ -105,10 +105,9 @@ export default function AbracolandiaHome() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link to={activeBanner.cta_link || '/abracolandia/convites'}>
-                  <Button className="bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-extrabold px-7 h-12 rounded-2xl shadow-xl shadow-pink-600/40 text-sm">
-                    <Ticket className="w-4 h-4 mr-2" />{' '}
-                    {activeBanner.cta_text || 'Comprar Convites'}
+                <Link to="/abracolandia/ingressos">
+                  <Button className="bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-extrabold px-7 h-12 rounded-2xl shadow-xl shadow-pink-600/40 text-sm animate-pulse hover:animate-none">
+                    <Ticket className="w-4 h-4 mr-2" /> Comprar Ingressos Online (QR Code)
                   </Button>
                 </Link>
                 <Link to="/abracolandia/festa">

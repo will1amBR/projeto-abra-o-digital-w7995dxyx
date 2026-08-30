@@ -315,3 +315,130 @@ export interface VolunteerInscription {
   created: string
   updated: string
 }
+
+// ==========================================
+// ONLINE TICKETING SYSTEM TYPES (ABRAÇOLÂNDIA)
+// ==========================================
+
+export interface TicketCategory {
+  id: string
+  name: string
+  description?: string
+  price_in_cents: number
+  total_quantity: number
+  available_quantity: number
+  badge_color?: string
+  active: boolean
+  order?: number
+  features?: string[]
+  created: string
+  updated: string
+}
+
+export interface TicketOrderItemSummary {
+  category_id: string
+  category_name: string
+  unit_price_cents: number
+  quantity: number
+  subtotal_cents: number
+  attendee_names?: string[]
+}
+
+export interface TicketOrder {
+  id: string
+  customer_name: string
+  customer_email: string
+  customer_phone: string
+  customer_document?: string
+  status: 'pending' | 'paid' | 'cancelled'
+  total_amount_cents: number
+  payment_method?: string
+  payment_gateway_ref?: string
+  payment_data?: any
+  items_summary?: TicketOrderItemSummary[]
+  created: string
+  updated: string
+}
+
+export interface TicketItem {
+  id: string
+  order_id: string
+  category_id: string
+  ticket_code: string
+  qr_payload: string
+  attendee_name?: string
+  attendee_document?: string
+  status: 'unused' | 'used' | 'cancelled'
+  used_at?: string
+  validated_by?: string
+  validation_notes?: string
+  created: string
+  updated: string
+  expand?: {
+    order_id?: TicketOrder
+    category_id?: TicketCategory
+  }
+}
+
+export interface CheckoutRequestPayload {
+  customer_name: string
+  customer_email: string
+  customer_phone: string
+  customer_document?: string
+  items: Array<{
+    category_id: string
+    quantity: number
+    attendee_names?: string[]
+  }>
+  simulate_mode?: boolean
+  success_url?: string
+  cancel_url?: string
+}
+
+export interface CheckoutResponsePayload {
+  mode: 'stripe' | 'demo'
+  status?: string
+  order_id: string
+  total_amount_cents?: number
+  checkout_url?: string
+  session_id?: string
+  tickets?: Array<{
+    id: string
+    ticket_code: string
+    category_id: string
+    category_name: string
+    attendee_name: string
+    status: string
+  }>
+  message?: string
+  error?: string
+}
+
+export interface TicketValidationResponse {
+  status: 'valid' | 'validated_success' | 'already_used' | 'cancelled' | 'not_found'
+  ticket?: {
+    id: string
+    ticket_code: string
+    status: 'unused' | 'used' | 'cancelled'
+    attendee_name?: string
+    attendee_document?: string
+    used_at?: string
+    validated_by?: string
+    category?: {
+      id: string
+      name: string
+      badge_color?: string
+      price_in_cents: number
+    }
+    order?: {
+      id: string
+      customer_name: string
+      customer_email: string
+      customer_phone: string
+      order_status: string
+      created: string
+    }
+  }
+  message?: string
+  error?: string
+}

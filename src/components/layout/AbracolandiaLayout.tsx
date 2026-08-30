@@ -24,6 +24,7 @@ import {
   ChevronRight,
   Flame,
   Gamepad2,
+  ShoppingBag,
 } from 'lucide-react'
 
 export const AbracolandiaHeader: React.FC = () => {
@@ -40,7 +41,8 @@ export const AbracolandiaHeader: React.FC = () => {
 
   const navLinks = [
     { name: 'A Festa', path: '/abracolandia/festa', icon: Music },
-    { name: 'Convites / PDVs', path: '/abracolandia/convites', icon: Ticket },
+    { name: 'Comprar Ingressos', path: '/abracolandia/ingressos', icon: Ticket },
+    { name: 'Pontos de Venda (PDVs)', path: '/abracolandia/convites', icon: ShoppingBag },
     { name: 'Beneficiados', path: '/abracolandia/beneficiados', icon: HeartHandshake },
     { name: 'Patrocinadores', path: '/abracolandia/patrocinadores', icon: Award },
     { name: 'Voluntariado', path: '/abracolandia/voluntariado', icon: Users },
@@ -147,9 +149,9 @@ export const AbracolandiaHeader: React.FC = () => {
 
           {/* Right Action */}
           <div className="hidden sm:flex items-center gap-3">
-            <Link to="/abracolandia/convites">
-              <Button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-extrabold text-xs px-5 h-10 shadow-md rounded-2xl">
-                <Ticket className="w-4 h-4 mr-1.5" /> Comprar Convite
+            <Link to="/abracolandia/ingressos">
+              <Button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-extrabold text-xs px-5 h-10 shadow-md rounded-2xl animate-pulse hover:animate-none">
+                <Ticket className="w-4 h-4 mr-1.5" /> Comprar Ingressos
               </Button>
             </Link>
           </div>
@@ -193,9 +195,9 @@ export const AbracolandiaHeader: React.FC = () => {
             </Link>
           ))}
           <div className="pt-3 border-t border-amber-200 space-y-2">
-            <Link to="/abracolandia/convites" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/abracolandia/ingressos" onClick={() => setIsMenuOpen(false)}>
               <Button className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold rounded-xl">
-                <Ticket className="w-4 h-4 mr-2" /> Garantir Meu Convite
+                <Ticket className="w-4 h-4 mr-2" /> 🎟 Comprar Ingressos Online
               </Button>
             </Link>
             <Link
@@ -310,10 +312,15 @@ export const AbracolandiaFooter: React.FC = () => {
             <ul className="space-y-2 text-xs text-slate-400 font-medium">
               <li>
                 <Link
-                  to="/abracolandia/convites"
+                  to="/abracolandia/ingressos"
                   className="hover:text-white text-amber-300 font-bold transition"
                 >
-                  🎟 Onde Comprar Convites (PDVs)
+                  🎟 Comprar Ingressos Online (QR Code)
+                </Link>
+              </li>
+              <li>
+                <Link to="/abracolandia/convites" className="hover:text-white transition">
+                  🏪 Pontos de Venda Físicos (PDVs)
                 </Link>
               </li>
               <li>
