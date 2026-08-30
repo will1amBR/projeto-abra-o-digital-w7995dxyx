@@ -43,24 +43,27 @@ export default function AbraPatrocinadores() {
       <AbracolandiaHeader />
 
       <main className="flex-1">
-        {/* Banner */}
-        <section className="bg-gradient-to-r from-purple-900 via-pink-700 to-amber-600 text-white py-16 relative overflow-hidden">
+        {/* Banner Oficial Empresas e Parceiros Abraçolândia */}
+        <section className="bg-gradient-to-r from-purple-950 via-pink-800 to-amber-700 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow">
-                Marcas que Transformam
+              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
+                EMPRESAS E PARCEIROS
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-                Patrocinadores da Abraçolândia
+                Uma transformação construída em conjunto
               </h1>
-              <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
-                Empresas parceiras e marcas apoiadoras divididas nas cotas Diamante, Ouro, Prata e
-                Bronze, viabilizando a megaestrutura da nossa festa solidária.
+              <p className="text-pink-100 text-base sm:text-lg leading-relaxed font-medium">
+                A realização das ações do Projeto Abraço também depende da participação de empresas,
+                patrocinadores, fornecedores e parceiros que acreditam no propósito do projeto. Essa
+                colaboração ajuda a viabilizar eventos, estruturas, serviços e iniciativas que
+                posteriormente se transformam em benefícios para as instituições selecionadas. Ao
+                apoiar o Projeto Abraço, empresas e parceiros passam a integrar uma rede de pessoas
+                e organizações mobilizadas em torno de uma finalidade social comum.
               </p>
             </div>
           </div>
         </section>
-
         {/* Busca por Nome */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white p-6 rounded-3xl border border-amber-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -223,6 +226,38 @@ export default function AbraPatrocinadores() {
               </div>
             </div>
           )}
+
+          {/* Chamada para Parcerias e Voluntariado */}
+          <div className="mt-16 bg-gradient-to-r from-purple-900 to-pink-900 rounded-3xl p-8 sm:p-12 text-white text-center space-y-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-amber-300 mx-auto">
+              <Sparkles className="w-6 h-6" />
+            </div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 text-white text-xs font-black uppercase tracking-wider">
+              FAÇA PARTE!
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black">
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+            </h3>
+            <p className="text-pink-100 text-sm max-w-2xl mx-auto leading-relaxed">
+              Parceiros registrados: Pipoll Travel, Talento Seguros, Questa, Grupo Curumim, Alfa
+              Alimentos, Facintelli, Bazar Irmãos Kido, Ozz, Instituto i9c, Yamamura, Soneda e
+              Sacolão Saúde, GlikSmart, entre outros.
+            </p>
+            <div className="pt-2 flex flex-wrap justify-center gap-3">
+              <a
+                href="mailto:contato@projetoabraco.org.br?subject=Interesse%20em%20Cota%20de%20Patroc%C3%ADnio"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-purple-950 font-black px-7 h-12 rounded-2xl text-xs sm:text-sm shadow-xl transition"
+              >
+                Solicitar Apresentação e Cotas <ArrowRight className="w-4 h-4" />
+              </a>
+              <Link
+                to="/abracolandia/voluntariado"
+                className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/40 text-white font-bold px-6 h-12 rounded-2xl text-xs sm:text-sm transition"
+              >
+                cadastre-se como voluntário e FAÇA PARTE!
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
 

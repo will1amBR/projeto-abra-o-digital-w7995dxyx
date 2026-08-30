@@ -58,19 +58,23 @@ export default function Patrocinadores() {
       <InstitutionalHeader />
 
       <main className="flex-1">
-        {/* Banner */}
+        {/* Banner Oficial Empresas e Parceiros */}
         <section className="bg-slate-900 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-500 text-slate-950 text-xs px-3 py-1 font-bold">
-                Parceiros do Bem
+              <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-bold uppercase tracking-wider">
+                EMPRESAS E PARCEIROS
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                Patrocinadores & Empresas Apoiadoras
+                Uma transformação construída em conjunto
               </h1>
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-                Empresas que acreditam e investem na transformação social, fortalecendo nossas ações
-                comunitárias e a realização da Abraçolândia.
+              <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+                A realização das ações do Projeto Abraço também depende da participação de empresas,
+                patrocinadores, fornecedores e parceiros que acreditam no propósito do projeto. Essa
+                colaboração ajuda a viabilizar eventos, estruturas, serviços e iniciativas que
+                posteriormente se transformam em benefícios para as instituições selecionadas. Ao
+                apoiar o Projeto Abraço, empresas e parceiros passam a integrar uma rede de pessoas
+                e organizações mobilizadas em torno de uma finalidade social comum.
               </p>
             </div>
           </div>
@@ -179,25 +183,34 @@ export default function Patrocinadores() {
           )}
 
           {/* Chamada para Novas Empresas Patrocinadoras */}
-          <div className="mt-16 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-3xl p-8 sm:p-12 text-white text-center space-y-4 shadow-xl">
-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 mx-auto">
+          <div className="mt-16 bg-gradient-to-r from-pink-600 via-purple-700 to-blue-900 rounded-3xl p-8 sm:p-12 text-white text-center space-y-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-amber-300 mx-auto">
               <Building className="w-6 h-6" />
             </div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 text-white text-xs font-black uppercase tracking-wider">
+              FAÇA PARTE!
+            </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold">
-              Sua Empresa Pode Transformar Realidades
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
             </h3>
-            <p className="text-slate-300 text-sm max-w-2xl mx-auto leading-relaxed">
-              Associe a marca da sua empresa ao Projeto Abraço ou garanta cotas de patrocínio
-              exclusivas para a Abraçolândia. Emitimos recibos sociais e prestação de contas
-              integral.
+            <p className="text-slate-200 text-sm max-w-2xl mx-auto leading-relaxed">
+              Parceiros registrados: Pipoll Travel, Talento Seguros, Questa, Grupo Curumim, Alfa
+              Alimentos, Facintelli, Bazar Irmãos Kido, Ozz, Instituto i9c, Yamamura, Soneda e
+              Sacolão Saúde, GlikSmart, entre outros.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap justify-center gap-4">
               <a
                 href="mailto:contato@projetoabraco.org.br?subject=Proposta%20de%20Patroc%C3%ADnio%20Projeto%20Abra%C3%A7o"
-                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 h-11 rounded-xl text-xs sm:text-sm shadow-md transition"
+                className="inline-flex items-center gap-2 bg-white text-purple-900 hover:bg-pink-50 font-extrabold px-6 h-11 rounded-xl text-xs sm:text-sm shadow-md transition"
               >
-                Solicitar Apresentação de Patrocínio <ArrowRight className="w-4 h-4" />
+                Seja um Parceiro Oficial <ArrowRight className="w-4 h-4" />
               </a>
+              <Link
+                to="/voluntariado"
+                className="inline-flex items-center gap-2 bg-pink-500/30 hover:bg-pink-500/50 border border-pink-300/40 text-white font-bold px-6 h-11 rounded-xl text-xs sm:text-sm transition"
+              >
+                cadastre-se como voluntário e FAÇA PARTE!
+              </Link>
             </div>
           </div>
         </section>

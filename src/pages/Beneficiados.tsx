@@ -51,19 +51,24 @@ export default function Beneficiados() {
       <InstitutionalHeader />
 
       <main className="flex-1">
-        {/* Banner */}
+        {/* Banner Oficial Quem o Projeto Abraço Beneficia */}
         <section className="bg-slate-900 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-red-600 text-white text-xs px-3 py-1 font-semibold">
-                Solidariedade em Ação
+              <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-bold uppercase tracking-wider">
+                QUEM O PROJETO ABRAÇO BENEFICIA
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                Ações Sociais & Beneficiados
+                Um abraço que alcança diferentes gerações
               </h1>
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-                Conheça os benefícios entregues em nossas ações, famílias acolhidas, entregas de
-                cestas básicas, reformas e capacitações com prestação de contas transparente.
+              <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+                O trabalho desenvolvido pelo Projeto Abraço não é direcionado a apenas um público.
+                As ações podem beneficiar: crianças, jovens, adultos e idosos, sempre por meio de
+                instituições, projetos e comunidades selecionados para receber as iniciativas
+                realizadas pelo projeto. Cada ação parte da ideia de que diferentes públicos possuem
+                necessidades diferentes. Por isso, os projetos desenvolvidos ao longo dos anos
+                transitam por áreas como assistência social, educação, cultura, saúde, esporte,
+                lazer e convivência.
               </p>
             </div>
           </div>

@@ -190,33 +190,30 @@ export default function AbracolandiaHome() {
           </div>
         </section>
 
-        {/* O QUE É A ABRAÇOLÂNDIA (SEÇÃO EDITÁVEL VIA CMS) */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-8 sm:p-12 border-2 border-amber-200 shadow-md grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        {/* SEÇÃO OFICIAL: ABRAÇOLÂNDIA 2025 & ABRAÇOLÂNDIA 2026 */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+          {/* Abraçolândia 2025 */}
+          <div className="bg-white rounded-3xl p-8 sm:p-12 border-2 border-pink-200 shadow-md grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-4">
-              <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-bold">
-                Sobre o Festival
+              <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-black uppercase tracking-wider">
+                ABRAÇOLÂNDIA 2025
               </Badge>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-purple-950">
-                Uma Festa Onde a Sua Alegria Vira Esperança!
+              <h2 className="text-2xl sm:text-3xl font-black text-purple-950">
+                ABRAÇOLÂNDIA 2025 – O Mágico Circo do Abraço
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                A <strong>Abraçolândia</strong> é o maior evento solidário da nossa instituição.
-                Reunimos milhares de famílias e amigos em um ambiente alegre, seguro e familiar, com
-                gastronomia de primeira, música, diversão infantil e sorteios emocionantes.
+              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+                Em 2025, a Abraçolândia ganhou o tema &quot;O Mágico Circo do Abraço&quot;, mantendo
+                a proposta de reunir diversão e solidariedade em uma grande ação social. Na edição,
+                foram definidas como instituições beneficiadas: ABRACO, Casa Safira, Associação Ikoi
+                no Sono, Maternidade Jesus, José e Maria, Kibô-no-Iê, Associação Kodomo no Sono, Lar
+                Pequeno Leão. A seleção de diferentes instituições reforça uma característica
+                importante do Projeto Abraço: a possibilidade de alcançar públicos e necessidades
+                distintas por meio de uma mesma mobilização.
               </p>
-              <div className="p-4 bg-pink-100/60 border border-pink-200 rounded-2xl text-xs sm:text-sm text-pink-950 font-semibold flex items-center gap-3">
-                <HeartHandshake className="w-8 h-8 text-pink-600 shrink-0" />
-                <span>
-                  <strong>100% da Arrecadação Revertida:</strong> Cada convite, cartela de bingo ou
-                  refeição consumida apoia diretamente as famílias assistidas pelo Projeto Abraço
-                  durante o ano inteiro.
-                </span>
-              </div>
               <div className="pt-2">
                 <Link to="/abracolandia/beneficiados">
                   <Button className="bg-purple-900 hover:bg-purple-800 text-white font-bold text-xs rounded-xl">
-                    Ver Quem é Ajudado com a Renda <ArrowRight className="w-4 h-4 ml-1.5" />
+                    Ver Instituições Beneficiadas <ArrowRight className="w-4 h-4 ml-1.5" />
                   </Button>
                 </Link>
               </div>
@@ -225,13 +222,52 @@ export default function AbracolandiaHome() {
             <div className="relative">
               <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-slate-200">
                 <img
-                  src="https://img.usecurling.com/p/1000/650?q=festival%20crowd%20family%20food%20stage"
-                  alt="Festival Abraçolândia"
+                  src="https://img.usecurling.com/p/1000/650?q=circus%20carnival%20magic%20celebration"
+                  alt="Abraçolândia 2025 - O Mágico Circo do Abraço"
                   className="w-full h-[360px] object-cover"
                 />
               </div>
               <div className="absolute -top-4 -right-4 bg-amber-400 text-slate-950 font-black px-4 py-2 rounded-2xl shadow-lg rotate-3 text-xs uppercase tracking-wider">
-                12ª Edição Confirmada!
+                Edição 2025
+              </div>
+            </div>
+          </div>
+
+          {/* Abraçolândia 2026 */}
+          <div className="bg-gradient-to-br from-purple-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-12 border border-purple-700 shadow-xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <Badge className="bg-amber-400 text-slate-950 text-xs px-3 py-1 font-black uppercase tracking-wider">
+                FUTURO & CONTINUIDADE
+              </Badge>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">ABRAÇOLÂNDIA 2026</h2>
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
+                O Projeto Abraço segue sua trajetória com uma nova edição da Abraçolândia em 2026. A
+                construção de cada edição envolve uma rede de pessoas, empresas, parceiros e
+                apoiadores que contribuem para tornar possível a realização do evento e,
+                consequentemente, ampliar sua capacidade de gerar benefícios sociais. Mais do que
+                colocar um evento de pé, cada nova Abraçolândia representa a continuidade de uma
+                história iniciada há mais de 20 anos. Uma história construída por pessoas que
+                acreditam que diversão e solidariedade podem caminhar juntas.
+              </p>
+              <div className="pt-2 flex flex-wrap gap-3">
+                <Link to="/abracolandia/voluntariado">
+                  <Button className="bg-pink-600 hover:bg-pink-500 text-white font-extrabold text-xs rounded-xl shadow-lg">
+                    cadastre-se como voluntário e FAÇA PARTE!
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 space-y-3">
+              <span className="text-xs font-bold text-amber-300 uppercase tracking-wide block">
+                VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+              </span>
+              <p className="text-xs text-pink-100 leading-relaxed">
+                Desde 2005 até as edições de 2025 e 2026, cada edição mobiliza voluntários e
+                patrocinadores para garantir benfeitorias estruturais diretas.
+              </p>
+              <div className="pt-2 text-xs font-mono text-cyan-300">
+                projetoabraco.org.br • @projetoabraco
               </div>
             </div>
           </div>

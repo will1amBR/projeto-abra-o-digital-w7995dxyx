@@ -42,21 +42,30 @@ export default function AFesta() {
       <AbracolandiaHeader />
 
       <main className="flex-1">
-        {/* Banner de Topo da Festa */}
+        {/* Banner de Topo da Festa com Textos Oficiais da Abraçolândia */}
         <section className="bg-gradient-to-r from-purple-900 via-pink-700 to-amber-600 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow">
-                Guia Oficial do Evento
+              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
+                A ABRAÇOLÂNDIA
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-                A Festa: Abraçolândia 2025
+                Diversão que se transforma em uma boa ação.
               </h1>
-              <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
-                Confira a programação completa de atrações musicais, opções gastronômicas, mega
-                espaço kids com monitores, regras do bingo beneficente e orientações de
-                estacionamento.
+              <p className="text-pink-100 text-base sm:text-lg leading-relaxed font-medium">
+                O Projeto Abraço atua desde 2005 na organização da Abraçolândia, um evento social,
+                cultural e recreativo. Toda renda obtida através deste evento é integralmente
+                revertida em instituições e/ou comunidades carentes, previamente selecionadas, em
+                forma de projetos de benfeitorias.
               </p>
+              <div className="pt-2 flex flex-wrap gap-3 text-xs font-bold text-white">
+                <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                  FAÇA PARTE!
+                </span>
+                <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                  VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+                </span>
+              </div>
             </div>
           </div>
         </section>

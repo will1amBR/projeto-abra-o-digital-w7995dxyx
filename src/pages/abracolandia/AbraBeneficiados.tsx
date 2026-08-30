@@ -38,25 +38,28 @@ export default function AbraBeneficiados() {
       <AbracolandiaHeader />
 
       <main className="flex-1">
-        {/* Banner */}
+        {/* Banner Oficial de Beneficiados Abraçolândia 2025 */}
         <section className="bg-gradient-to-r from-purple-900 via-pink-700 to-rose-700 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow">
-                Destinação 100% Solidária
+              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
+                ABRAÇOLÂNDIA 2025 – O Mágico Circo do Abraço
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-                Quem é Beneficiado com a Abraçolândia
+                Instituições Beneficiadas
               </h1>
               <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
-                Cada convite adquirido e cada rodada de bingo jogada financiam projetos de
-                assistência, lares acolhidos e terapias multidisciplinares para crianças e famílias
-                em vulnerabilidade.
+                Em 2025, a Abraçolândia ganhou o tema &quot;O Mágico Circo do Abraço&quot;, mantendo
+                a proposta de reunir diversão e solidariedade em uma grande ação social. Na edição,
+                foram definidas como instituições beneficiadas: ABRACO, Casa Safira, Associação Ikoi
+                no Sono, Maternidade Jesus, José e Maria, Kibô-no-Iê, Associação Kodomo no Sono, Lar
+                Pequeno Leão. A seleção de diferentes instituições reforça uma característica
+                importante do Projeto Abraço: a possibilidade de alcançar públicos e necessidades
+                distintas por meio de uma mesma mobilização.
               </p>
             </div>
           </div>
         </section>
-
         {/* Barra de Busca */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white p-6 rounded-3xl border border-amber-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">

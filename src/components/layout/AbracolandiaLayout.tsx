@@ -66,35 +66,20 @@ export const AbracolandiaHeader: React.FC = () => {
             <ArrowLeft className="w-3.5 h-3.5" /> Voltar ao Projeto Abraço (Institucional)
           </Link>
 
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-3 sm:gap-4 ml-auto flex-wrap">
+            <span className="font-bold text-white text-[11px] hidden md:inline">
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+            </span>
             {/* Socials */}
             <div className="flex items-center gap-3 text-pink-100">
               <a
-                href={socials.instagram || 'https://instagram.com'}
+                href="https://instagram.com/projetoabraco"
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-white transition"
-                title="Instagram"
+                className="hover:text-white transition flex items-center gap-1 font-semibold text-xs"
+                title="Instagram @projetoabraco"
               >
-                <Instagram className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href={socials.facebook || 'https://facebook.com'}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-white transition"
-                title="Facebook"
-              >
-                <Facebook className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href={socials.youtube || 'https://youtube.com'}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-white transition"
-                title="YouTube"
-              >
-                <Youtube className="w-3.5 h-3.5" />
+                <Instagram className="w-3.5 h-3.5" /> @projetoabraco
               </a>
             </div>
 
@@ -242,22 +227,30 @@ export const AbracolandiaFooter: React.FC = () => {
             <div className="flex items-center gap-3">
               <AbracoLogo size="md" variant="full" />
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              O maior evento beneficente do Projeto Abraço. Uma celebração de música, alta
-              gastronomia, parque infantil e bingo beneficente onde 100% da arrecadação é revertida
-              para causas sociais.
+            <p className="text-xs font-bold text-pink-400 uppercase tracking-wide">
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
             </p>
+            <p className="text-slate-400 text-xs leading-relaxed">
+              O Projeto Abraço atua desde 2005 na organização da Abraçolândia, um evento social,
+              cultural e recreativo. Toda renda obtida através deste evento é integralmente
+              revertida em instituições e/ou comunidades carentes, previamente selecionadas, em
+              forma de projetos de benfeitorias.
+            </p>
+            <div className="text-xs font-semibold text-cyan-300">
+              projetoabraco.org.br • Instagram @projetoabraco
+            </div>
             <div className="flex items-center gap-3 pt-2">
               <a
-                href={socials.instagram || 'https://instagram.com'}
+                href="https://instagram.com/projetoabraco"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-pink-400 hover:text-white hover:bg-pink-600 transition"
+                title="Instagram @projetoabraco"
               >
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href={socials.facebook || 'https://facebook.com'}
+                href={socials.facebook || 'https://facebook.com/projetoabraco'}
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-blue-400 hover:text-white hover:bg-blue-600 transition"
@@ -265,7 +258,7 @@ export const AbracolandiaFooter: React.FC = () => {
                 <Facebook className="w-4 h-4" />
               </a>
               <a
-                href={socials.youtube || 'https://youtube.com'}
+                href={socials.youtube || 'https://youtube.com/@projetoabraco'}
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-red-400 hover:text-white hover:bg-red-600 transition"
@@ -357,13 +350,23 @@ export const AbracolandiaFooter: React.FC = () => {
           {/* Col 4 */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wider">
-              Projeto Abraço
+              FAÇA PARTE!
             </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              A Abraçolândia é uma realização oficial da Associação Projeto Abraço (CNPJ
-              12.345.678/0001-90).
+            <p className="text-xs text-slate-300 font-semibold">
+              cadastre-se como voluntário e FAÇA PARTE!
             </p>
-            <div className="pt-2">
+            <p className="text-xs text-slate-400 leading-relaxed">
+              A Abraçolândia é uma realização oficial da Associação Projeto Abraço.
+            </p>
+            <div className="pt-2 flex flex-col gap-2">
+              <Link to="/abracolandia/voluntariado">
+                <Button
+                  size="sm"
+                  className="w-full text-xs bg-pink-600 hover:bg-pink-700 text-white font-bold"
+                >
+                  <HeartHandshake className="w-3.5 h-3.5 mr-1.5" /> Seja Voluntário
+                </Button>
+              </Link>
               <Link to="/">
                 <Button
                   variant="outline"

@@ -38,19 +38,22 @@ export default function FestasAnteriores() {
       <AbracolandiaHeader />
 
       <main className="flex-1">
-        {/* Banner */}
+        {/* Banner Oficial de Festas Anteriores */}
         <section className="bg-gradient-to-r from-purple-950 via-pink-800 to-amber-700 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl space-y-4">
-              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow">
-                Memórias & Resultados
+              <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
+                UMA HISTÓRIA CONSTRUÍDA AO LONGO DOS ANOS
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-                Festas Anteriores da Abraçolândia
+                Festas Anteriores e Edições da Abraçolândia
               </h1>
               <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
-                Relembre a trajetória das edições passadas, fotos históricas, vídeos da cobertura e
-                as métricas de arrecadação revertidas para a comunidade.
+                A trajetória do Projeto Abraço não começou hoje. Desde 2005, diferentes projetos,
+                ações e edições foram realizados, acompanhando diferentes públicos e necessidades.
+                Toda renda obtida através deste evento é integralmente revertida em instituições
+                e/ou comunidades carentes, previamente selecionadas, em forma de projetos de
+                benfeitorias.
               </p>
             </div>
           </div>

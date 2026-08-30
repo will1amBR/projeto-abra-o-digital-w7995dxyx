@@ -116,35 +116,56 @@ export default function Voluntariado() {
       <InstitutionalHeader />
 
       <main className="flex-1">
-        {/* Banner */}
+        {/* Banner Oficial de Voluntariado */}
         <section className="bg-slate-900 text-white py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8 space-y-4">
-                <Badge className="bg-green-600 text-white text-xs px-3 py-1 font-semibold">
-                  Faça Parte da Mudança
+                <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-bold uppercase tracking-wider">
+                  VOLUNTARIADO
                 </Badge>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                  Seja um Voluntário do Projeto Abraço
+                  Faça parte dessa história
                 </h1>
-                <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-                  Doe seu tempo, seu talento e seu amor ao próximo. O voluntariado é o coração
-                  pulsante de todas as nossas iniciativas e eventos.
+                <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-3xl">
+                  O Projeto Abraço é feito por pessoas. Pessoas que doam tempo, trabalho,
+                  conhecimento, apoio e disposição para ajudar a transformar cada iniciativa em
+                  realidade. Ser voluntário é uma das formas de participar dessa corrente. Ao longo
+                  das ações e eventos, diferentes pessoas se unem em torno de um objetivo comum,
+                  contribuindo para que os projetos possam chegar às instituições e aos públicos
+                  beneficiados. Se você acredita que a diversão também pode se transformar em uma
+                  boa ação, venha fazer parte do Projeto Abraço. Cadastre-se como voluntário.
                 </p>
+                <div className="pt-2">
+                  <Button
+                    onClick={() => {
+                      const el = document.getElementById('inscricao-form')
+                      el?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    className="bg-pink-600 hover:bg-pink-500 text-white font-extrabold text-xs sm:text-sm h-11 px-6 rounded-xl shadow-lg"
+                  >
+                    <HeartHandshake className="w-4 h-4 mr-2" /> Cadastre-se como voluntário e FAÇA
+                    PARTE!
+                  </Button>
+                </div>
               </div>
 
               {/* Box de Acesso Rápido à Área Gamificada */}
-              <div className="lg:col-span-4 bg-gradient-to-br from-blue-900/90 to-indigo-950/90 border border-blue-500/30 rounded-2xl p-5 text-white backdrop-blur-md shadow-xl space-y-3">
-                <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+              <div className="lg:col-span-4 bg-gradient-to-br from-purple-900/90 to-indigo-950/90 border border-purple-500/30 rounded-2xl p-6 text-white backdrop-blur-md shadow-xl space-y-4">
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-sm uppercase tracking-wide">
                   <Trophy className="w-5 h-5 text-amber-400" />
                   Área do Voluntário Gamificada
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Já é voluntário? Acompanhe sua pontuação, participe de missões e suba no ranking!
+                <p className="text-xs text-slate-200 leading-relaxed">
+                  VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO! Cadastre-se, ganhe pontos em missões
+                  solidárias e acompanhe seu impacto.
                 </p>
+                <div className="text-[11px] text-pink-300 font-semibold">
+                  projetoabraco.org.br • @projetoabraco
+                </div>
                 <Link to="/area-do-voluntario" className="block">
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs h-9 shadow-md">
-                    <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Acessar Meus Pontos & Missões
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs h-10 shadow-md">
+                    <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Acessar Área Gamificada
                   </Button>
                 </Link>
               </div>
@@ -295,12 +316,13 @@ export default function Voluntariado() {
         <section id="inscricao-form" className="bg-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-3 mb-10">
-              <Badge className="bg-blue-600 text-white text-xs px-3 py-1 font-semibold">
-                Formulário de Inscrição
+              <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-bold uppercase tracking-wider">
+                FAÇA PARTE!
               </Badge>
-              <h2 className="text-3xl font-extrabold">Junte-se à Nossa Rede do Bem</h2>
+              <h2 className="text-3xl font-extrabold">cadastre-se como voluntário e FAÇA PARTE!</h2>
               <p className="text-slate-300 text-sm max-w-xl mx-auto">
-                Preencha os seus dados para iniciarmos o processo de integração voluntária.
+                Se você acredita que a diversão também pode se transformar em uma boa ação, venha
+                fazer parte do Projeto Abraço.
               </p>
             </div>
 
@@ -492,9 +514,11 @@ export default function Voluntariado() {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold h-11 text-sm shadow-lg"
+                  className="w-full bg-pink-600 hover:bg-pink-500 text-white font-extrabold h-12 text-sm shadow-lg uppercase tracking-wide"
                 >
-                  {loading ? 'Enviando sua inscrição...' : 'Concluir Inscrição Voluntária'}
+                  {loading
+                    ? 'Enviando sua inscrição...'
+                    : 'Cadastre-se como voluntário e FAÇA PARTE!'}
                 </Button>{' '}
               </form>
             )}

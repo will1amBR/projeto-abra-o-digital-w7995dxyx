@@ -56,38 +56,29 @@ export const InstitutionalHeader: React.FC = () => {
       {/* Top Bar for Socials & Contact & Hotsite Switch */}
       <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:flex items-center gap-1.5 text-slate-400">
-              <MapPin className="w-3.5 h-3.5 text-blue-400" /> São Paulo, SP
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+            <span className="font-extrabold text-pink-400 uppercase tracking-wider">
+              FAÇA PARTE!
             </span>
-            <a
-              href={`mailto:${socials.email || 'contato@projetoabraco.org.br'}`}
-              className="flex items-center gap-1.5 hover:text-white transition"
-            >
-              <Mail className="w-3.5 h-3.5 text-blue-400" />{' '}
-              {socials.email || 'contato@projetoabraco.org.br'}
-            </a>
-            <a
-              href={socials.whatsapp || 'https://wa.me/5511999998888'}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden md:flex items-center gap-1.5 hover:text-white transition"
-            >
-              <Phone className="w-3.5 h-3.5 text-emerald-400" /> {socials.phone || '(11) 3234-5678'}
-            </a>
+            <span className="text-slate-300 font-semibold hidden sm:inline">
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
+            </span>
+            <span className="text-slate-400 text-[11px] hidden md:inline">
+              • projetoabraco.org.br
+            </span>
           </div>
 
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-3 sm:gap-4 ml-auto">
             {/* Social Icons */}
             <div className="flex items-center gap-3">
               <a
-                href={socials.instagram || 'https://instagram.com/projetoabracoficial'}
+                href="https://instagram.com/projetoabraco"
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-pink-400 transition"
-                title="Instagram"
+                className="hover:text-pink-400 transition flex items-center gap-1 font-semibold text-xs"
+                title="Instagram @projetoabraco"
               >
-                <Instagram className="w-3.5 h-3.5" />
+                <Instagram className="w-3.5 h-3.5 text-pink-400" /> @projetoabraco
               </a>
               <a
                 href={socials.facebook || 'https://facebook.com/projetoabracoficial'}
@@ -184,8 +175,8 @@ export const InstitutionalHeader: React.FC = () => {
               </Button>
             </Link>
             <Link to="/voluntariado">
-              <Button className="bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs px-4 h-10 shadow-sm rounded-xl">
-                Quero Participar <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              <Button className="bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs px-4 h-10 shadow-sm rounded-xl">
+                <HeartHandshake className="w-4 h-4 mr-1.5" /> FAÇA PARTE!
               </Button>
             </Link>
           </div>
@@ -232,7 +223,10 @@ export const InstitutionalHeader: React.FC = () => {
               <ChevronRight className="w-4 h-4" />
             </Link>
             <Link to="/voluntariado" onClick={() => setIsMenuOpen(false)}>
-              <Button className="w-full bg-blue-900 text-white mt-1">Quero Ser Voluntário</Button>
+              <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold mt-1">
+                <HeartHandshake className="w-4 h-4 mr-1.5" /> Cadastre-se como voluntário e FAÇA
+                PARTE!
+              </Button>
             </Link>
           </div>
         </div>
@@ -259,25 +253,31 @@ export const InstitutionalFooter: React.FC = () => {
             <div className="flex items-center gap-3">
               <AbracoLogo size="md" variant="full" />
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              Transformamos diversão em boa ação! Há mais de 15 anos unindo voluntários e empresas
-              para mobilizar recursos e destinar a projetos de benfeitoria para instituições
-              assistenciais.
+            <p className="text-xs font-bold text-pink-400 uppercase tracking-wide">
+              VAMOS FAZER DA DIVERSÃO UMA BOA AÇÃO!
             </p>
+            <p className="text-slate-400 text-xs leading-relaxed">
+              O Projeto Abraço é uma organização não governamental, sem fins lucrativos, com atuação
+              na área de assistência social. Há mais de 20 anos mobilizando pessoas e transformando
+              participação em solidariedade.
+            </p>
+            <div className="text-xs font-semibold text-cyan-300">projetoabraco.org.br</div>
             <div className="flex items-center gap-3 pt-2">
               <a
-                href={socials.instagram || 'https://instagram.com/projetoabracoficial'}
+                href="https://instagram.com/projetoabraco"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-pink-600 transition"
+                title="Instagram @projetoabraco"
               >
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href={socials.facebook || 'https://facebook.com/projetoabracoficial'}
+                href={socials.facebook || 'https://facebook.com/projetoabraco'}
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-600 transition"
+                title="Facebook"
               >
                 <Facebook className="w-4 h-4" />
               </a>
@@ -286,6 +286,7 @@ export const InstitutionalFooter: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-600 transition"
+                title="YouTube"
               >
                 <Youtube className="w-4 h-4" />
               </a>
@@ -328,9 +329,9 @@ export const InstitutionalFooter: React.FC = () => {
               <li>
                 <Link
                   to="/voluntariado"
-                  className="hover:text-white transition flex items-center gap-1.5"
+                  className="hover:text-pink-400 text-pink-300 font-bold transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Seja um Voluntário
+                  <ChevronRight className="w-3.5 h-3.5 text-pink-400" /> FAÇA PARTE! (Voluntariado)
                 </Link>
               </li>
               <li>
@@ -338,15 +339,15 @@ export const InstitutionalFooter: React.FC = () => {
                   to="/area-do-voluntario"
                   className="text-amber-300 hover:text-amber-200 font-semibold transition flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Área do Voluntário (Pontos)
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Área do Voluntário
                 </Link>
-              </li>{' '}
+              </li>
               <li>
                 <Link
-                  to="/voluntariado"
+                  to="/nossa-historia"
                   className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3 h-3 text-blue-400" /> Seja um Voluntário
+                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Nossa História
                 </Link>
               </li>
               <li>
@@ -354,7 +355,7 @@ export const InstitutionalFooter: React.FC = () => {
                   to="/noticias"
                   className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3 h-3 text-blue-400" /> Notícias e Acontecimentos
+                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Notícias e Acontecimentos
                 </Link>
               </li>
               <li>
@@ -362,7 +363,7 @@ export const InstitutionalFooter: React.FC = () => {
                   to="/beneficiados"
                   className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3 h-3 text-blue-400" /> Ações e Beneficiados
+                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Ações e Beneficiados
                 </Link>
               </li>
               <li>
@@ -370,7 +371,7 @@ export const InstitutionalFooter: React.FC = () => {
                   to="/patrocinadores"
                   className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  <ChevronRight className="w-3 h-3 text-blue-400" /> Empresas Patrocinadoras
+                  <ChevronRight className="w-3.5 h-3.5 text-blue-400" /> Empresas e Parceiros
                 </Link>
               </li>
               <li>
@@ -378,7 +379,7 @@ export const InstitutionalFooter: React.FC = () => {
                   to="/abracolandia"
                   className="hover:text-pink-400 text-pink-300 font-bold transition flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3 h-3 text-pink-400" /> Hotsite Abraçolândia
+                  <Sparkles className="w-3.5 h-3.5 text-pink-400" /> Hotsite Abraçolândia
                 </Link>
               </li>
             </ul>
