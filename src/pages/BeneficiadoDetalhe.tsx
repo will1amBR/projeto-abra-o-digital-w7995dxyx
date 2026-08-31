@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getBeneficiaryBySlug, getBeneficiaries, getImageSrc } from '@/services/contentService'
 import type { Beneficiary } from '@/types/content'
 import { Button } from '@/components/ui/button'
@@ -246,6 +247,7 @@ export default function BeneficiadoDetalhe() {
         </div>
       </main>
 
+      <ColorStrip className="h-1.5" />
       <InstitutionalFooter />
     </div>
   )

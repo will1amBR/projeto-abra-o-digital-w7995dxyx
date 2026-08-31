@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getNewsBySlug, getNews, getImageSrc } from '@/services/contentService'
 import type { NewsItem } from '@/types/content'
 import { Button } from '@/components/ui/button'
@@ -208,6 +209,7 @@ export default function NoticiaDetalhe() {
         </div>
       </main>
 
+      <ColorStrip className="h-1.5" />
       <InstitutionalFooter />
     </div>
   )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import {
   getActiveTicketCategories,
   createTicketCheckout,
@@ -745,6 +746,7 @@ export default function IngressosOnline() {
         )}
       </main>
 
+      <ColorStrip className="h-1.5" />
       <AbracolandiaFooter />
     </div>
   )

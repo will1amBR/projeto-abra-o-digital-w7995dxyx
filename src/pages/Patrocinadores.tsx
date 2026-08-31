@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getSponsors, getImageSrc } from '@/services/contentService'
 import type { Sponsor } from '@/types/content'
 import { Card, CardContent } from '@/components/ui/card'
@@ -79,6 +80,8 @@ export default function Patrocinadores() {
             </div>
           </div>
         </section>
+
+        <ColorStrip className="h-1.5" />
 
         {/* Filtros & Barra de Busca por Nome */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

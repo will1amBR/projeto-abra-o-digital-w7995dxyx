@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getEventSections, getSiteSettings, getImageSrc } from '@/services/contentService'
 import type { EventSection } from '@/types/content'
 import { Card, CardContent } from '@/components/ui/card'
@@ -145,6 +146,8 @@ export default function AFesta() {
           </div>
         </section>
 
+        <ColorStrip className="h-1.5" />
+
         {/* 1. SEÇÃO GERAL & INFRAESTRUTURA */}
         {generalSection && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -179,6 +182,8 @@ export default function AFesta() {
             </div>
           </section>
         )}
+
+        <ColorStrip className="h-1.5" />
 
         {/* 2. ATRAÇÕES & SHOWS CONFIRMADOS */}
         {attractionsSection && (
@@ -216,6 +221,8 @@ export default function AFesta() {
             </div>
           </section>
         )}
+
+        <ColorStrip className="h-1.5" />
 
         {/* 3. GASTRONOMIA & PRAÇA DE ALIMENTAÇÃO */}
         {gastronomySection && (

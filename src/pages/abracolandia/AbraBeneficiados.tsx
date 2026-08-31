@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getBeneficiaries, getImageSrc } from '@/services/contentService'
 import type { Beneficiary } from '@/types/content'
 import { Card, CardContent } from '@/components/ui/card'
@@ -138,6 +139,7 @@ export default function AbraBeneficiados() {
         </section>
       </main>
 
+      <ColorStrip className="h-1.5" />
       <AbracolandiaFooter />
     </div>
   )

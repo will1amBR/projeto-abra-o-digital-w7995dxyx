@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getTicketOutlets } from '@/services/contentService'
 import type { TicketOutlet } from '@/types/content'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -98,6 +99,8 @@ export default function Convites() {
             </div>
           </div>
         </section>
+
+        <ColorStrip className="h-1.5" />
 
         {/* Filtros & Barra de Busca por Cidade ou Nome */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

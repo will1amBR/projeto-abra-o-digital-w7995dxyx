@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import {
   getBanners,
   getEventSections,
@@ -207,6 +208,8 @@ export default function AbracolandiaHome() {
           </div>
         </section>
 
+        <ColorStrip className="h-1.5" />
+
         {/* SEÇÃO OFICIAL: ABRAÇOLÂNDIA 2025 & ABRAÇOLÂNDIA 2026 */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
           {/* Abraçolândia 2025 */}
@@ -315,6 +318,8 @@ export default function AbracolandiaHome() {
           </div>{' '}
         </section>
 
+        <ColorStrip className="h-1.5" />
+
         {/* RESUMO DAS FESTAS ANTERIORES & ARRECADAÇÃO */}
         {lastEdition && (
           <section className="bg-purple-950 text-white py-16">
@@ -367,6 +372,8 @@ export default function AbracolandiaHome() {
             </div>
           </section>
         )}
+
+        <ColorStrip className="h-1.5" />
 
         {/* PATROCINADORES OFICIAIS (DIAMANTE, OURO, PRATA, BRONZE) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">

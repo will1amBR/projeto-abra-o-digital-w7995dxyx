@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/InstitutionalLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { useAuth } from '@/contexts/AuthContext'
 import {
   calculateLevelInfo,
@@ -697,6 +698,8 @@ export default function AreaDoVoluntario() {
             </div>
           </div>
         </section>
+
+        <ColorStrip className="h-1.5" />
 
         {/* REGRAS & COMO FUNCIONA A PONTUAÇÃO */}
         <section className="bg-white border-b border-slate-200 py-10 shadow-xs">

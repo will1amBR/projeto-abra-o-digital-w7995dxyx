@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getVolunteerAreas, submitVolunteerInscription } from '@/services/contentService'
 import type { VolunteerArea } from '@/types/content'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -276,6 +277,7 @@ export default function AbraVoluntariado() {
         </section>
       </main>
 
+      <ColorStrip className="h-1.5" />
       <AbracolandiaFooter />
     </div>
   )

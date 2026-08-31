@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import pb from '@/lib/pocketbase/client'
 import { BingoGame, getCurrentBingoGame, getBingoColumn } from '@/services/bingoService'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import AbracoLogo from '@/components/brand/AbracoLogo'
@@ -326,6 +327,7 @@ export default function AbracolandiaBingoPublic() {
         </section>
       </main>
 
+      <ColorStrip className="h-1.5" />
       <AbracolandiaFooter />
     </div>
   )

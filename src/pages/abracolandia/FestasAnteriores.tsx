@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
+import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getPastEditions, getImageSrc } from '@/services/contentService'
 import type { PastEdition } from '@/types/content'
 import { Card, CardContent } from '@/components/ui/card'
@@ -58,6 +59,8 @@ export default function FestasAnteriores() {
             </div>
           </div>
         </section>
+
+        <ColorStrip className="h-1.5" />
 
         {/* Campo de Busca por Ano ou Tema */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
