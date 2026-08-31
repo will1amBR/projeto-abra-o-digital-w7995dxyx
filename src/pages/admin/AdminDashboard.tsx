@@ -51,6 +51,7 @@ import {
   Dice5,
 } from 'lucide-react'
 import AbracoLogo from '@/components/brand/AbracoLogo'
+import AdminLayout from '@/components/layout/AdminLayout'
 
 export default function AdminDashboard() {
   const { user, logout, isAdmin } = useAuth()
@@ -865,78 +866,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
-      {/* Top Navbar */}
-      <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 px-4 lg:px-8 py-3 shadow-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <AbracoLogo size="sm" variant="full" />
-            <div className="hidden sm:block border-l border-slate-700 pl-3">
-              <div className="flex items-center gap-2">
-                <h1 className="font-bold text-base tracking-tight">CMS Projeto Abraço</h1>
-                <Badge className="bg-amber-500 text-slate-950 text-[10px] font-bold px-1.5 py-0">
-                  ADMIN
-                </Badge>
-              </div>
-              <p className="text-[11px] text-slate-400">
-                Gestão Integrada • Website Institucional & Hotsite Abraçolândia
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <Button
-              size="sm"
-              onClick={() => navigate('/admin/caixa')}
-              className="text-xs bg-pink-600 hover:bg-pink-500 text-white font-bold h-8"
-            >
-              <CreditCard className="w-3.5 h-3.5 mr-1.5" /> Caixa & Consumo
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => navigate('/admin/bingo')}
-              className="text-xs bg-purple-600 hover:bg-purple-500 text-white font-bold h-8"
-            >
-              <Dice5 className="w-3.5 h-3.5 mr-1.5 text-amber-300" /> Sorteador Bingo
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/admin/validar-ingressos')}
-              className="text-xs bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white h-8"
-            >
-              <ScanLine className="w-3.5 h-3.5 mr-1.5 text-emerald-400" /> Portaria
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/abracolandia')}
-              className="text-xs bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white h-8 hidden sm:inline-flex"
-            >
-              <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-pink-400" /> Abraçolândia
-            </Button>
-            <div className="h-6 w-px bg-slate-800 hidden sm:block" />
-            <div className="text-right hidden md:block">
-              <div className="text-xs font-semibold text-slate-200">
-                {user?.name || user?.email}
-              </div>
-              <div className="text-[10px] text-slate-400">{user?.email}</div>
-            </div>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => {
-                logout()
-                navigate('/admin/login')
-              }}
-              className="text-xs h-8 px-2.5"
-            >
-              <LogOut className="w-3.5 h-3.5 mr-1.5" /> Sair
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    <AdminLayout title="Painel de Controle CMS" activeNav="cms">
       {/* Main Container */}
       <div className="max-w-7xl mx-auto w-full p-4 lg:p-8 flex-1">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -2745,6 +2675,6 @@ export default function AdminDashboard() {
           fields={modalConfig.fields}
         />
       )}
-    </div>
+    </AdminLayout>
   )
 }

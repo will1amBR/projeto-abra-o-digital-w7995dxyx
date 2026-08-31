@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import AdminLayout from '@/components/layout/AdminLayout'
 import { validateTicketApi, getAllTickets, formatCurrencyBRL } from '@/services/ticketService'
 import type { TicketValidationResponse, TicketItem } from '@/types/content'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -214,18 +215,11 @@ export default function ValidarIngressos() {
   const totalUnused = allTickets.filter((t) => t.status === 'unused').length
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans">
-      {/* Top Mobile-Friendly Header */}
-      <header className="bg-slate-950 border-b border-slate-800 px-4 py-3 sticky top-0 z-40">
+    <AdminLayout title="Controle de Portaria & Ingressos" activeNav="portaria">
+      {/* Subheader action bar for scanner */}
+      <div className="bg-slate-900 border-b border-slate-800 px-4 py-3">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link
-              to="/admin"
-              className="p-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition"
-              title="Voltar ao Painel CMS"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5">
@@ -263,274 +257,278 @@ export default function ValidarIngressos() {
             </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto w-full p-4 sm:p-6 flex-1 space-y-6">
-        {/* Real-time Counters Row */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 sm:p-4 text-center">
-            <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">
-              Total Emitidos
-            </span>
-            <span className="text-xl sm:text-3xl font-black text-white mt-0.5 block">
-              {totalSold}
-            </span>
+      <div className="bg-slate-900 text-slate-100 flex-1">
+        <div className="max-w-5xl mx-auto w-full p-4 sm:p-6 space-y-6">
+          {/* Real-time Counters Row */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 sm:p-4 text-center">
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">
+                Total Emitidos
+              </span>
+              <span className="text-xl sm:text-3xl font-black text-white mt-0.5 block">
+                {totalSold}
+              </span>
+            </div>
+
+            <div className="bg-emerald-950/60 border border-emerald-700/80 rounded-2xl p-3 sm:p-4 text-center">
+              <span className="text-[10px] sm:text-xs font-bold text-emerald-400 uppercase tracking-wider block">
+                Entradas Validadas
+              </span>
+              <span className="text-xl sm:text-3xl font-black text-emerald-300 mt-0.5 block">
+                {totalUsed}
+              </span>
+            </div>
+
+            <div className="bg-purple-950/60 border border-purple-700/80 rounded-2xl p-3 sm:p-4 text-center">
+              <span className="text-[10px] sm:text-xs font-bold text-purple-400 uppercase tracking-wider block">
+                Restantes na Fila
+              </span>
+              <span className="text-xl sm:text-3xl font-black text-purple-300 mt-0.5 block">
+                {totalUnused}
+              </span>
+            </div>
           </div>
 
-          <div className="bg-emerald-950/60 border border-emerald-700/80 rounded-2xl p-3 sm:p-4 text-center">
-            <span className="text-[10px] sm:text-xs font-bold text-emerald-400 uppercase tracking-wider block">
-              Entradas Validadas
-            </span>
-            <span className="text-xl sm:text-3xl font-black text-emerald-300 mt-0.5 block">
-              {totalUsed}
-            </span>
-          </div>
-
-          <div className="bg-purple-950/60 border border-purple-700/80 rounded-2xl p-3 sm:p-4 text-center">
-            <span className="text-[10px] sm:text-xs font-bold text-purple-400 uppercase tracking-wider block">
-              Restantes na Fila
-            </span>
-            <span className="text-xl sm:text-3xl font-black text-purple-300 mt-0.5 block">
-              {totalUnused}
-            </span>
-          </div>
-        </div>
-
-        {/* Action Panel: Scanner Camera + Manual Input */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Leitor de Câmera / QR */}
-          <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl overflow-hidden shadow-xl">
-            <CardHeader className="p-5 pb-3">
-              <CardTitle className="text-base font-black flex items-center justify-between">
-                <span className="flex items-center gap-2 text-white">
-                  <Camera className="w-5 h-5 text-pink-400" /> Leitor por Câmera (QR Code)
-                </span>
-                <Button
-                  size="sm"
-                  onClick={toggleCamera}
-                  className={`text-xs h-8 px-3 rounded-xl font-bold ${
-                    isCameraActive
-                      ? 'bg-red-600 hover:bg-red-700 text-white'
-                      : 'bg-pink-600 hover:bg-pink-700 text-white'
-                  }`}
-                >
-                  {isCameraActive ? 'Parar Câmera' : 'Ativar Câmera'}
-                </Button>
-              </CardTitle>
-              <CardDescription className="text-xs text-slate-400">
-                Aponte a câmera do celular para o QR Code impresso ou na tela do visitante.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-5 pt-0 space-y-4">
-              <div className="relative aspect-video sm:aspect-square bg-slate-950 rounded-2xl border-2 border-slate-700 overflow-hidden flex items-center justify-center">
-                {isCameraActive ? (
-                  <>
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      muted
-                      className="w-full h-full object-cover"
-                    />
-                    {/* Scanner target overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-48 h-48 border-2 border-pink-500 rounded-2xl relative animate-pulse shadow-lg shadow-pink-500/20">
-                        <div className="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-amber-400 rounded-tl" />
-                        <div className="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-amber-400 rounded-tr" />
-                        <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-amber-400 rounded-bl" />
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-amber-400 rounded-br" />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-center p-6 space-y-3">
-                    <QrCode className="w-16 h-16 text-slate-600 mx-auto" />
-                    <p className="text-xs text-slate-400 max-w-xs mx-auto">
-                      Clique em <strong>Ativar Câmera</strong> acima para escanear ingressos em
-                      tempo real.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Validação Manual por Código */}
-          <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl shadow-xl flex flex-col justify-between">
-            <div>
+          {/* Action Panel: Scanner Camera + Manual Input */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Leitor de Câmera / QR */}
+            <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl overflow-hidden shadow-xl">
               <CardHeader className="p-5 pb-3">
-                <CardTitle className="text-base font-black flex items-center gap-2 text-white">
-                  <Ticket className="w-5 h-5 text-purple-400" /> Digitação Manual do Código
+                <CardTitle className="text-base font-black flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-white">
+                    <Camera className="w-5 h-5 text-pink-400" /> Leitor por Câmera (QR Code)
+                  </span>
+                  <Button
+                    size="sm"
+                    onClick={toggleCamera}
+                    className={`text-xs h-8 px-3 rounded-xl font-bold ${
+                      isCameraActive
+                        ? 'bg-red-600 hover:bg-red-700 text-white'
+                        : 'bg-pink-600 hover:bg-pink-700 text-white'
+                    }`}
+                  >
+                    {isCameraActive ? 'Parar Câmera' : 'Ativar Câmera'}
+                  </Button>
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-400">
-                  Digite o código alfanumérico do ingresso (Ex: <code>ABRA-A1B2C3D4</code>) ou ID.
+                  Aponte a câmera do celular para o QR Code impresso ou na tela do visitante.
                 </CardDescription>
               </CardHeader>
 
               <CardContent className="p-5 pt-0 space-y-4">
-                <form onSubmit={handleSubmitManual} className="space-y-3">
-                  <div className="relative">
-                    <Input
-                      placeholder="Ex: ABRA-XXXXXX"
-                      value={inputCode}
-                      onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-                      className="bg-slate-950 border-slate-700 text-white font-mono text-base uppercase tracking-wider h-12 pl-4 pr-12 rounded-2xl"
-                      autoFocus
-                    />
-                    <div className="absolute right-3 top-3 text-slate-400">
-                      <Search className="w-5 h-5" />
+                <div className="relative aspect-video sm:aspect-square bg-slate-950 rounded-2xl border-2 border-slate-700 overflow-hidden flex items-center justify-center">
+                  {isCameraActive ? (
+                    <>
+                      <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                        muted
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Scanner target overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-48 h-48 border-2 border-pink-500 rounded-2xl relative animate-pulse shadow-lg shadow-pink-500/20">
+                          <div className="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-amber-400 rounded-tl" />
+                          <div className="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-amber-400 rounded-tr" />
+                          <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-amber-400 rounded-bl" />
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-amber-400 rounded-br" />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center p-6 space-y-3">
+                      <QrCode className="w-16 h-16 text-slate-600 mx-auto" />
+                      <p className="text-xs text-slate-400 max-w-xs mx-auto">
+                        Clique em <strong>Ativar Câmera</strong> acima para escanear ingressos em
+                        tempo real.
+                      </p>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button
-                      type="submit"
-                      disabled={validating || !inputCode.trim()}
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs h-11 rounded-xl shadow-lg"
-                    >
-                      {validating ? (
-                        'Validando...'
-                      ) : (
-                        <span className="flex items-center gap-1.5">
-                          <Check className="w-4 h-4" /> Validar & Liberar Entrada
-                        </span>
-                      )}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      disabled={validating || !inputCode.trim()}
-                      onClick={() => handleValidate(inputCode, false)}
-                      className="w-full bg-slate-900 text-slate-200 border-slate-700 hover:bg-slate-800 text-xs h-11 rounded-xl"
-                    >
-                      Consultar Apenas
-                    </Button>
-                  </div>
-                </form>
-
-                {/* Exibição do Resultado da Leitura Atual */}
-                {result && (
-                  <div className="pt-3 border-t border-slate-700/80 animate-in fade-in-50">
-                    {result.status === 'validated_success' || result.status === 'valid' ? (
-                      <div className="p-4 bg-emerald-950/80 border-2 border-emerald-500 rounded-2xl space-y-2">
-                        <div className="flex items-center gap-2 text-emerald-300 font-black text-base">
-                          <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
-                          <span>ENTRADA LIBERADA COM SUCESSO!</span>
-                        </div>
-                        <div className="text-xs text-emerald-100 space-y-1 pl-8">
-                          <div>
-                            <strong>Participante:</strong>{' '}
-                            {result.ticket?.attendee_name || 'Titular'}
-                          </div>
-                          <div>
-                            <strong>Categoria:</strong> {result.ticket?.category?.name}
-                          </div>
-                          <div>
-                            <strong>Código:</strong>{' '}
-                            <code className="font-mono bg-emerald-900 px-2 py-0.5 rounded">
-                              {result.ticket?.ticket_code}
-                            </code>
-                          </div>
-                          <div>
-                            <strong>Comprador:</strong> {result.ticket?.order?.customer_name}
-                          </div>
-                        </div>
-                      </div>
-                    ) : result.status === 'already_used' ? (
-                      <div className="p-4 bg-amber-950/80 border-2 border-amber-500 rounded-2xl space-y-2">
-                        <div className="flex items-center gap-2 text-amber-300 font-black text-base">
-                          <AlertTriangle className="w-6 h-6 text-amber-400 shrink-0" />
-                          <span>ATENÇÃO: INGRESSO JÁ UTILIZADO!</span>
-                        </div>
-                        <div className="text-xs text-amber-200 space-y-1 pl-8">
-                          <p>{result.message}</p>
-                          <div>
-                            <strong>Nome:</strong> {result.ticket?.attendee_name}
-                          </div>
-                          <div>
-                            <strong>Utilizado em:</strong> {result.ticket?.used_at}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="p-4 bg-red-950/80 border-2 border-red-500 rounded-2xl space-y-2">
-                        <div className="flex items-center gap-2 text-red-300 font-black text-base">
-                          <XCircle className="w-6 h-6 text-red-400 shrink-0" />
-                          <span>INGRESSO INVÁLIDO OU NÃO ENCONTRADO</span>
-                        </div>
-                        <p className="text-xs text-red-200 pl-8">
-                          {result.message || result.error || 'Verifique o código digitado.'}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
               </CardContent>
-            </div>
+            </Card>
 
-            {/* Quick Demo QR shortcut for instant testing */}
-            <div className="p-4 bg-slate-950 border-t border-slate-700/80 text-[11px] text-slate-400 flex items-center justify-between rounded-b-3xl">
-              <span>Validador autenticado: {user?.name || user?.email}</span>
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Portaria Oficial
-              </span>
-            </div>
+            {/* Validação Manual por Código */}
+            <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl shadow-xl flex flex-col justify-between">
+              <div>
+                <CardHeader className="p-5 pb-3">
+                  <CardTitle className="text-base font-black flex items-center gap-2 text-white">
+                    <Ticket className="w-5 h-5 text-purple-400" /> Digitação Manual do Código
+                  </CardTitle>
+                  <CardDescription className="text-xs text-slate-400">
+                    Digite o código alfanumérico do ingresso (Ex: <code>ABRA-A1B2C3D4</code>) ou ID.
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent className="p-5 pt-0 space-y-4">
+                  <form onSubmit={handleSubmitManual} className="space-y-3">
+                    <div className="relative">
+                      <Input
+                        placeholder="Ex: ABRA-XXXXXX"
+                        value={inputCode}
+                        onChange={(e) => setInputCode(e.target.value.toUpperCase())}
+                        className="bg-slate-950 border-slate-700 text-white font-mono text-base uppercase tracking-wider h-12 pl-4 pr-12 rounded-2xl"
+                        autoFocus
+                      />
+                      <div className="absolute right-3 top-3 text-slate-400">
+                        <Search className="w-5 h-5" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        type="submit"
+                        disabled={validating || !inputCode.trim()}
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs h-11 rounded-xl shadow-lg"
+                      >
+                        {validating ? (
+                          'Validando...'
+                        ) : (
+                          <span className="flex items-center gap-1.5">
+                            <Check className="w-4 h-4" /> Validar & Liberar Entrada
+                          </span>
+                        )}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={validating || !inputCode.trim()}
+                        onClick={() => handleValidate(inputCode, false)}
+                        className="w-full bg-slate-900 text-slate-200 border-slate-700 hover:bg-slate-800 text-xs h-11 rounded-xl"
+                      >
+                        Consultar Apenas
+                      </Button>
+                    </div>
+                  </form>
+
+                  {/* Exibição do Resultado da Leitura Atual */}
+                  {result && (
+                    <div className="pt-3 border-t border-slate-700/80 animate-in fade-in-50">
+                      {result.status === 'validated_success' || result.status === 'valid' ? (
+                        <div className="p-4 bg-emerald-950/80 border-2 border-emerald-500 rounded-2xl space-y-2">
+                          <div className="flex items-center gap-2 text-emerald-300 font-black text-base">
+                            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+                            <span>ENTRADA LIBERADA COM SUCESSO!</span>
+                          </div>
+                          <div className="text-xs text-emerald-100 space-y-1 pl-8">
+                            <div>
+                              <strong>Participante:</strong>{' '}
+                              {result.ticket?.attendee_name || 'Titular'}
+                            </div>
+                            <div>
+                              <strong>Categoria:</strong> {result.ticket?.category?.name}
+                            </div>
+                            <div>
+                              <strong>Código:</strong>{' '}
+                              <code className="font-mono bg-emerald-900 px-2 py-0.5 rounded">
+                                {result.ticket?.ticket_code}
+                              </code>
+                            </div>
+                            <div>
+                              <strong>Comprador:</strong> {result.ticket?.order?.customer_name}
+                            </div>
+                          </div>
+                        </div>
+                      ) : result.status === 'already_used' ? (
+                        <div className="p-4 bg-amber-950/80 border-2 border-amber-500 rounded-2xl space-y-2">
+                          <div className="flex items-center gap-2 text-amber-300 font-black text-base">
+                            <AlertTriangle className="w-6 h-6 text-amber-400 shrink-0" />
+                            <span>ATENÇÃO: INGRESSO JÁ UTILIZADO!</span>
+                          </div>
+                          <div className="text-xs text-amber-200 space-y-1 pl-8">
+                            <p>{result.message}</p>
+                            <div>
+                              <strong>Nome:</strong> {result.ticket?.attendee_name}
+                            </div>
+                            <div>
+                              <strong>Utilizado em:</strong> {result.ticket?.used_at}
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-4 bg-red-950/80 border-2 border-red-500 rounded-2xl space-y-2">
+                          <div className="flex items-center gap-2 text-red-300 font-black text-base">
+                            <XCircle className="w-6 h-6 text-red-400 shrink-0" />
+                            <span>INGRESSO INVÁLIDO OU NÃO ENCONTRADO</span>
+                          </div>
+                          <p className="text-xs text-red-200 pl-8">
+                            {result.message || result.error || 'Verifique o código digitado.'}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </div>
+
+              {/* Quick Demo QR shortcut for instant testing */}
+              <div className="p-4 bg-slate-950 border-t border-slate-700/80 text-[11px] text-slate-400 flex items-center justify-between rounded-b-3xl">
+                <span>Validador autenticado: {user?.name || user?.email}</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Portaria Oficial
+                </span>
+              </div>
+            </Card>
+          </div>
+
+          {/* Histórico de Validações Recentes */}
+          <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl overflow-hidden shadow-xl">
+            <CardHeader className="p-5 pb-3">
+              <CardTitle className="text-base font-black flex items-center justify-between">
+                <span className="flex items-center gap-2 text-white">
+                  <Clock className="w-5 h-5 text-amber-400" /> Leituras e Validações Recentes nesta
+                  Sessão ({recentValidations.length})
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-5 pt-0">
+              {recentValidations.length === 0 ? (
+                <div className="text-center py-8 text-slate-500 text-xs">
+                  Nenhuma leitura efetuada nesta sessão. Aponte a câmera ou digite um código acima.
+                </div>
+              ) : (
+                <div className="divide-y divide-slate-700 text-xs">
+                  {recentValidations.map((val) => (
+                    <div key={val.id} className="py-2.5 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-slate-400 font-mono text-[11px]">
+                          {val.timestamp}
+                        </span>
+                        <div>
+                          <strong className="text-white font-bold">{val.attendee_name}</strong>
+                          <span className="text-slate-400 ml-2">({val.category_name})</span>
+                          <div className="text-[10px] font-mono text-slate-400">{val.code}</div>
+                        </div>
+                      </div>
+                      <Badge
+                        className={
+                          val.status === 'validated_success' || val.status === 'valid'
+                            ? 'bg-emerald-600 text-white text-[10px]'
+                            : val.status === 'already_used'
+                              ? 'bg-amber-600 text-white text-[10px]'
+                              : 'bg-red-600 text-white text-[10px]'
+                        }
+                      >
+                        {val.status === 'validated_success'
+                          ? 'Liberado'
+                          : val.status === 'valid'
+                            ? 'Válido'
+                            : val.status === 'already_used'
+                              ? 'Repetido'
+                              : 'Inválido'}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
           </Card>
         </div>
-
-        {/* Histórico de Validações Recentes */}
-        <Card className="bg-slate-800/90 border-slate-700 text-slate-100 rounded-3xl overflow-hidden shadow-xl">
-          <CardHeader className="p-5 pb-3">
-            <CardTitle className="text-base font-black flex items-center justify-between">
-              <span className="flex items-center gap-2 text-white">
-                <Clock className="w-5 h-5 text-amber-400" /> Leituras e Validações Recentes nesta
-                Sessão ({recentValidations.length})
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-5 pt-0">
-            {recentValidations.length === 0 ? (
-              <div className="text-center py-8 text-slate-500 text-xs">
-                Nenhuma leitura efetuada nesta sessão. Aponte a câmera ou digite um código acima.
-              </div>
-            ) : (
-              <div className="divide-y divide-slate-700 text-xs">
-                {recentValidations.map((val) => (
-                  <div key={val.id} className="py-2.5 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-slate-400 font-mono text-[11px]">{val.timestamp}</span>
-                      <div>
-                        <strong className="text-white font-bold">{val.attendee_name}</strong>
-                        <span className="text-slate-400 ml-2">({val.category_name})</span>
-                        <div className="text-[10px] font-mono text-slate-400">{val.code}</div>
-                      </div>
-                    </div>
-                    <Badge
-                      className={
-                        val.status === 'validated_success' || val.status === 'valid'
-                          ? 'bg-emerald-600 text-white text-[10px]'
-                          : val.status === 'already_used'
-                            ? 'bg-amber-600 text-white text-[10px]'
-                            : 'bg-red-600 text-white text-[10px]'
-                      }
-                    >
-                      {val.status === 'validated_success'
-                        ? 'Liberado'
-                        : val.status === 'valid'
-                          ? 'Válido'
-                          : val.status === 'already_used'
-                            ? 'Repetido'
-                            : 'Inválido'}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   )
 }

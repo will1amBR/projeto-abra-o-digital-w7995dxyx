@@ -24,7 +24,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { toast } from '@/hooks/use-toast'
-import AbracoLogo from '@/components/brand/AbracoLogo'
+import AdminLayout from '@/components/layout/AdminLayout'
 import {
   CreditCard,
   QrCode,
@@ -471,19 +471,11 @@ export default function AdminCaixa() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
-      {/* Top Header */}
-      <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 px-4 lg:px-8 py-3 shadow-md">
+    <AdminLayout title="Sistema de Caixa & Consumo" activeNav="caixa">
+      {/* Action bar */}
+      <div className="bg-slate-900 text-white px-4 lg:px-8 py-3 shadow-inner">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate('/admin')}
-              className="text-xs text-slate-300 hover:text-white hover:bg-slate-800 p-2"
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" /> CMS
-            </Button>
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-600 via-purple-600 to-orange-500 flex items-center justify-center text-white shadow-lg">
               <CreditCard className="w-5 h-5" />
             </div>
@@ -528,7 +520,7 @@ export default function AdminCaixa() {
             </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto w-full p-4 lg:p-6 flex-1 space-y-6">
@@ -1420,6 +1412,6 @@ export default function AdminCaixa() {
           </Tabs>
         </Card>
       </div>
-    </div>
+    </AdminLayout>
   )
 }

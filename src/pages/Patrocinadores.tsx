@@ -4,6 +4,7 @@ import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/In
 import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getSponsors, getImageSrc } from '@/services/contentService'
 import type { Sponsor } from '@/types/content'
+import { SponsorLogo } from '@/components/brand/SponsorLogo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -157,11 +158,13 @@ export default function Patrocinadores() {
                         )}
                       </div>
 
-                      <div className="h-24 bg-slate-50 rounded-xl p-3 flex items-center justify-center border border-slate-100">
-                        <img
-                          src={getImageSrc(item, 'sponsors')}
-                          alt={item.name}
-                          className="max-h-full max-w-full object-contain"
+                      <div className="h-24 bg-slate-50 rounded-xl p-3 flex items-center justify-center border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition">
+                        <SponsorLogo
+                          sponsor={item}
+                          size={
+                            item.tier === 'Diamante' ? 'lg' : item.tier === 'Ouro' ? 'md' : 'sm'
+                          }
+                          className="w-full h-full shadow-none"
                         />
                       </div>
 

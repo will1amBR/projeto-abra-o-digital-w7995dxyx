@@ -10,6 +10,7 @@ import {
   getSiteSettings,
   getImageSrc,
 } from '@/services/contentService'
+import { SponsorLogo } from '@/components/brand/SponsorLogo'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -391,11 +392,11 @@ export default function AbracolandiaHome() {
                 to={`/abracolandia/patrocinadores/${s.slug}`}
                 className="bg-white p-5 rounded-2xl border border-amber-200 shadow-sm hover:border-pink-400 hover:shadow-md transition flex flex-col items-center group"
               >
-                <div className="h-16 flex items-center justify-center mb-3">
-                  <img
-                    src={getImageSrc(s, 'sponsors')}
-                    alt={s.name}
-                    className="max-h-full max-w-full object-contain"
+                <div className="h-16 w-full flex items-center justify-center mb-3">
+                  <SponsorLogo
+                    sponsor={s}
+                    size="sm"
+                    className="w-full h-full shadow-none bg-transparent"
                   />
                 </div>
                 <h4 className="font-bold text-xs text-slate-800 group-hover:text-pink-600 transition truncate w-full">

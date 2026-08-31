@@ -4,6 +4,7 @@ import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/Abra
 import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getSponsors, getImageSrc } from '@/services/contentService'
 import type { Sponsor } from '@/types/content'
+import { SponsorLogo } from '@/components/brand/SponsorLogo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -101,11 +102,11 @@ export default function AbraPatrocinadores() {
                   <Link key={s.id} to={`/abracolandia/patrocinadores/${s.slug}`}>
                     <Card className="border-2 border-cyan-300 bg-white hover:shadow-xl transition rounded-3xl p-6 h-full flex flex-col justify-between">
                       <div className="space-y-4">
-                        <div className="h-28 bg-cyan-50/50 rounded-2xl p-4 flex items-center justify-center border border-cyan-100">
-                          <img
-                            src={getImageSrc(s, 'sponsors')}
-                            alt={s.name}
-                            className="max-h-full max-w-full object-contain"
+                        <div className="h-28 bg-cyan-50/50 rounded-2xl p-2 flex items-center justify-center border border-cyan-100">
+                          <SponsorLogo
+                            sponsor={s}
+                            size="lg"
+                            className="w-full h-full shadow-none bg-transparent"
                           />
                         </div>
                         <h3 className="font-black text-slate-900 text-lg">{s.name}</h3>
@@ -141,11 +142,11 @@ export default function AbraPatrocinadores() {
                   <Link key={s.id} to={`/abracolandia/patrocinadores/${s.slug}`}>
                     <Card className="border-2 border-amber-300 bg-white hover:shadow-lg transition rounded-3xl p-6 h-full flex flex-col justify-between">
                       <div className="space-y-4">
-                        <div className="h-24 bg-amber-50/50 rounded-2xl p-4 flex items-center justify-center border border-amber-100">
-                          <img
-                            src={getImageSrc(s, 'sponsors')}
-                            alt={s.name}
-                            className="max-h-full max-w-full object-contain"
+                        <div className="h-24 bg-amber-50/50 rounded-2xl p-2 flex items-center justify-center border border-amber-100">
+                          <SponsorLogo
+                            sponsor={s}
+                            size="md"
+                            className="w-full h-full shadow-none bg-transparent"
                           />
                         </div>
                         <h3 className="font-bold text-slate-900 text-base">{s.name}</h3>
@@ -179,10 +180,10 @@ export default function AbraPatrocinadores() {
                   <Link key={s.id} to={`/abracolandia/patrocinadores/${s.slug}`}>
                     <Card className="border border-slate-200 bg-white hover:border-slate-400 transition rounded-2xl p-4 text-center">
                       <div className="h-16 flex items-center justify-center mb-2">
-                        <img
-                          src={getImageSrc(s, 'sponsors')}
-                          alt={s.name}
-                          className="max-h-full max-w-full object-contain"
+                        <SponsorLogo
+                          sponsor={s}
+                          size="sm"
+                          className="w-full h-full shadow-none bg-transparent"
                         />
                       </div>
                       <h4 className="font-bold text-xs text-slate-800 truncate">{s.name}</h4>
@@ -213,10 +214,10 @@ export default function AbraPatrocinadores() {
                   <Link key={s.id} to={`/abracolandia/patrocinadores/${s.slug}`}>
                     <Card className="border border-orange-200 bg-white hover:border-orange-400 transition rounded-2xl p-4 text-center">
                       <div className="h-16 flex items-center justify-center mb-2">
-                        <img
-                          src={getImageSrc(s, 'sponsors')}
-                          alt={s.name}
-                          className="max-h-full max-w-full object-contain"
+                        <SponsorLogo
+                          sponsor={s}
+                          size="sm"
+                          className="w-full h-full shadow-none bg-transparent"
                         />
                       </div>
                       <h4 className="font-bold text-xs text-slate-800 truncate">{s.name}</h4>

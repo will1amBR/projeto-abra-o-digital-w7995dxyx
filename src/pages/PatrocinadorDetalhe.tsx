@@ -4,6 +4,7 @@ import { InstitutionalHeader, InstitutionalFooter } from '@/components/layout/In
 import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getSponsorBySlug, getSponsors, getImageSrc } from '@/services/contentService'
 import type { Sponsor } from '@/types/content'
+import { SponsorLogo } from '@/components/brand/SponsorLogo'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -90,14 +91,13 @@ export default function PatrocinadorDetalhe() {
           {/* Sponsor Profile Card */}
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 border-b border-slate-100 pb-8">
-              <div className="w-32 h-32 rounded-2xl bg-slate-50 border border-slate-200 p-4 flex items-center justify-center shrink-0">
-                <img
-                  src={getImageSrc(sponsor, 'sponsors')}
-                  alt={sponsor.name}
-                  className="max-h-full max-w-full object-contain"
+              <div className="w-36 h-36 rounded-2xl bg-slate-50 border border-slate-200 p-3 flex items-center justify-center shrink-0">
+                <SponsorLogo
+                  sponsor={sponsor}
+                  size="xl"
+                  className="w-full h-full shadow-none bg-transparent"
                 />
               </div>
-
               <div className="space-y-3 text-center sm:text-left flex-1">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                   <Badge
@@ -161,11 +161,12 @@ export default function PatrocinadorDetalhe() {
                 {related.map((rel) => (
                   <Link key={rel.id} to={`/patrocinadores/${rel.slug}`}>
                     <Card className="border-slate-200 bg-white hover:border-blue-300 transition">
-                      <CardContent className="p-4 flex items-center gap-3">
-                        <img
-                          src={getImageSrc(rel, 'sponsors')}
-                          alt={rel.name}
-                          className="w-10 h-10 object-contain shrink-0"
+                      <CardContent className="p-3 flex items-center gap-3">
+                        <SponsorLogo
+                          sponsor={rel}
+                          size="sm"
+                          showNameFallback={false}
+                          className="w-12 h-12 shrink-0 shadow-none border border-slate-100"
                         />
                         <div className="min-w-0">
                           <h4 className="font-bold text-xs text-slate-900 truncate">{rel.name}</h4>

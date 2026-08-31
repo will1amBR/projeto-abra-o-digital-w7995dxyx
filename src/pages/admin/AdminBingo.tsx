@@ -12,6 +12,7 @@ import {
   getBingoColumn,
 } from '@/services/bingoService'
 import { useAuth } from '@/contexts/AuthContext'
+import AdminLayout from '@/components/layout/AdminLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
@@ -218,19 +219,11 @@ export default function AdminBingo() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col">
-      {/* Top Bar */}
-      <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-4 lg:px-8 py-3 shadow-md">
+    <AdminLayout title="Sorteador & Telão do Bingo" activeNav="bingo">
+      {/* Dark Action Banner for Stage/Bingo Operator */}
+      <div className="bg-slate-900 text-white px-4 lg:px-8 py-3 shadow-inner">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate('/admin')}
-              className="text-xs text-slate-300 hover:text-white hover:bg-slate-800 p-2"
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" /> CMS
-            </Button>
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-400 flex items-center justify-center text-white shadow-lg">
               <Dice5 className="w-5 h-5" />
             </div>
@@ -266,7 +259,7 @@ export default function AdminBingo() {
             </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto w-full p-4 lg:p-6 flex-1 space-y-6">
@@ -533,6 +526,6 @@ export default function AdminBingo() {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   )
 }

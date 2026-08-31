@@ -354,7 +354,45 @@ export default function AreaDoVoluntario() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      {/* 1. Header Padronizado Oficial do Projeto */}
       <InstitutionalHeader />
+
+      {/* 2. Subbarra de navegação rápida do Voluntário */}
+      <div className="bg-slate-900 text-white px-4 sm:px-8 py-2.5 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <Badge className="bg-amber-500 text-slate-950 font-black text-[10px] px-2 py-0.5">
+              PAINEL DO VOLUNTÁRIO
+            </Badge>
+            <span className="text-slate-300 font-semibold hidden sm:inline">
+              • Jornada Solidária & Gamificação
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              to="/voluntariado"
+              className="text-slate-300 hover:text-white transition font-medium flex items-center gap-1"
+            >
+              Áreas de Atuação
+            </Link>
+            <span className="text-slate-700">•</span>
+            <Link
+              to="/abracolandia"
+              className="text-pink-400 hover:text-pink-300 transition font-medium flex items-center gap-1"
+            >
+              Hotsite Abraçolândia
+            </Link>
+            <span className="text-slate-700">•</span>
+            <Link
+              to="/admin"
+              className="text-blue-400 hover:text-blue-300 transition font-medium flex items-center gap-1"
+            >
+              Área Administrativa →
+            </Link>
+          </div>
+        </div>
+      </div>
 
       <main className="flex-1">
         {/* HERO HEADER GAMIFICADO */}
@@ -1425,6 +1463,8 @@ export default function AreaDoVoluntario() {
         </DialogContent>
       </Dialog>
 
+      {/* 3. Rodapé Padronizado Oficial com ColorStrip */}
+      <ColorStrip className="h-1.5" />
       <InstitutionalFooter />
     </div>
   )
