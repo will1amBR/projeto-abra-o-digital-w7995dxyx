@@ -204,7 +204,7 @@ export const AdminAiAssistant: React.FC = () => {
           <button
             onClick={() =>
               handleSend(
-                'Escreva um convite caloroso para voluntários participarem da Abraçolândia 2025.',
+                'Escreva um convite caloroso para voluntários participarem da Abraçolândia 2027.',
               )
             }
             className="px-2.5 py-1 bg-amber-50 border border-amber-200 text-amber-800 rounded-full hover:bg-amber-100 transition whitespace-nowrap text-[11px]"

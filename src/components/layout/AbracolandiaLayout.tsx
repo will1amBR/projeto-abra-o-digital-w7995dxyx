@@ -48,12 +48,12 @@ export const AbracolandiaHeader: React.FC = () => {
       {/* Top Banner Aviso Festa */}
       <div className="bg-gradient-to-r from-[#ed0e58] via-[#8d198f] to-[#2e3192] text-white text-xs py-1.5 px-4 text-center font-bold tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-3.5 h-3.5 text-yellow-300 animate-pulse" />
-        <span>Vem aí a Abraçolândia 2025! O maior evento solidário do ano!</span>
+        <span>Vem aí a Abraçolândia 2027! O maior evento solidário do ano!</span>
         <Link
-          to="/abracolandia/ingressos"
+          to="/abracolandia/a-festa"
           className="underline hover:text-yellow-200 font-extrabold ml-1 hidden sm:inline"
         >
-          Garanta seu ingresso antecipado &rarr;
+          Saiba tudo sobre a próxima edição &rarr;
         </Link>
       </div>
 

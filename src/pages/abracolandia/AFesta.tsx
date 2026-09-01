@@ -27,13 +27,13 @@ export default function AFesta() {
   const [sections, setSections] = useState<EventSection[]>([])
   const [activeTab, setActiveTab] = useState<string>('todos')
   const [eventSettings, setEventSettings] = useState<any>({
-    eventName: 'Abraçolândia 2026',
-    edition: '13ª Edição',
-    dateStr: 'Hoje, 30 de Agosto de 2026',
-    timeStr: 'Das 10h às 22h (Em Andamento)',
+    eventName: 'Abraçolândia 2027',
+    edition: '14ª Edição',
+    dateStr: 'Em Breve em 2027',
+    timeStr: 'Data e Programação a Confirmar',
     venue: 'Parque das Nações & Pavilhão Social',
     address: 'Av. das Festas, 1000 - São Paulo/SP',
-    statusBadge: 'ACONTECENDO AGORA',
+    statusBadge: 'VEM AÍ 2027',
   })
 
   useEffect(() => {
@@ -66,11 +66,11 @@ export default function AFesta() {
             <div className="max-w-3xl space-y-4">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge className="bg-amber-400 text-purple-950 text-xs px-3 py-1 font-black shadow uppercase tracking-wider">
-                  {eventSettings.eventName || 'ABRAÇOLÂNDIA 2026'}
+                  {eventSettings.eventName || 'ABRAÇOLÂNDIA 2027'}
                 </Badge>
-                <Badge className="bg-red-600 text-white text-xs px-3 py-1 font-black shadow animate-pulse">
-                  <span className="w-2 h-2 rounded-full bg-white mr-1.5 animate-ping inline-block" />
-                  {eventSettings.statusBadge || 'ACONTECENDO AGORA'}
+                <Badge className="bg-pink-600 text-white text-xs px-3 py-1 font-black shadow">
+                  <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-300 inline" />
+                  {eventSettings.statusBadge || 'VEM AÍ 2027'}
                 </Badge>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
@@ -103,10 +103,10 @@ export default function AFesta() {
               </div>
               <div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Data do Evento
+                  Data Prevista
                 </span>
                 <span className="font-black text-slate-900 text-sm sm:text-base">
-                  {eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}
+                  {eventSettings.dateStr || 'Em Breve em 2027'}
                 </span>
               </div>
             </div>
@@ -117,10 +117,10 @@ export default function AFesta() {
               </div>
               <div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Horários de Funcionamento
+                  Programação
                 </span>
                 <span className="font-black text-slate-900 text-sm sm:text-base">
-                  {eventSettings.timeStr || 'Hoje das 10h às 22h (Em Andamento)'}
+                  {eventSettings.timeStr || 'Data e Programação a Confirmar'}
                 </span>
               </div>
             </div>

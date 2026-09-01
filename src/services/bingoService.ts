@@ -57,7 +57,7 @@ export async function createOrResetBingoGame(params?: {
   const currentGame = await getCurrentBingoGame()
 
   const payload = {
-    title: params?.title || 'Super Bingo Beneficente Abraçolândia 2026',
+    title: params?.title || 'Super Bingo Beneficente Abraçolândia 2027',
     round_prize: params?.round_prize || 'Smart TV 55" 4K + Prêmios Especiais',
     max_number: params?.max_number || 75,
     drawn_numbers: [],

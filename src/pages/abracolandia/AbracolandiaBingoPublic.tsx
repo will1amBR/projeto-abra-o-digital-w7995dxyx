@@ -97,7 +97,7 @@ export default function AbracolandiaBingoPublic() {
                 Painel Digital Oficial • Abraçolândia
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white drop-shadow-md">
-                {game?.title || 'Super Bingo Beneficente 2026'}
+                {game?.title || 'Super Bingo Beneficente 2027'}
               </h1>
               <p className="text-sm sm:text-base text-pink-100 max-w-xl">
                 Acompanhe os números cantados em tempo real na palma da sua mão ou nos telões do

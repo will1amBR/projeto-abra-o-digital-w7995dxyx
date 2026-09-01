@@ -64,11 +64,11 @@ export default function IngressosOnline() {
   const [completedOrder, setCompletedOrder] = useState<TicketOrder | null>(null)
   const [completedTickets, setCompletedTickets] = useState<TicketItem[]>([])
   const [eventSettings, setEventSettings] = useState<any>({
-    eventName: 'Abraçolândia 2026',
-    dateStr: 'Hoje, 30 de Agosto de 2026',
+    eventName: 'Abraçolândia 2027',
+    dateStr: 'Em Breve em 2027',
     venue: 'Pavilhão de Eventos Vera Cruz & Social',
-    timeStr: 'Portões abertos a partir das 10h',
-    statusBadge: 'ACONTECENDO AGORA',
+    timeStr: 'Data e Programação a Confirmar',
+    statusBadge: 'VEM AÍ 2027',
   })
 
   // Load Categories, Settings & Completed Order if returning from Checkout
@@ -250,12 +250,12 @@ export default function IngressosOnline() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                Ingressos {eventSettings.eventName || 'Abraçolândia 2026'}
+                Ingressos {eventSettings.eventName || 'Abraçolândia 2027'}
               </h1>
 
               <p className="text-pink-100 text-base sm:text-lg leading-relaxed">
-                Garanta sua entrada no maior festival beneficente da região com pagamento seguro e
-                emissão imediata de QR Code por ingresso.{' '}
+                Garanta sua entrada antecipada no maior festival beneficente da região com pagamento
+                seguro e emissão imediata de QR Code por ingresso.{' '}
                 <strong>100% da arrecadação líquida</strong> é destinada às famílias e instituições
                 assistidas pelo Projeto Abraço.
               </p>
@@ -264,7 +264,7 @@ export default function IngressosOnline() {
               <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-pink-100">
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <Calendar className="w-4 h-4 text-amber-300" />
-                  <span>{eventSettings.dateStr || 'Hoje, 30 de Agosto de 2026'}</span>
+                  <span>{eventSettings.dateStr || 'Em Breve em 2027'}</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <MapPin className="w-4 h-4 text-pink-300" />
@@ -272,7 +272,7 @@ export default function IngressosOnline() {
                 </div>
                 <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-xs">
                   <Clock className="w-4 h-4 text-purple-300" />
-                  <span>{eventSettings.timeStr || 'Portões Abertos: 10h às 22h'}</span>
+                  <span>{eventSettings.timeStr || 'Em Breve: 10h às 22h'}</span>
                 </div>
               </div>
             </div>

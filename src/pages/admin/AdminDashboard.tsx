@@ -537,13 +537,13 @@ export default function AdminDashboard() {
               name: 'event_date',
               label: 'Data do Evento (Texto)',
               type: 'text',
-              placeholder: 'Ex: 18/10/2025',
+              placeholder: 'Ex: 18/10/2027',
             },
             {
               name: 'published_at',
               label: 'Data de Publicação',
               type: 'text',
-              placeholder: 'Ex: 20/05/2025',
+              placeholder: 'Ex: 20/05/2027',
             },
             { name: 'featured', label: 'Destaque na Página Inicial', type: 'bool' },
             { name: 'image_url', label: 'URL da Imagem de Capa', type: 'text' },
@@ -2464,7 +2464,7 @@ export default function AdminDashboard() {
                               </label>
                               <Input
                                 value={settingsData.event_general_info?.eventName || ''}
-                                placeholder="Ex: Abraçolândia 2026"
+                                placeholder="Ex: Abraçolândia 2027"
                                 onChange={(e) =>
                                   setSettingsData({
                                     ...settingsData,
@@ -2483,7 +2483,7 @@ export default function AdminDashboard() {
                               </label>
                               <Input
                                 value={settingsData.event_general_info?.statusBadge || ''}
-                                placeholder="Ex: ACONTECENDO AGORA"
+                                placeholder="Ex: VEM AÍ 2027"
                                 onChange={(e) =>
                                   setSettingsData({
                                     ...settingsData,
@@ -2505,7 +2505,7 @@ export default function AdminDashboard() {
                               </label>
                               <Input
                                 value={settingsData.event_general_info?.dateStr || ''}
-                                placeholder="Ex: Hoje, 30 de Agosto de 2026"
+                                placeholder="Ex: Em Breve em 2027"
                                 onChange={(e) =>
                                   setSettingsData({
                                     ...settingsData,
@@ -2524,7 +2524,7 @@ export default function AdminDashboard() {
                               </label>
                               <Input
                                 value={settingsData.event_general_info?.timeStr || ''}
-                                placeholder="Ex: Hoje das 10h às 22h (Em Andamento)"
+                                placeholder="Ex: Data e Programação a Confirmar"
                                 onChange={(e) =>
                                   setSettingsData({
                                     ...settingsData,
@@ -2585,7 +2585,7 @@ export default function AdminDashboard() {
                             </label>
                             <Input
                               value={settingsData.event_general_info?.headline || ''}
-                              placeholder="Ex: A Abraçolândia 2026 está ACONTECENDO HOJE!"
+                              placeholder="Ex: Vem aí a Abraçolândia 2027!"
                               onChange={(e) =>
                                 setSettingsData({
                                   ...settingsData,

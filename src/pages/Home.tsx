@@ -35,17 +35,17 @@ export default function Home() {
   const [recentBeneficiaries, setRecentBeneficiaries] = useState<any[]>([])
   const [sponsors, setSponsors] = useState<any[]>([])
   const [eventSettings, setEventSettings] = useState<any>({
-    eventName: 'Abraçolândia 2026',
-    edition: '13ª Edição',
-    dateStr: 'Hoje, 30 de Agosto de 2026',
-    timeStr: 'Das 10h às 22h (Em Andamento)',
+    eventName: 'Abraçolândia 2027',
+    edition: '14ª Edição',
+    dateStr: 'Em Breve em 2027',
+    timeStr: 'Data e Programação a Confirmar',
     venue: 'Parque das Nações & Pavilhão Social',
     address: 'Av. das Festas, 1000 - São Paulo/SP',
-    status: 'happening_now',
-    statusBadge: 'ACONTECENDO AGORA',
-    headline: 'Abraçolândia 2026 está ACONTECENDO HOJE!',
+    status: 'upcoming',
+    statusBadge: 'VEM AÍ 2027',
+    headline: 'Vem aí a Abraçolândia 2027!',
     description:
-      'Música ao vivo, alta gastronomia com sistema de caixa integrado, parque infantil e o tradicional Super Bingo em tempo real. 100% da arrecadação é revertida diretamente para as causas assistenciais do Projeto Abraço.',
+      'O maior festival beneficente da região está sendo preparado para 2027! Gastronomia deliciosa, shows ao vivo, mega área infantil e o tradicional Super Bingo. 100% da arrecadação revertida para causas sociais do Projeto Abraço.',
   })
   const [loading, setLoading] = useState(true)
 
@@ -205,18 +205,18 @@ export default function Home() {
         <ColorStrip height="h-[3.5px]" />
 
         {/* =========================================================================
-            DESTAQUE ABRAÇOLÂNDIA (HOTSITE 2026) - EVENTO ANUAL
+            DESTAQUE ABRAÇOLÂNDIA (HOTSITE 2027) - EVENTO ANUAL
             ========================================================================= */}
         <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 py-12 px-4 sm:px-6 lg:px-8 text-white">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-purple-950 text-xs font-black">
                 <PartyPopper className="w-3.5 h-3.5" />
-                {eventSettings.statusBadge || 'ACONTECENDO AGORA'} •{' '}
-                {eventSettings.edition || '13ª Edição'}
+                {eventSettings.statusBadge || 'VEM AÍ 2027'} •{' '}
+                {eventSettings.edition || '14ª Edição'}
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {eventSettings.eventName || 'Abraçolândia 2026'}
+                {eventSettings.eventName || 'Abraçolândia 2027'}
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
                 {eventSettings.description ||
