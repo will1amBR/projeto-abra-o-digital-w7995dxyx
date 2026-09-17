@@ -90,12 +90,12 @@ export default function Convites() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="/abracolandia/ingressos"
+              <Link
+                to="/abracolandia/ingressos"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-black px-6 h-12 rounded-2xl shadow-lg transition text-xs sm:text-sm animate-bounce hover:animate-none"
               >
                 <Ticket className="w-4 h-4" /> Comprar Ingressos Online com QR Code
-              </a>
+              </Link>
             </div>
           </div>
         </section>
