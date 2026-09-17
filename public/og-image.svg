@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#fff9fa" />
+      <stop offset="100%" stop-color="#fff0f5" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#ed0e58" flood-opacity="0.12" />
+    </filter>
+    <filter id="cardShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)" />
+
+  <!-- Subtle colorful top accent bars -->
+  <g transform="translate(0, 0)">
+    <rect x="0" y="0" width="200" height="8" fill="#ed0e58" />
+    <rect x="200" y="0" width="200" height="8" fill="#8d198f" />
+    <rect x="400" y="0" width="200" height="8" fill="#2e3192" />
+    <rect x="600" y="0" width="200" height="8" fill="#01abb7" />
+    <rect x="800" y="0" width="200" height="8" fill="#cce310" />
+    <rect x="1000" y="0" width="200" height="8" fill="#f89c0e" />
+  </g>
+
+  <!-- Soft background decorative circles -->
+  <circle cx="150" cy="180" r="140" fill="#ed0e58" fill-opacity="0.03" />
+  <circle cx="1060" cy="460" r="180" fill="#2e3192" fill-opacity="0.03" />
+  <circle cx="980" cy="140" r="120" fill="#f89c0e" fill-opacity="0.04" />
+  <circle cx="120" cy="520" r="130" fill="#01abb7" fill-opacity="0.03" />
+
+  <!-- White Card Container for Crisp Logo Display -->
+  <rect x="150" y="60" width="900" height="360" rx="32" fill="#ffffff" filter="url(#cardShadow)" stroke="#f1f5f9" stroke-width="2" />
+
+  <!-- Top Badge: Mais de 20 anos de Solidariedade -->
+  <g transform="translate(600, 110)">
+    <rect x="-190" y="-18" width="380" height="36" rx="18" fill="#8d198f" fill-opacity="0.08" />
+    <text x="0" y="6" text-anchor="middle" fill="#8d198f" font-size="14" font-weight="800" letter-spacing="3" font-family="system-ui, -apple-system, Roboto, sans-serif">
+      TRANSFORMANDO PARTICIPAÇÃO EM SOLIDARIEDADE
+    </text>
+  </g>
+
+  <!-- Official Logo Centerpiece (Rendered from official vector at high-res) -->
+  <!-- Scaled and centered at (600, 240) -->
+  <g transform="translate(600, 255) scale(1.6) translate(-230, -65)">
+    <!-- Vertical PROJETO text -->
+    <text
+      x="18"
+      y="76"
+      transform="rotate(-90 18 76)"
+      fill="#222222"
+      font-size="15"
+      font-weight="900"
+      letter-spacing="4"
+      font-family="system-ui, -apple-system, sans-serif"
+    >
+      PROJETO
+    </text>
+
+    <!-- 1. Letter A (Pink #ed0e58) -->
+    <rect x="30" y="8" width="60" height="60" rx="6" fill="#ed0e58" />
+    <text
+      x="60"
+      y="54"
+      fill="#ffffff"
+      font-size="46"
+      font-weight="900"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      A
+    </text>
+
+    <!-- 2. Letter B (Purple #8d198f) -->
+    <rect x="94" y="8" width="60" height="60" rx="6" fill="#8d198f" />
+    <text
+      x="124"
+      y="54"
+      fill="#ffffff"
+      font-size="46"
+      font-weight="900"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      B
+    </text>
+
+    <!-- 3. Letter R (Dark Blue #2e3192) -->
+    <rect x="158" y="8" width="60" height="60" rx="6" fill="#2e3192" />
+    <text
+      x="188"
+      y="54"
+      fill="#ffffff"
+      font-size="46"
+      font-weight="900"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      R
+    </text>
+
+    <!-- 4. Letter A (Cyan #01abb7) -->
+    <rect x="222" y="8" width="60" height="60" rx="6" fill="#01abb7" />
+    <text
+      x="252"
+      y="54"
+      fill="#ffffff"
+      font-size="46"
+      font-weight="900"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      A
+    </text>
+
+    <!-- 5. Letter Ç (Lime Green #cce310) -->
+    <rect x="286" y="8" width="60" height="60" rx="6" fill="#cce310" />
+    <text
+      x="316"
+      y="52"
+      fill="#ffffff"
+      font-size="44"
+      font-weight="900"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      Ç
+    </text>
+
+    <!-- 6. Symbol O (Orange #f89c0e) -->
+    <rect x="350" y="8" width="60" height="60" rx="6" fill="#f89c0e" />
+    <!-- Embrace circle / community symbol inside O -->
+    <g transform="translate(380, 38)">
+      <circle cx="0" cy="0" r="18" stroke="#ffffff" stroke-width="4" fill="none" />
+      <circle cx="0" cy="-6" r="3" fill="#ffffff" />
+      <circle cx="-6" cy="4" r="3" fill="#ffffff" />
+      <circle cx="6" cy="4" r="3" fill="#ffffff" />
+      <path
+        d="M -12,12 C -6,16 6,16 12,12"
+        stroke="#ffffff"
+        stroke-width="3.5"
+        stroke-linecap="round"
+        fill="none"
+      />
+    </g>
+
+    <!-- Subtitle: FAÇA DA DIVERSÃO UMA BOA AÇÃO! -->
+    <text
+      x="228"
+      y="100"
+      fill="#ed0e58"
+      font-size="19"
+      font-weight="800"
+      letter-spacing="2.5"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, Roboto, sans-serif"
+    >
+      FAÇA DA DIVERSÃO UMA BOA AÇÃO!
+    </text>
+  </g>
+
+  <!-- Divider strip under card -->
+  <g transform="translate(250, 460)">
+    <rect x="0" y="0" width="116" height="4" fill="#ed0e58" rx="2" />
+    <rect x="116" y="0" width="116" height="4" fill="#8d198f" rx="2" />
+    <rect x="232" y="0" width="116" height="4" fill="#2e3192" rx="2" />
+    <rect x="348" y="0" width="116" height="4" fill="#01abb7" rx="2" />
+    <rect x="464" y="0" width="116" height="4" fill="#cce310" rx="2" />
+    <rect x="580" y="0" width="120" height="4" fill="#f89c0e" rx="2" />
+  </g>
+
+  <!-- Tagline & Context text -->
+  <text x="600" y="505" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="900" font-family="system-ui, -apple-system, Roboto, sans-serif" letter-spacing="-0.5">
+    Projeto Abraço &amp; Abraçolândia
+  </text>
+  <text x="600" y="545" text-anchor="middle" fill="#475569" font-size="18" font-weight="500" font-family="system-ui, -apple-system, Roboto, sans-serif">
+    Eventos e Ações Sociais Beneficentes • Há mais de 20 anos fazendo a diferença
+  </text>
+
+  <!-- Domain Tag / Social Media -->
+  <g transform="translate(600, 585)">
+    <text x="0" y="0" text-anchor="middle" fill="#8d198f" font-size="16" font-weight="800" letter-spacing="1.5" font-family="system-ui, -apple-system, Roboto, sans-serif">
+      abraco.glikholding.com.br • @projetoabraco
+    </text>
+  </g>
+
+  <!-- Bottom Colorful Strip -->
+  <g transform="translate(0, 622)">
+    <rect x="0" y="0" width="200" height="8" fill="#ed0e58" />
+    <rect x="200" y="0" width="200" height="8" fill="#8d198f" />
+    <rect x="400" y="0" width="200" height="8" fill="#2e3192" />
+    <rect x="600" y="0" width="200" height="8" fill="#01abb7" />
+    <rect x="800" y="0" width="200" height="8" fill="#cce310" />
+    <rect x="1000" y="0" width="200" height="8" fill="#f89c0e" />
+  </g>
+</svg>

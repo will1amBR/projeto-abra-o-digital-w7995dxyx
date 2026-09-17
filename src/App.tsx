@@ -35,6 +35,8 @@ import AdminCaixa from '@/pages/admin/AdminCaixa'
 import AdminBingo from '@/pages/admin/AdminBingo'
 import NotFound from '@/pages/NotFound'
 
+import { RouteMetaSync } from '@/components/layout/RouteMetaSync'
+
 // Protected Admin Route Guard
 const ProtectedAdminRoute = ({ children }: { children: React.ReactElement }) => {
   const { user, isLoading } = useAuth()
@@ -58,6 +60,7 @@ export default function App() {
   return (
     <AuthProvider>
       <Router>
+        <RouteMetaSync />
         <Routes>
           {/* =========================================
               AMBIENTE 1: WEBSITE INSTITUCIONAL (PROJETO ABRAÇO)
