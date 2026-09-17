@@ -78,7 +78,10 @@ export default function App() {
               ========================================= */}
           <Route path="/abracolandia" element={<AbracolandiaHome />} />
           <Route path="/abracolandia/a-festa" element={<AFesta />} />
-          <Route path="/abracolandia/festa" element={<Navigate to="/abracolandia/a-festa" replace />} />
+          <Route
+            path="/abracolandia/festa"
+            element={<Navigate to="/abracolandia/a-festa" replace />}
+          />
           <Route path="/abracolandia/convites" element={<Convites />} />
           <Route path="/abracolandia/ingressos" element={<IngressosOnline />} />
           <Route path="/abracolandia/bingo" element={<AbracolandiaBingoPublic />} />

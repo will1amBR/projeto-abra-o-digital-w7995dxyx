@@ -164,7 +164,7 @@ export default function AbracolandiaHome() {
         {/* QUICK EVENT HIGHLIGHTS GRID */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link to="/abracolandia/festa" className="group">
+            <Link to="/abracolandia/a-festa" className="group">
               <div className="bg-white p-5 rounded-3xl border-2 border-pink-200 shadow-lg hover:border-pink-400 hover:shadow-xl transition flex flex-col items-center text-center space-y-2">
                 <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center font-black group-hover:scale-110 transition">
                   <Music className="w-6 h-6" />
@@ -174,7 +174,7 @@ export default function AbracolandiaHome() {
               </div>
             </Link>
 
-            <Link to="/abracolandia/festa" className="group">
+            <Link to="/abracolandia/a-festa" className="group">
               <div className="bg-white p-5 rounded-3xl border-2 border-amber-200 shadow-lg hover:border-amber-400 hover:shadow-xl transition flex flex-col items-center text-center space-y-2">
                 <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-black group-hover:scale-110 transition">
                   <Utensils className="w-6 h-6" />
@@ -184,7 +184,7 @@ export default function AbracolandiaHome() {
               </div>
             </Link>
 
-            <Link to="/abracolandia/festa" className="group">
+            <Link to="/abracolandia/a-festa" className="group">
               <div className="bg-white p-5 rounded-3xl border-2 border-emerald-200 shadow-lg hover:border-emerald-400 hover:shadow-xl transition flex flex-col items-center text-center space-y-2">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-black group-hover:scale-110 transition">
                   <Smile className="w-6 h-6" />

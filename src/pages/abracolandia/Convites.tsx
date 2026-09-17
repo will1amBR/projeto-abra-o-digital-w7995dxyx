@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { AbracolandiaHeader, AbracolandiaFooter } from '@/components/layout/AbracolandiaLayout'
 import { ColorStrip } from '@/components/brand/ColorStrip'
 import { getTicketOutlets } from '@/services/contentService'

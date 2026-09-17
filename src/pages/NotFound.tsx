@@ -26,7 +26,11 @@ const NotFound = () => {
           <span className="text-6xl font-black text-[#ed0e58] block">404</span>
           <h1 className="text-2xl font-black text-slate-900">Página não encontrada</h1>
           <p className="text-sm text-slate-600">
-            A página que você tentou acessar (<code className="text-xs font-mono bg-slate-100 px-1 py-0.5 rounded">{location.pathname}</code>) não existe ou mudou de endereço.
+            A página que você tentou acessar (
+            <code className="text-xs font-mono bg-slate-100 px-1 py-0.5 rounded">
+              {location.pathname}
+            </code>
+            ) não existe ou mudou de endereço.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link to="/" className="w-full sm:w-auto">
@@ -35,7 +39,10 @@ const NotFound = () => {
               </Button>
             </Link>
             <Link to="/abracolandia" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full border-purple-300 text-purple-900 hover:bg-purple-50 font-bold text-xs">
+              <Button
+                variant="outline"
+                className="w-full border-purple-300 text-purple-900 hover:bg-purple-50 font-bold text-xs"
+              >
                 Hotsite Abraçolândia
               </Button>
             </Link>

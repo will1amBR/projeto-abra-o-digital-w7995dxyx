@@ -71,6 +71,8 @@ export default function Home() {
     })
   }, [])
 
+  const currentBanner = banners[currentBannerIndex]
+
   return (
     <div className="min-h-screen bg-white flex flex-col selection:bg-pink-500 selection:text-white">
       <InstitutionalHeader />
@@ -87,9 +89,12 @@ export default function Home() {
           {/* Background image */}
           <div className="absolute inset-0 z-0">
             <img
-              src="https://img.usecurling.com/p/1600/900?q=volunteers%20blue%20shirts%20community%20event%20crowd"
-              alt="Voluntários do Projeto Abraço"
-              className="w-full h-full object-cover object-center brightness-95"
+              src={
+                currentBanner?.image_url ||
+                'https://img.usecurling.com/p/1600/900?q=volunteers%20blue%20shirts%20community%20event%20crowd'
+              }
+              alt={currentBanner?.title || 'Voluntários do Projeto Abraço'}
+              className="w-full h-full object-cover object-center brightness-95 transition-all duration-700"
             />
             {/* Subtle dark gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/20" />
@@ -98,15 +103,25 @@ export default function Home() {
           {/* Carousel Left/Right indicators as shown on mockup */}
           <button
             type="button"
+            onClick={() => {
+              if (banners.length > 1) {
+                setCurrentBannerIndex((prev) => (prev - 1 + banners.length) % banners.length)
+              }
+            }}
             aria-label="Banner anterior"
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full cursor-pointer"
           >
             <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400 drop-shadow-md" />
           </button>
           <button
             type="button"
+            onClick={() => {
+              if (banners.length > 1) {
+                setCurrentBannerIndex((prev) => (prev + 1) % banners.length)
+              }
+            }}
             aria-label="Próximo banner"
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition p-2 hover:bg-black/20 rounded-full cursor-pointer"
           >
             <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400 drop-shadow-md" />
           </button>
@@ -116,6 +131,11 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-end md:items-end justify-between gap-6 pt-24 sm:pt-36">
               {/* Slogan with pink/purple highlight stroke & shadow */}
               <div className="max-w-xl text-left">
+                {currentBanner?.badge && (
+                  <div className="inline-block px-3 py-1 mb-2 rounded-full bg-pink-600/90 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                    {currentBanner.badge}
+                  </div>
+                )}
                 <h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-normal font-sans"
                   style={{
@@ -123,19 +143,30 @@ export default function Home() {
                       '0 0 20px rgba(237, 14, 88, 0.9), 0 0 35px rgba(141, 25, 143, 0.8), 2px 2px 4px rgba(0,0,0,0.9), -2px -2px 0 #ed0e58, 2px -2px 0 #ed0e58, -2px 2px 0 #ed0e58, 2px 2px 0 #ed0e58',
                   }}
                 >
-                  Faça da Diversão <br />
-                  uma Boa Ação!
+                  {currentBanner?.title ? (
+                    currentBanner.title
+                  ) : (
+                    <>
+                      Faça da Diversão <br />
+                      uma Boa Ação!
+                    </>
+                  )}
                 </h1>
+                {currentBanner?.subtitle && (
+                  <p className="text-white/90 text-sm sm:text-base font-medium mt-2 max-w-lg drop-shadow">
+                    {currentBanner.subtitle}
+                  </p>
+                )}
               </div>
 
-              {/* Botão "Seja Voluntário" com fundo branco e texto na cor principal */}
+              {/* Botão CTA com fundo branco e texto na cor principal */}
               <div className="self-end md:self-end pb-2">
-                <Link to="/voluntariado">
+                <Link to={currentBanner?.cta_link || '/voluntariado'}>
                   <Button
                     size="lg"
                     className="bg-white hover:bg-slate-50 text-[#8d198f] hover:text-[#ed0e58] font-black text-base sm:text-lg px-8 py-6 rounded-2xl shadow-2xl transition-all duration-200 hover:scale-105 border border-pink-200/50"
                   >
-                    Seja Voluntário
+                    {currentBanner?.cta_text || 'Seja Voluntário'}
                   </Button>
                 </Link>
               </div>
