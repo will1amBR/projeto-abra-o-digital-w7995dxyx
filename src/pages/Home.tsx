@@ -77,6 +77,13 @@ export default function Home() {
     <div className="min-h-screen bg-white flex flex-col selection:bg-pink-500 selection:text-white">
       <InstitutionalHeader />
 
+      {/* Indicador de status de carregamento sutil se ainda carregando */}
+      {loading && (
+        <div className="sr-only" aria-live="polite">
+          Carregando informações institucionais...
+        </div>
+      )}
+
       <main className="flex-1">
         {/* =========================================================================
             HERO SECTION - FIEL AO MOCKUP
