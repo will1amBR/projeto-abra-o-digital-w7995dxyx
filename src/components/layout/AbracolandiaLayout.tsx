@@ -330,14 +330,14 @@ export const AbracolandiaFooter: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Barra Preta de Copyright com Studio Artio */}
+      {/* 4. Barra Preta de Copyright com Glik Smart & Studio Artio */}
       <section className="bg-black text-slate-400 py-4 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
             <p>&copy; {new Date().getFullYear()} Projeto Abraço. Todos os direitos reservados.</p>
             <p className="text-slate-400">
               Desenvolvido por{' '}
-              <span className="font-bold text-white tracking-wider">Studio Artio</span>
+              <span className="font-bold text-white tracking-wider">Glik Smart & Studio Artio</span>
             </p>
           </div>
         </div>

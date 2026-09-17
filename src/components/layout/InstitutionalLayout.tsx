@@ -261,7 +261,9 @@ export const InstitutionalFooter: React.FC = () => {
       {/* Copyright Bar (Escuro) */}
       <div className="bg-[#222222] text-slate-300 py-3.5 px-4 text-center text-xs font-normal">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2">
-          <span>Todos os Direitos Reservados @ 2026 - Projeto Abraço by Studio Artio</span>
+          <span>
+            Todos os Direitos Reservados @ 2026 - Projeto Abraço by Glik Smart & Studio Artio
+          </span>
         </div>
       </div>
     </footer>

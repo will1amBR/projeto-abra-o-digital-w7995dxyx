@@ -52,7 +52,10 @@ const NotFound = () => {
 
       <ColorStrip className="h-1.5" />
       <footer className="bg-black text-slate-400 py-4 text-center text-xs">
-        <p>&copy; {new Date().getFullYear()} Projeto Abraço. Todos os direitos reservados.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Projeto Abraço by Glik Smart & Studio Artio. Todos os
+          direitos reservados.
+        </p>
       </footer>
     </div>
   )
