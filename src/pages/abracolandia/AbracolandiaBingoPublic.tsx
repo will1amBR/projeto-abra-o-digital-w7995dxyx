@@ -310,7 +310,7 @@ export default function AbracolandiaBingoPublic() {
             voluntários identificados.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Link to="/abracolandia/festa">
+            <Link to="/abracolandia/a-festa">
               <Button className="bg-pink-600 hover:bg-pink-500 text-white font-black text-xs h-11 px-6 rounded-xl shadow-lg">
                 Ver Atrações da Festa
               </Button>
