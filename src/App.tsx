@@ -27,6 +27,9 @@ import FestasAnteriores from '@/pages/abracolandia/FestasAnteriores'
 // Bingo Público
 import AbracolandiaBingoPublic from '@/pages/abracolandia/AbracolandiaBingoPublic'
 
+// Demo Showcase
+import DemoPage from '@/pages/DemoPage'
+
 // CMS Admin (Painel Protegido)
 import AdminLogin from '@/pages/admin/AdminLogin'
 import AdminDashboard from '@/pages/admin/AdminDashboard'
@@ -93,6 +96,11 @@ export default function App() {
           <Route path="/abracolandia/patrocinadores/:slug" element={<PatrocinadorDetalhe />} />
           <Route path="/abracolandia/voluntariado" element={<AbraVoluntariado />} />
           <Route path="/abracolandia/festas-anteriores" element={<FestasAnteriores />} />
+
+          {/* =========================================
+              PÁGINA CENTRAL DE DEMONSTRAÇÃO (TOUR INTERNO)
+              ========================================= */}
+          <Route path="/demo" element={<DemoPage />} />
 
           {/* =========================================
               PAINEL CMS ADMINISTRATIVO

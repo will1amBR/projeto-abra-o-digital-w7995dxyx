@@ -110,6 +110,12 @@ const ROUTE_META_MAP: Record<string, RouteMeta> = {
       'Seja um voluntário na Abraçolândia! Ajude na organização, suporte, barracas e recreação infantil.',
     image: DEFAULT_OG_IMAGE,
   },
+  '/demo': {
+    title: 'Demonstração do Sistema — Projeto Abraço Digital',
+    description:
+      'Página central de demonstração e tour guiado do Projeto Abraço e da festa Abraçolândia.',
+    image: DEFAULT_OG_IMAGE,
+  },
 }
 
 function updateMetaTag(selector: string, attr: 'content' | 'href', value: string) {
