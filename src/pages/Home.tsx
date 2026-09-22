@@ -25,9 +25,6 @@ import {
   PartyPopper,
 } from 'lucide-react'
 
-// Import mockup screenshot asset
-import mockupHeroImage from '@/assets/screenshot2026-08-30-17-21-42-705com.android.chrome-edit-ce9fc.jpg'
-
 export default function Home() {
   const [banners, setBanners] = useState<any[]>([])
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
@@ -71,6 +68,15 @@ export default function Home() {
     })
   }, [])
 
+  // Auto-rotação sutil a cada 7 segundos caso haja múltiplos banners
+  useEffect(() => {
+    if (banners.length <= 1) return
+    const interval = setInterval(() => {
+      setCurrentBannerIndex((prev) => (prev + 1) % banners.length)
+    }, 7000)
+    return () => clearInterval(interval)
+  }, [banners.length])
+
   const currentBanner = banners[currentBannerIndex]
 
   return (
@@ -96,23 +102,25 @@ export default function Home() {
           {/* Background image */}
           <div className="absolute inset-0 z-0">
             <img
+              key={currentBanner?.id || currentBannerIndex}
               src={
-                currentBanner?.image_url ||
-                'https://img.usecurling.com/p/1600/900?q=volunteers%20blue%20shirts%20community%20event%20crowd'
+                (currentBanner ? getImageSrc(currentBanner, 'banners') : '') ||
+                'https://img.usecurling.com/p/1600/900?q=children%20hospital%20visit%20volunteers'
               }
-              alt={currentBanner?.title || 'Voluntários do Projeto Abraço'}
-              className="w-full h-full object-cover object-center brightness-95 transition-all duration-700"
+              alt={currentBanner?.title || 'Acolhimento e Voluntários do Projeto Abraço'}
+              className="w-full h-full object-cover object-center brightness-95 transition-all duration-700 animate-in fade-in duration-500"
             />
             {/* Subtle dark gradient overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/25" />
           </div>
 
           {/* Carousel Left/Right indicators as shown on mockup */}
           <button
             type="button"
             onClick={() => {
-              if (banners.length > 1) {
-                setCurrentBannerIndex((prev) => (prev - 1 + banners.length) % banners.length)
+              const total = banners.length > 0 ? banners.length : 1
+              if (total > 1) {
+                setCurrentBannerIndex((prev) => (prev - 1 + total) % total)
               }
             }}
             aria-label="Banner anterior"
@@ -123,8 +131,9 @@ export default function Home() {
           <button
             type="button"
             onClick={() => {
-              if (banners.length > 1) {
-                setCurrentBannerIndex((prev) => (prev + 1) % banners.length)
+              const total = banners.length > 0 ? banners.length : 1
+              if (total > 1) {
+                setCurrentBannerIndex((prev) => (prev + 1) % total)
               }
             }}
             aria-label="Próximo banner"

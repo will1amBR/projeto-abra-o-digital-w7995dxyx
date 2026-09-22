@@ -71,7 +71,7 @@ migrate(
         cta_link: '/voluntariado',
         badge: 'Projeto Abraço Institucional',
         image_url:
-          'https://img.usecurling.com/p/1600/700?q=solidarity%20community%20charity%20hands',
+          'https://img.usecurling.com/p/1600/900?q=children%20hospital%20visit%20volunteers',
         active: true,
         order: 1,
       },
@@ -84,7 +84,7 @@ migrate(
         cta_link: '/beneficiados',
         badge: 'Ações que Transformam',
         image_url:
-          'https://img.usecurling.com/p/1600/700?q=volunteers%20helping%20families%20boxes',
+          'https://img.usecurling.com/p/1600/900?q=volunteers%20hospitalized%20children%20smiling',
         active: true,
         order: 2,
       },
