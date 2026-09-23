@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export const SITE_DOMAIN = 'https://abraco.glikholding.com.br'
-export const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/og-image.png`
+export const DEFAULT_OG_IMAGE =
+  'https://img.usecurling.com/p/1600/900?q=children%20hospital%20visit%20volunteers'
 export const DEFAULT_TITLE = 'Projeto Abraço — Faça da Diversão uma Boa Ação!'
 export const DEFAULT_DESCRIPTION =
   'Projeto Abraço — Faça da Diversão uma Boa Ação! Conheça nossas ações sociais, voluntariado e a tradicional festa solidária Abraçolândia.'
