@@ -24,10 +24,10 @@ export const AbracoVectorLogo: React.FC<{
   size?: 'sm' | 'md' | 'lg' | 'xl'
 }> = ({ className = '', invertedSubtitle = false, showSubtitle = true, size = 'md' }) => {
   const heightMap = {
-    sm: 'h-8',
-    md: 'h-11',
-    lg: 'h-16',
-    xl: 'h-24',
+    sm: 'h-7 sm:h-8',
+    md: 'h-9 sm:h-11',
+    lg: 'h-12 sm:h-16',
+    xl: 'h-16 sm:h-24',
   }
 
   return (
@@ -169,10 +169,10 @@ export const AbracoLogo: React.FC<LogoProps> = ({
   showSubtitle = true,
 }) => {
   const heightClasses = {
-    sm: 'h-8',
-    md: 'h-11',
-    lg: 'h-16',
-    xl: 'h-24',
+    sm: 'h-7 sm:h-8',
+    md: 'h-9 sm:h-11',
+    lg: 'h-12 sm:h-16',
+    xl: 'h-16 sm:h-24',
   }
 
   if (variant === 'full') {

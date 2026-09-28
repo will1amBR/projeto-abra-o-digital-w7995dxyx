@@ -57,50 +57,61 @@ export const InstitutionalHeader: React.FC = () => {
   return (
     <header className="bg-white">
       {/* Top quick utility bar with administrative and direct links */}
-      <div className="bg-slate-900 text-slate-300 text-[11px] py-1.5 px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-pink-400 tracking-wider">PROJETO ABRAÇO</span>
-            <span className="text-slate-400 hidden sm:inline">
+      <div className="bg-slate-900 text-slate-300 text-[11px] sm:text-xs py-1 sm:py-1.5 px-3 sm:px-4 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2">
+          {/* Brand identifier / subtitle */}
+          <div className="flex items-center justify-between sm:justify-start gap-2">
+            <span className="font-extrabold text-pink-400 tracking-wider text-[11px] sm:text-xs">
+              PROJETO ABRAÇO
+            </span>
+            <span className="text-slate-400 text-[10px] sm:text-xs sm:inline">
               • Faça da diversão uma boa ação!
             </span>
           </div>
 
-          <div className="flex items-center gap-3 ml-auto">
+          {/* Quick links: grid 3 cols on mobile, flex on sm+ */}
+          <div className="grid grid-cols-3 sm:flex items-center justify-items-center sm:justify-end gap-1 sm:gap-3 pt-1 sm:pt-0 border-t border-slate-800/80 sm:border-t-0">
             <Link
               to="/abracolandia"
-              className="text-pink-400 hover:text-pink-300 font-bold transition flex items-center gap-1"
+              className="text-pink-400 hover:text-pink-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
             >
-              <PartyPopper className="w-3 h-3" /> Hotsite Abraçolândia
+              <PartyPopper className="w-3 h-3 shrink-0" />
+              <span className="truncate">Abraçolândia</span>
             </Link>
-            <div className="h-3 w-px bg-slate-700" />
+
+            <div className="hidden sm:block h-3 w-px bg-slate-700 shrink-0" />
+
             <Link
               to="/area-do-voluntario"
-              className="text-amber-400 hover:text-amber-300 font-bold transition flex items-center gap-1"
+              className="text-amber-400 hover:text-amber-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
             >
-              <Sparkles className="w-3 h-3" /> Área do Voluntário
+              <Sparkles className="w-3 h-3 shrink-0" />
+              <span className="truncate">Voluntário</span>
             </Link>
-            <div className="h-3 w-px bg-slate-700" />
+
+            <div className="hidden sm:block h-3 w-px bg-slate-700 shrink-0" />
+
             <Link
               to={isAdmin ? '/admin' : '/admin/login'}
-              className="text-slate-300 hover:text-amber-400 transition flex items-center gap-1"
+              className="text-slate-300 hover:text-amber-400 transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
             >
-              <Lock className="w-3 h-3 text-amber-400" /> {isAdmin ? 'Painel CMS' : 'Login CMS'}
+              <Lock className="w-3 h-3 text-amber-400 shrink-0" />
+              <span className="truncate">{isAdmin ? 'Painel CMS' : 'Login CMS'}</span>
             </Link>
           </div>
         </div>
       </div>
 
       {/* Main Header with Centered Logo & Slogan matching Mockup */}
-      <div className="py-4 sm:py-6 px-4 bg-white flex flex-col items-center justify-center text-center">
+      <div className="py-3 sm:py-5 px-3 sm:px-4 bg-white flex flex-col items-center justify-center text-center">
         <Link to="/" className="inline-block transition-transform hover:scale-[1.02]">
           <AbracoLogo size="lg" variant="svg-transparent" showSubtitle={true} />
         </Link>
       </div>
 
       {/* Navigation menu bar */}
-      <div className="border-t border-slate-100 bg-slate-50/70">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-12">
+      <div className="border-t border-slate-100 bg-slate-50/80">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-11 sm:h-12">
           <nav className="hidden md:flex items-center justify-center flex-1 gap-1">
             {navLinks.map((link) => (
               <NavLink
@@ -120,13 +131,15 @@ export const InstitutionalHeader: React.FC = () => {
           </nav>
 
           <div className="flex md:hidden items-center justify-between w-full">
-            <span className="text-xs font-bold text-slate-600">Menu de Navegação</span>
+            <span className="text-xs font-bold text-slate-700 tracking-wide">
+              Menu de Navegação
+            </span>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-200 transition"
+              className="p-2 rounded-lg text-slate-700 hover:bg-slate-200/80 transition active:scale-95"
               aria-label="Abrir Menu"
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? <X className="w-5 h-5 text-pink-600" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>

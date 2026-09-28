@@ -204,9 +204,9 @@ export default function Home() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Coluna Esquerda: Conteúdo Institucional (7 colunas) */}
             <div className="md:col-span-7 space-y-6">
-              {/* Título "bem-vindo" em minúsculas e negrito */}
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight lowercase">
-                bem-vindo
+              {/* Título "Bem-vindo" padronizado com inicial maiúscula */}
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+                Bem-vindo
               </h2>
 
               {/* Texto 1: Missão / Descrição */}
