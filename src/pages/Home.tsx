@@ -8,6 +8,7 @@ import {
   getBeneficiaries,
   getSponsors,
   getSiteSettings,
+  getContentBlockBySlug,
   getImageSrc,
 } from '@/services/contentService'
 import { Button } from '@/components/ui/button'
@@ -44,6 +45,7 @@ export default function Home() {
     description:
       'O maior festival beneficente da região está sendo preparado para 2027! Gastronomia deliciosa, shows ao vivo, mega área infantil e o tradicional Super Bingo. 100% da arrecadação revertida para causas sociais do Projeto Abraço.',
   })
+  const [bemVindoBlock, setBemVindoBlock] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -53,7 +55,11 @@ export default function Home() {
       getBeneficiaries({ site: 'abraco' }),
       getSponsors({ site: 'abraco' }),
       getSiteSettings(),
-    ]).then(([banData, newsData, benData, sponData, settingsMap]) => {
+      getContentBlockBySlug('bem-vindo'),
+    ]).then(([banData, newsData, benData, sponData, settingsMap, bemVindoData]) => {
+      if (bemVindoData) {
+        setBemVindoBlock(bemVindoData)
+      }
       setBanners(banData)
       setLatestNews(newsData.slice(0, 3))
       setRecentBeneficiaries(benData.slice(0, 3))
@@ -235,12 +241,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Coluna Direita: Imagem de um Abraço (5 colunas) */}
+            {/* Coluna Direita: Imagem de um Abraço com Crianças (5 colunas) */}
             <div className="md:col-span-5 flex justify-center md:justify-end">
               <div className="w-full max-w-sm sm:max-w-md rounded-2xl overflow-hidden shadow-xl border-4 border-slate-100 group">
                 <img
-                  src="https://img.usecurling.com/p/600/600?q=warm%20hug%20elderly%20volunteer%20embrace%20love"
-                  alt="Um abraço de solidariedade do Projeto Abraço"
+                  src={
+                    (bemVindoBlock ? getImageSrc(bemVindoBlock, 'content_blocks') : '') ||
+                    'https://img.usecurling.com/p/600/600?q=smiling%20children%20volunteers%20hug%20solidarity'
+                  }
+                  alt={
+                    bemVindoBlock?.title || 'Acolhimento e carinho com crianças no Projeto Abraço'
+                  }
                   className="w-full h-auto object-cover aspect-square group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

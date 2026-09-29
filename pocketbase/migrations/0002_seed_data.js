@@ -138,6 +138,16 @@ migrate(
     const initialBlocks = [
       {
         site: 'abraco',
+        slug: 'bem-vindo',
+        title: 'Bem-vindo',
+        subtitle: 'Faça da diversão uma boa ação',
+        body: '<p>Somos uma organização sem fins lucrativos e temos como missão engajar pessoas para o trabalho voluntário com o objetivo de promover ações sociais que mobilizam recursos para instituições assistenciais e comunidades carentes.</p>',
+        image_url:
+          'https://img.usecurling.com/p/600/600?q=smiling%20children%20volunteers%20hug%20solidarity',
+        order: 0,
+      },
+      {
+        site: 'abraco',
         slug: 'nossa-historia-origens',
         title: 'Nossa História e Origens',
         subtitle:

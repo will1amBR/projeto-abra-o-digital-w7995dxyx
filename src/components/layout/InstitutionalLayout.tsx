@@ -56,44 +56,42 @@ export const InstitutionalHeader: React.FC = () => {
 
   return (
     <header className="bg-white">
-      {/* Top quick utility bar with administrative and direct links */}
-      <div className="bg-slate-900 text-slate-300 text-[11px] sm:text-xs py-1 sm:py-1.5 px-3 sm:px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2">
+      {/* Top quick utility bar with administrative and direct links (oculta no mobile para manter header limpo e enxuto) */}
+      <div className="hidden sm:block bg-slate-900 text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           {/* Brand identifier / subtitle */}
-          <div className="flex items-center justify-between sm:justify-start gap-2">
-            <span className="font-extrabold text-pink-400 tracking-wider text-[11px] sm:text-xs">
+          <div className="flex items-center justify-start gap-2">
+            <span className="font-extrabold text-pink-400 tracking-wider text-xs">
               PROJETO ABRAÇO
             </span>
-            <span className="text-slate-400 text-[10px] sm:text-xs sm:inline">
-              • Faça da diversão uma boa ação!
-            </span>
+            <span className="text-slate-400 text-xs inline">• Faça da diversão uma boa ação!</span>
           </div>
 
-          {/* Quick links: grid 3 cols on mobile, flex on sm+ */}
-          <div className="grid grid-cols-3 sm:flex items-center justify-items-center sm:justify-end gap-1 sm:gap-3 pt-1 sm:pt-0 border-t border-slate-800/80 sm:border-t-0">
+          {/* Quick links: desktop */}
+          <div className="flex items-center justify-end gap-3">
             <Link
               to="/abracolandia"
-              className="text-pink-400 hover:text-pink-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
+              className="text-pink-400 hover:text-pink-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 text-center"
             >
               <PartyPopper className="w-3 h-3 shrink-0" />
               <span className="truncate">Abraçolândia</span>
             </Link>
 
-            <div className="hidden sm:block h-3 w-px bg-slate-700 shrink-0" />
+            <div className="h-3 w-px bg-slate-700 shrink-0" />
 
             <Link
               to="/area-do-voluntario"
-              className="text-amber-400 hover:text-amber-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
+              className="text-amber-400 hover:text-amber-300 font-bold transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 text-center"
             >
               <Sparkles className="w-3 h-3 shrink-0" />
               <span className="truncate">Voluntário</span>
             </Link>
 
-            <div className="hidden sm:block h-3 w-px bg-slate-700 shrink-0" />
+            <div className="h-3 w-px bg-slate-700 shrink-0" />
 
             <Link
               to={isAdmin ? '/admin' : '/admin/login'}
-              className="text-slate-300 hover:text-amber-400 transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 w-full sm:w-auto text-center"
+              className="text-slate-300 hover:text-amber-400 transition flex items-center justify-center gap-1 text-[11px] py-1 px-1.5 rounded hover:bg-slate-800/60 text-center"
             >
               <Lock className="w-3 h-3 text-amber-400 shrink-0" />
               <span className="truncate">{isAdmin ? 'Painel CMS' : 'Login CMS'}</span>
@@ -179,8 +177,48 @@ export const InstitutionalHeader: React.FC = () => {
 }
 
 export const InstitutionalFooter: React.FC = () => {
+  const { isAdmin } = useAuth()
+
   return (
     <footer>
+      {/* Barra de Links Rápidos destacada (visível em todas as telas ou destacada especialmente para mobile) */}
+      <div className="bg-slate-900 text-slate-200 border-b border-slate-800 py-3 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2 text-center sm:text-left">
+            <span className="font-extrabold text-pink-400 tracking-wider text-xs">
+              PROJETO ABRAÇO
+            </span>
+            <span className="text-slate-400 text-xs">• Faça da diversão uma boa ação!</span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 w-full sm:w-auto items-center justify-center text-center">
+            <Link
+              to="/abracolandia"
+              className="bg-slate-800/90 hover:bg-slate-700 text-pink-400 hover:text-pink-300 font-bold transition flex items-center justify-center gap-1.5 text-xs py-2 px-3 rounded-lg border border-pink-500/20"
+            >
+              <PartyPopper className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Abraçolândia</span>
+            </Link>
+
+            <Link
+              to="/area-do-voluntario"
+              className="bg-slate-800/90 hover:bg-slate-700 text-amber-400 hover:text-amber-300 font-bold transition flex items-center justify-center gap-1.5 text-xs py-2 px-3 rounded-lg border border-amber-500/20"
+            >
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Voluntário</span>
+            </Link>
+
+            <Link
+              to={isAdmin ? '/admin' : '/admin/login'}
+              className="bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-amber-300 font-bold transition flex items-center justify-center gap-1.5 text-xs py-2 px-3 rounded-lg border border-slate-700"
+            >
+              <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="truncate">{isAdmin ? 'Painel CMS' : 'Login CMS'}</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Colorful 6-color Project Abraço strip divider */}
       <ColorStrip height="h-[3.5px]" />
 
