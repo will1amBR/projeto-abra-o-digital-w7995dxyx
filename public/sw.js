@@ -16,7 +16,14 @@ const API_CACHE = `${VERSION}-api`
 const OFFLINE_URL = '/offline.html'
 
 // Assets pré-cacheados na instalação (app shell mínimo).
-const PRECACHE_URLS = ['/', OFFLINE_URL, '/manifest.webmanifest', '/icons/favicon.svg']
+const PRECACHE_URLS = [
+  '/',
+  OFFLINE_URL,
+  '/manifest.webmanifest',
+  '/icons/favicon.svg',
+  '/icons/icon.svg',
+  '/icons/icon-maskable.svg',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

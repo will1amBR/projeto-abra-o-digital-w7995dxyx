@@ -4,6 +4,9 @@
  *
  * Sem dependências externas: rasterizador próprio (blocos da identidade
  * oficial A-B-R-A-Ç-O em fonte pixel 3x5) + PNG escrito com zlib nativo.
+ *
+ * Depois de gerar os PNGs, o script JÁ RELIGA no manifest e no index.html
+ * as entradas de ícone em PNG (o PWA fica 100% pronto, sem edição manual).
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -11,7 +14,8 @@ import zlib from 'node:zlib'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const OUT = path.resolve(__dirname, '..', 'public', 'icons')
+const ROOT = path.resolve(__dirname, '..')
+const OUT = path.join(ROOT, 'public', 'icons')
 
 const BRAND = {
   rosa: [0xed, 0x0e, 0x58],
@@ -174,6 +178,7 @@ function renderIcon(size, maskable = false) {
   return encodePng(pixels, size)
 }
 
+// ---------- geração dos PNGs ----------
 fs.mkdirSync(OUT, { recursive: true })
 const targets = [
   ['pwa-192.png', 192, false],
@@ -187,3 +192,25 @@ for (const [name, size, maskable] of targets) {
   console.log(`✓ ${name} (${size}x${size}${maskable ? ', maskable' : ''})`)
 }
 console.log('Ícones PWA gerados em', OUT)
+
+// ---------- religa as entradas PNG no manifest e no index.html ----------
+const manifestPath = path.join(ROOT, 'public', 'manifest.webmanifest')
+const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+manifest.icons = [
+  { src: '/icons/pwa-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+  { src: '/icons/pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+  { src: '/icons/pwa-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+  { src: '/icons/pwa-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+]
+fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n')
+console.log('✓ manifest.webmanifest apontando para os PNGs')
+
+const indexPath = path.join(ROOT, 'index.html')
+let html = fs.readFileSync(indexPath, 'utf8')
+html = html.replace(
+  /<!-- apple-touch-icon em PNG[\s\S]*?-->\n\s*<!--\s*<link rel="apple-touch-icon"[^>]*>\s*-->/,
+  '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />',
+)
+fs.writeFileSync(indexPath, html)
+console.log('✓ index.html com apple-touch-icon.png ativado')
+console.log('\nPronto: rode o build normalmente (npm run build) e o PWA fica completo.')

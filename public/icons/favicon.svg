@@ -1,18 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#ffffff"/>
   <g>
-    <rect x="7" y="11" width="11.5" height="18.5" rx="2.5" fill="#ed0e58"/>
-    <rect x="20.5" y="11" width="11.5" height="18.5" rx="2.5" fill="#8d198f"/>
-    <rect x="34" y="11" width="11.5" height="18.5" rx="2.5" fill="#2e3192"/>
-    <rect x="47.5" y="11" width="11.5" height="18.5" rx="2.5" fill="#01abb7"/>
-    <rect x="7" y="31.5" width="11.5" height="18.5" rx="2.5" fill="#cce310"/>
-    <rect x="20.5" y="31.5" width="11.5" height="18.5" rx="2.5" fill="#f89c0e"/>
-    <circle cx="26.25" cy="38" r="3.4" stroke="#ffffff" stroke-width="1.4" fill="none"/>
-    <circle cx="26.25" cy="36.9" r="0.8" fill="#ffffff"/>
-    <circle cx="25.1" cy="38.8" r="0.8" fill="#ffffff"/>
-    <circle cx="27.4" cy="38.8" r="0.8" fill="#ffffff"/>
-    <path d="M 24.3 40.3 C 25.2 41 27.3 41 28.2 40.3" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none"/>
-    <text x="40.5" y="46.5" font-family="Roboto, Arial, sans-serif" font-size="16" font-weight="900" fill="#2e3192">O</text>
-    <text x="7" y="60" font-family="Roboto, Arial, sans-serif" font-size="4.6" font-weight="700" letter-spacing="0.4" fill="#ed0e58">FAÇA DA DIVERSÃO UMA BOA AÇÃO!</text>
+    <rect x="68" y="176" width="104" height="160" rx="18" fill="#ed0e58"/>
+    <rect x="188" y="176" width="104" height="160" rx="18" fill="#8d198f"/>
+    <rect x="308" y="176" width="104" height="160" rx="18" fill="#2e3192"/>
+    <rect x="428" y="176" width="104" height="160" rx="18" fill="#01abb7"/>
   </g>
 </svg>
