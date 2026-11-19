@@ -1,0 +1,40 @@
+{
+  "name": "Projeto Abraço",
+  "short_name": "Abraço",
+  "description": "Projeto Abraço - Faça da Diversão uma Boa Ação! Ações sociais, voluntariado, ingressos e a festa solidária Abraçolândia.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#ed0e58",
+  "background_color": "#ffffff",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["social", "events", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/pwa-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Maskable: conteúdo central seguro (80% = 410px), fundo branco ocupa 100% -->
+  <rect width="512" height="512" fill="#ffffff"/>
+  <g transform="translate(51,71) scale(0.8)">
+    <rect x="0" y="0" width="88" height="150" rx="12" fill="#ed0e58"/>
+    <text x="44" y="115" font-family="Roboto, Arial, sans-serif" font-size="105" font-weight="900" fill="#ffffff" text-anchor="middle">A</text>
+    <rect x="104" y="0" width="88" height="150" rx="12" fill="#8d198f"/>
+    <text x="148" y="115" font-family="Roboto, Arial, sans-serif" font-size="105" font-weight="900" fill="#ffffff" text-anchor="middle">B</text>
+    <rect x="208" y="0" width="88" height="150" rx="12" fill="#2e3192"/>
+    <text x="252" y="115" font-family="Roboto, Arial, sans-serif" font-size="105" font-weight="900" fill="#ffffff" text-anchor="middle">R</text>
+    <rect x="312" y="0" width="88" height="150" rx="12" fill="#01abb7"/>
+    <text x="356" y="115" font-family="Roboto, Arial, sans-serif" font-size="105" font-weight="900" fill="#ffffff" text-anchor="middle">A</text>
+    <rect x="0" y="170" width="88" height="150" rx="12" fill="#cce310"/>
+    <text x="44" y="285" font-family="Roboto, Arial, sans-serif" font-size="100" font-weight="900" fill="#ffffff" text-anchor="middle">Ç</text>
+    <rect x="104" y="170" width="88" height="150" rx="12" fill="#f89c0e"/>
+    <circle cx="148" cy="232" r="27" stroke="#ffffff" stroke-width="9" fill="none"/>
+    <circle cx="148" cy="223" r="6" fill="#ffffff"/>
+    <circle cx="139" cy="238" r="6" fill="#ffffff"/>
+    <circle cx="157" cy="238" r="6" fill="#ffffff"/>
+    <path d="M 133 249 C 140 255 156 255 163 249" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <text x="248" y="290" font-family="Roboto, Arial, sans-serif" font-size="105" font-weight="900" fill="#2e3192">O</text>
+    <text x="205" y="372" font-family="Roboto, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#ed0e58" text-anchor="middle">FAÇA DA DIVERSÃO UMA BOA AÇÃO!</text>
+  </g>
+</svg>

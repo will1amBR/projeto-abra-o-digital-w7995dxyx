@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sem conexão — Projeto Abraço</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <style>
+      :root {
+        --rosa: #ed0e58;
+        --roxo: #8d198f;
+        --azul: #2e3192;
+        --ciano: #01abb7;
+        --verde: #cce310;
+        --laranja: #f89c0e;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: linear-gradient(160deg, #2e3192 0%, #8d198f 55%, #ed0e58 100%);
+        color: #ffffff;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+      }
+      .logo {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 28px;
+        align-items: center;
+      }
+      .bloco {
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 28px;
+        color: #ffffff;
+      }
+      @media (max-width: 420px) {
+        .bloco {
+          width: 34px;
+          height: 34px;
+          font-size: 20px;
+        }
+      }
+      .rotulo {
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 4px;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      h1 {
+        font-size: 26px;
+        font-weight: 800;
+        margin-bottom: 12px;
+      }
+      p {
+        max-width: 420px;
+        line-height: 1.6;
+        opacity: 0.92;
+        margin-bottom: 28px;
+      }
+      .strip {
+        display: flex;
+        height: 6px;
+        width: 220px;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 30px;
+      }
+      .strip span {
+        flex: 1;
+      }
+      button {
+        background: #ffffff;
+        color: #ed0e58;
+        font-weight: 800;
+        font-size: 16px;
+        padding: 12px 32px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      }
+      button:hover {
+        background: #f4f4f4;
+      }
+      .dica {
+        font-size: 13px;
+        opacity: 0.75;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="logo" aria-label="Projeto Abraço">
+      <span class="rotulo">PROJETO</span>
+      <span class="bloco" style="background: var(--rosa)">A</span>
+      <span class="bloco" style="background: var(--roxo)">B</span>
+      <span class="bloco" style="background: var(--azul)">R</span>
+      <span class="bloco" style="background: var(--ciano)">A</span>
+      <span class="bloco" style="background: var(--verde); color: #ffffff">Ç</span>
+      <span class="bloco" style="background: var(--laranja)">O</span>
+    </div>
+    <h1>Você está sem conexão</h1>
+    <p>
+      Esta página ainda não foi salva no seu dispositivo para funcionar offline. Verifique sua
+      internet e tente novamente — o restante do app continua disponível.
+    </p>
+    <button onclick="location.reload()">Tentar novamente</button>
+    <a href="/" style="color: #fff; margin-top: 16px; font-weight: 600">Ir para a página inicial</a>
+    <div class="strip" aria-hidden="true">
+      <span style="background: var(--rosa)"></span>
+      <span style="background: var(--roxo)"></span>
+      <span style="background: var(--azul)"></span>
+      <span style="background: var(--ciano)"></span>
+      <span style="background: var(--verde)"></span>
+      <span style="background: var(--laranja)"></span>
+    </div>
+    <p class="dica">Projeto Abraço — Faça da Diversão uma Boa Ação!</p>
+  </body>
+</html>
